@@ -1,0 +1,11 @@
+Package: pimeta
+Type: Package
+Title: Prediction Interval for Random-Effects Meta-Analysis
+Version: 0.0.1
+Author: Kengo Nagashima, Hisashi Noma, and Toshi A. Furukawa
+Maintainer: Kengo Nagashima <nshi@chiba-u.jp>
+Description: Prediction Intervals for Meta-Analysis.
+License: GPL-3
+Imports: Rcpp (>= 0.12.3)
+LinkingTo: Rcpp, RcppEigen
+RoxygenNote: 6.0.1
