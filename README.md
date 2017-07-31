@@ -10,5 +10,5 @@ An implementation of a prediction interval for random-effects meta-analysis:
 
 ## Installation
 
-The "complete version" will be published on the CRAN website (https://cran.rproject.org/) and GitHub (https://github.com/nshi-stat/pimeta/) after acceptance of the paper.
+The "complete version" will be published on the CRAN website (https://cran.r-project.org/) and GitHub (https://github.com/nshi-stat/pimeta/) after acceptance of the paper.
 
