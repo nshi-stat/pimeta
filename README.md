@@ -4,11 +4,21 @@
 
 ## Prediction Interval for Random-Effects Meta-Analysis
 
-An implementation of a prediction interval for random-effects meta-analysis:
-"Nagashima K, Noma H, Furukawa TA. Prediction interval for random-effects meta-analysis: a confidence distribution approach. *Under Review*."
+An implementation of prediction intervals for random-effects meta-analysis:
+
+- Higgins JPT, Thompson SG, Spiegelhalter DJ. A re-evaluation of random-effects meta-analysis. *Journal of the Royal Statistical Society: Series A (Statistics in Society)* 2009; **172**(1): 137--159. [doi:10.1111/j.1467-985X.2008.00552.x](https://doi.org/10.1111/j.1467-985X.2008.00552.x).
+- Partlett C, Riley RD. Random effects meta-analysis: Coverage performance of 95% confidence
+and prediction intervals following REML estimation. *Statistics in Medicine* 2017; **36**(2): 301--317. [doi:10.1002/sim.7140](https://doi.org/10.1002/sim.7140).
+- Nagashima K, Noma H, Furukawa TA. Prediction interval for random-effects meta-analysis: a confidence distribution approach. *Under Review*. [arXiv:1804.01054](https://arxiv.org/abs/1804.01054).
 
 
 ## Installation
 
-The "complete version" will be published on the CRAN website (https://cran.r-project.org/) and GitHub (https://github.com/nshi-stat/pimeta/) after acceptance of the paper.
+``` r
+# From CRAN:
+install.packages("pimeta")
 
+# Or the the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("nshi-stat/pimeta")
+```

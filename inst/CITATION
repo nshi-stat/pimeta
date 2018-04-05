@@ -1,0 +1,23 @@
+citHeader("To cite Rcpp in publications use:")
+
+citEntry(
+entry = "Article",
+title = "Prediction interval for random-effects meta-analysis: a confidence distribution approach",
+author = personList(
+  as.person("Kengo Nagashima"),
+  as.person("Hisashi Noma"),
+  as.person("Toshi A. Furukawa")),
+journal = "Under Review",
+year = "2018",
+volume = "",
+number = "",
+page = "",
+url = "https://arxiv.org/abs/1804.01054",
+doi = "",
+note = "Pre-print available at arXiv",
+textVersion = paste(
+  "Nagashima K, Noma H, Furukawa TA.",
+  "Prediction interval for random-effects meta-analysis: a confidence distribution approach.",
+  "Under Review.",
+  "arXiv:1804.01054."
+))
