@@ -2,7 +2,7 @@
 # pimeta package
 
 
-## Prediction Interval for Random-Effects Meta-Analysis
+## Prediction Intervals for Random-Effects Meta-Analysis
 
 An implementation of prediction intervals for random-effects meta-analysis:
 
