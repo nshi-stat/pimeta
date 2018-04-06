@@ -23,8 +23,10 @@
 #' \url{https://arxiv.org/abs/1804.01054}.
 #' @examples
 #' data(sbp, package = "pimeta")
-#' # set.seed(20161102)
-#' # pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)
+#' set.seed(20161102)
+#' \donttest{
+#'   pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)
+#' }
 #' # $muhat
 #' # [1] -0.3340597
 #' # $lbpi

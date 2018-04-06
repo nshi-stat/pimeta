@@ -38,8 +38,10 @@ A parametric bootstrap prediction interval (Nagashima et al., 2018)
 }
 \examples{
 data(sbp, package = "pimeta")
-# set.seed(20161102)
-# pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)
+set.seed(20161102)
+\donttest{
+  pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)
+}
 # $muhat
 # [1] -0.3340597
 # $lbpi
