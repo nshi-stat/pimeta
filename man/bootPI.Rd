@@ -39,9 +39,7 @@ A parametric bootstrap prediction interval (Nagashima et al., 2018)
 \examples{
 data(sbp, package = "pimeta")
 set.seed(20161102)
-\donttest{
-  pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)
-}
+\donttest{pimeta::bootPI(sbp$y, sbp$sigmak, B = 50000)}
 # $muhat
 # [1] -0.3340597
 # $lbpi
@@ -53,6 +51,7 @@ set.seed(20161102)
 Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
-\emph{Under Review}.
+\emph{Stat Methods Med Res}.
+\emph{In press}.
 \url{https://arxiv.org/abs/1804.01054}.
 }
