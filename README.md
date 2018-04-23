@@ -11,6 +11,8 @@ An implementation of prediction intervals for random-effects meta-analysis:
 and prediction intervals following REML estimation. *Statistics in Medicine* 2017; **36**(2): 301--317. [doi:10.1002/sim.7140](https://doi.org/10.1002/sim.7140).
 - Nagashima K, Noma H, Furukawa TA. Prediction interval for random-effects meta-analysis: a confidence distribution approach. *Statistical Methods in Medical Research* 2018. *In press*. [arXiv:1804.01054](https://arxiv.org/abs/1804.01054).
 
+[CRAN task view: Meta Analysis](https://cran.r-project.org/view=MetaAnalysis)
+
 
 ## Installation
 
