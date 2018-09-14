@@ -1,7 +1,7 @@
 Package: pimeta
 Type: Package
 Title: Prediction Intervals for Random-Effects Meta-Analysis
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: c(
   person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
          role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
@@ -13,6 +13,9 @@ Description: An implementation of prediction intervals for random-effects meta-a
   <arXiv:1804.01054>.
 Depends: R (>= 3.0.0)
 Imports: stats, Rcpp (>= 0.12.16)
+Suggests: knitr, rmarkdown
 LinkingTo: Rcpp, RcppEigen
 License: GPL-3
-RoxygenNote: 6.0.1
+Encoding: UTF-8
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0

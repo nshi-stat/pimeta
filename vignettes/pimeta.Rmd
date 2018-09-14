@@ -1,0 +1,54 @@
+---
+title: "Introduction  the `pimeta` package"
+author: "Kengo Nagashima"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Introduction  the `pimeta` package}
+  %\VignetteEncoding{UTF-8}
+---
+
+The `pimeta` package is easy.
+Load your data and then pass it the `pima` function!
+
+```r
+require("pimeta")
+data(sbp, package = "pimeta")
+
+# a parametric bootstrap prediction interval
+set.seed(20161102)
+pima(y  = sbp$y,      # effect size estimates
+     se = sbp$sigmak, # within studies standard errors
+     B  = 50000       # some options (e.g., number of bootstrap samples)
+)
+```
+
+```
+Prediction Interval for Random-Effects Meta-Analysis
+
+A parametric bootstrap prediction interval
+ Heterogeneity variance: DerSimonian-Laird
+ SE for average treatment effect: standard
+
+Average treatment effect [95%PI]:
+ -0.3341 [-0.8769, 0.2248]
+
+Average treatment effect [95%CI]:
+ -0.3341 [-0.5660, -0.0976]
+
+Heterogeneity variance (tau^2):
+ 0.0282
+```
+
+Several type of methods is supported.
+```r
+# Higgins-Thompson-Spiegelhalter prediction interval
+pima(sbp$y, sbp$sigmak, method = "HTS")
+
+# Partlett-Riley prediction interval (Hartung and Knapp's SE)
+pima(sbp$y, sbp$sigmak, method = "HK")
+
+# Partlett-Riley prediction interval (Sidik and Jonkman's SE)
+pima(sbp$y, sbp$sigmak, method = "SJ")
+```

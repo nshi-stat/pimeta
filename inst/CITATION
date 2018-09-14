@@ -20,5 +20,5 @@ textVersion = paste(
   "Prediction interval for random-effects meta-analysis: a confidence distribution approach.",
   "Statistical Methods in Medical Research 2018.",
   "In press.",
-  "arXiv:1804.01054."
+  "DOI:10.1177/0962280218773520."
 ))
