@@ -57,7 +57,7 @@ pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
 \value{
 \itemize{
 \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
-\item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+\item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 }
