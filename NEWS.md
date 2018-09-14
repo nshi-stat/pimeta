@@ -2,6 +2,12 @@
 # The 'pimeta' package
 
 
+## Version 1.1.0 (2018-09-14)
+
+* Refined the package structure.
+* New function `pima` is available (see a Vignette file).
+
+
 ## Version 1.0.1 (2018-05-11)
 
 * Updated citation informations.
