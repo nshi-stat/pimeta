@@ -3,7 +3,7 @@
 \name{pima_htsreml}
 \alias{pima_htsreml}
 \alias{htsreml}
-\title{Higgins-Thompson-Spiegelhalter prediction interval with a REML estimator for \eqn{\hat{\tau}}}
+\title{Partlett--Riley prediction interval}
 \usage{
 pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "CL"),
   maxiter = 100)
@@ -16,31 +16,45 @@ pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "CL"),
 \item{alpha}{the alpha level of the prediction interval}
 
 \item{vartype}{the type of the variance estimator for \eqn{\hat{\mu}} (default = "HK"):
-\code{HK}, the Hartung and Knapp (2001)'s estimator;
-\code{SJBC}, the Sidik and Jonkman (2006)'s bias coreccted estimator;
-\code{CL}, a classical estimator, \eqn{(1/\sum{\hat{w}_i})^{-1}};}
+\itemize{
+\item \code{HK}: the Hartung and Knapp (2001)'s estimator.
+\item \code{SJBC}: the Sidik and Jonkman (2006)'s bias coreccted estimator.
+\item \code{CL}: a standard estimator, \eqn{(1/\sum{\hat{w}_i})^{-1}}.
+}}
 
 \item{maxiter}{the maximum number of iterations}
 }
 \value{
-The average treatment effect estimate \eqn{\hat{\mu}} (\code{muhat}),
-the lower and upper prediction limits \eqn{\hat{c}_l} (\code{lpi}) and \eqn{\hat{c}_u} (\code{upi}),
-the REML estimator for \eqn{\hat{\tau}} (\code{tau2h}), and the type of the variance estimator (\code{vartype}).
+\itemize{
+\item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
+\item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+\item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+\item \code{tau2h}: the estimate for \eqn{\tau^2}.
+}
 }
 \description{
-A subroutine for the extended HTS PI (Partlett & Riley, 2017)
+A subroutine for the Partlett--Riley PI
+based on the REML estimator (Partlett & Riley, 2017)
 }
 \examples{
 data(sbp, package = "pimeta")
-pimeta::htsreml(sbp$y, sbp$sigmak)
-# $muhat
-# [1] -0.3287403
-# $lbpi
-# [1] -0.9886995
-# $ubpi
-# [1] 0.3312188
-# $tau2h
-# [1] 0.06995102
+pimeta::pima_htsreml(sbp$y, sbp$sigmak)
+# 
+# Prediction Interval for Random-Effects Meta-Analysis
+# 
+# Partlett-Riley prediction interval
+#  Heterogeneity variance: REML
+#  SE for average treatment effect: Hartung-Knapp
+# 
+# Average treatment effect [95\%PI]:
+#  -0.3287 [-0.9887, 0.3312]
+# 
+# Average treatment effect [95\%CI]:
+#  -0.3287 [-0.5761, -0.0814]
+# 
+# Heterogeneity variance (tau^2):
+#  0.0700
+#
 }
 \references{
 Partlett, C, and Riley, R. D. (2017).
@@ -48,4 +62,7 @@ Random effects meta-analysis: Coverage performance of 95%
 confidence and prediction intervals following REML estimation.
 \emph{Stat Med.}
 \strong{36}(2): 301-317.
+}
+\seealso{
+\code{\link[=pima]{pima()}}.
 }

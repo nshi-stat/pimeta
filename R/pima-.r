@@ -10,18 +10,19 @@
 #' @param alpha the alpha level of the prediction interval
 #' @param method the calculation method for the pretiction interval (default = "boot").
 #' \itemize{
-#' \item \code{boot}: A parametric bootstrap prediction interval.
-#' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter prediction interval / 
+#' \item \code{boot}: A parametric bootstrap prediction interval
+#'            (Nagashima et al., 2018).
+#' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
 #'            the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            a standard SE estimator for the average effect,
 #'            \eqn{(1/\sum{\hat{w}_i})^{-1}}.
-#' \item \code{HK}: Partlett & Riley's prediction interval /
+#' \item \code{HK}: Partlett--Riley (2017) prediction interval /
 #'            the REML estimator for \eqn{\tau^2} with
 #'            the Hartung and Knapp (2001)'s SE estimator for the average effect.
-#' \item \code{SJ}: Partlett & Riley's prediction interval /
+#' \item \code{SJ}: Partlett--Riley (2017) prediction interval /
 #'            the REML estimator for \eqn{\tau^2} with
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
-#'             for the average effect.
+#'            for the average effect.
 #' \item \code{CL}: a prediction interval with REML and standard SE /
 #'            the REML estimator for \eqn{\tau^2} with
 #'            a standard SE estimator for the average effect.
@@ -35,8 +36,13 @@
 #' @param tol the desired level of accuracy for numerical inversions
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
 #' @param maxiter the maximum number of iteration for REML estimation
-#' @return The average treatment effect estimate \eqn{\hat{\mu}} (\code{muhat}),
-#' and the lower and upper prediction limits \eqn{\hat{c}_l} (\code{lbpi}) and \eqn{\hat{c}_u} (\code{ubpi}).
+#' @return
+#' \itemize{
+#' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
+#' \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+#' \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+#' }
 #' @references
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 #' A re-evaluation of random-effects meta-analysis.
@@ -55,47 +61,88 @@
 #' \emph{Stat Methods Med Res}.
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
+#' @seealso
+#' \code{\link[=pima_boot]{pima_boot()}},
+#' \code{\link[=pima_hts]{pima_hts()}},
+#' \code{\link[=pima_htsreml]{pima_htsreml()}}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, B = 50000)}
+#' # 
+#' # Prediction Interval for Random-Effects Meta-Analysis
+#' # 
+#' # A parametric bootstrap prediction interval
+#' #  Heterogeneity variance: DerSimonian-Laird
+#' #  SE for average treatment effect: Hartung
+#' # 
 #' # Average treatment effect [95%PI]:
-#' # -0.3341 [-0.8769, 0.2248]
+#' #  -0.3341 [-0.8769, 0.2248]
+#' # 
 #' # Average treatment effect [95%CI]:
-#' # -0.3341 [-0.5660, -0.0976]
+#' #  -0.3341 [-0.5660, -0.0976]
+#' # 
 #' # Heterogeneity variance (tau^2):
-#' # 0.0282
-#'
+#' #  0.0282
+#'  
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")}
+#' # 
+#' # Prediction Interval for Random-Effects Meta-Analysis
+#' # 
+#' # Higgins-Thompson-Spiegelhalter prediction interval
+#' #  Heterogeneity variance: DerSimonian-Laird
+#' #  SE for average treatment effect: standard
+#' # 
 #' # Average treatment effect [95%PI]:
-#' # -0.3341 [-0.7598, 0.0917]
+#' #  -0.3341 [-0.7598, 0.0917]
+#' # 
 #' # Average treatment effect [95%CI]:
-#' # -0.3341 [-0.5068, -0.1613]
+#' #  -0.3341 [-0.5068, -0.1613]
+#' # 
 #' # Heterogeneity variance (tau^2):
-#' # 0.0282
+#' #  0.0282
 #' 
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HK")}
+#' # 
+#' # Prediction Interval for Random-Effects Meta-Analysis
+#' # 
+#' # Partlett-Riley prediction interval
+#' #  Heterogeneity variance: REML
+#' #  SE for average treatment effect: Hartung-Knapp
+#' # 
 #' # Average treatment effect [95%PI]:
-#' # -0.3287 [-0.9887, 0.3312]
+#' #  -0.3287 [-0.9887, 0.3312]
+#' # 
 #' # Average treatment effect [95%CI]:
-#' # -0.3287 [-0.5761, -0.0814]
+#' #  -0.3287 [-0.5761, -0.0814]
+#' # 
 #' # Heterogeneity variance (tau^2):
-#' # 0.0700
+#' #  0.0700
 #' 
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")}
+#' # 
+#' # Prediction Interval for Random-Effects Meta-Analysis
+#' # 
+#' # Partlett-Riley prediction interval
+#' #  Heterogeneity variance: REML
+#' #  SE for average treatment effect: Hartung-Knapp
+#' # 
 #' # Average treatment effect [95%PI]:
-#' # -0.3287 [-0.9835, 0.3261]
+#' #  -0.3287 [-0.9835, 0.3261]
+#' # 
 #' # Average treatment effect [95%CI]:
-#' # -0.3287 [-0.5625, -0.0950]
+#' #  -0.3287 [-0.5625, -0.0950]
+#' # 
 #' # Heterogeneity variance (tau^2):
-#' # 0.0700
+#' #  0.0700
 #' @export
-pima <- function(y, se, alpha = 0.05, method = "boot",
+pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
   
   ## .. may be need more more strictry check.
+  method <- match.arg(method)
   
   if (!is.element(method, c("boot", "HTS", "HK", "SJ", "CL")))
     stop("Unknown 'method' specified.")
@@ -108,7 +155,6 @@ pima <- function(y, se, alpha = 0.05, method = "boot",
   
   if (B < 1)
     stop("'B' should be grater than 1.")
-  
   
   if (method == "boot") {
     res <- pima_boot(y      = y, 
@@ -144,9 +190,6 @@ pima <- function(y, se, alpha = 0.05, method = "boot",
                         vartype = "CL",
                         maxiter = maxiter)
   }
-  
-  res <- append(res, list(method = method, y = y, se = se, alpha = alpha))
-  class(res) <- "pima" 
   
   return(res)
   

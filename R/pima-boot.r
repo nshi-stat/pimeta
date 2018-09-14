@@ -1,6 +1,7 @@
-#' A parametric bootstrap prediction interval (Nagashima et al., 2018)
+#' A parametric bootstrap prediction interval
 #' 
 #' A subroutine for the parametric bootstrap PI
+#' based on confidence distribution (Nagashima et al., 2018)
 #'
 #' @name pima_boot
 #' @rdname pima_boot
@@ -16,8 +17,13 @@
 #' @param maxit2 the maximum number of iteration for numerical inversions
 #' @param tol the desired level of accuracy for numerical inversions
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
-#' @return The average treatment effect estimate \eqn{\hat{\mu}} (\code{muhat}),
-#' and the lower and upper prediction limits \eqn{\hat{c}_l} (\code{lbpi}) and \eqn{\hat{c}_u} (\code{ubpi}).
+#' @return
+#' \itemize{
+#' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
+#' \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+#' \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
+#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+#' }
 #' @references
 #' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
 #' Prediction intervals for random-effects meta-analysis:
@@ -25,16 +31,28 @@
 #' \emph{Stat Methods Med Res}.
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
+#' @seealso
+#' \code{\link[=pima]{pima()}}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
 #' \donttest{pimeta::pima_boot(sbp$y, sbp$sigmak, B = 50000)}
+#' # 
+#' # Prediction Interval for Random-Effects Meta-Analysis
+#' # 
+#' # A parametric bootstrap prediction interval
+#' #  Heterogeneity variance: DerSimonian-Laird
+#' #  SE for average treatment effect: Hartung
+#' # 
 #' # Average treatment effect [95%PI]:
-#' # -0.334 [-0.877, 0.225]
+#' #  -0.3341 [-0.8769, 0.2248]
+#' # 
 #' # Average treatment effect [95%CI]:
-#' # -0.334 [-0.566, -0.098]
+#' #  -0.3341 [-0.5660, -0.0976]
+#' # 
 #' # Heterogeneity variance (tau^2):
-#' # 0.028
+#' #  0.0282
+#' # 
 #' @export
 pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
                    eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
@@ -78,7 +96,10 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
     alpha = as.double(alpha)
   )
   
-  res <- append(append(muhat, res), list(rnd = rndtau2, tau2 = tau2h))
+  res <- append(append(muhat, res),
+                list(tau2 = tau2h, method = "boot", y = y, se = sigma,
+                     alpha = alpha, rnd = rndtau2))
+  class(res) <- "pima" 
   return(res)
 
 }

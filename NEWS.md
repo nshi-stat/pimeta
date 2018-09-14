@@ -2,6 +2,11 @@
 # The 'pimeta' package
 
 
+## Version 1.1.1 (2018-09-15)
+
+* Fixed documents.
+
+
 ## Version 1.1.0 (2018-09-14)
 
 * Refined the package structure.
