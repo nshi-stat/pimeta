@@ -3,7 +3,7 @@
 #' A subroutine for the parametric bootstrap PI
 #' based on confidence distribution (Nagashima et al., 2018).
 #' A parametric bootstrap confidence interval is also calculated
-#' based on similar sampling method.
+#' based on the same sampling method for bootstrap PI.
 #'
 #' @name pima_boot
 #' @rdname pima_boot
@@ -33,6 +33,11 @@
 #' \emph{Stat Methods Med Res}.
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
+#' 
+#' Hartung, J. (1999).
+#' An alternative method for meta-analysis.
+#' \emph{Biom J.}
+#' \strong{41}(8): 901-916.
 #' @seealso
 #' \code{\link[=pima]{pima()}}.
 #' @examples
@@ -86,9 +91,7 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
     rndtau2 <- rnd
   }
 
-  k <- length(y)
-  tau2h <- max(0, (sum(sigma^-2 * (y - sum(sigma^-2*y) / sum(sigma^-2))^2) - (k - 1)) /
-                 (sum(sigma^-2) - sum(sigma^-4)/sum(sigma^-2)))
+  tau2h <- tau2h_dl(y = y, se = sigma)
   w <- (sigma^2 + tau2h)^-1
   muhat <- list(muhat = sum(y*w) / sum(w))
   res <- bootPICppWrap(
@@ -101,7 +104,8 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   res <- append(append(muhat, res),
                 list(tau2 = tau2h, method = "boot", y = y, se = sigma,
                      alpha = alpha, rnd = rndtau2))
-  class(res) <- "pima" 
+  class(res) <- "pima"
+  
   return(res)
 
 }

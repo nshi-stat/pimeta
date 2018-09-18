@@ -29,6 +29,17 @@
 #' confidence and prediction intervals following REML estimation.
 #' \emph{Stat Med.}
 #' \strong{36}(2): 301-317.
+#' 
+#' Hartung, J., and Knapp, G. (2001).
+#' On tests of the overall treatment effect in meta-analysis with
+#' normally distributed responses.
+#' \emph{Stat Med.}
+#' \strong{20}(12): 1771-1782.
+#' 
+#' Sidik, K., and Jonkman, J. N. (2006).
+#' Robust variance estimation for random effects meta-analysis.
+#' \emph{Comput Stat Data Anal.}
+#' \strong{50}(12): 3681-3701.
 #' @seealso
 #' \code{\link[=pima]{pima()}}.
 #' @examples
@@ -64,35 +75,8 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
   }
 
   k <- length(y)
-  taudl <- max(0, (sum(sigma^-2 * (y - sum(sigma^-2*y) / sum(sigma^-2))^2) - (k - 1)) /
-                 (sum(sigma^-2) - sum(sigma^-4)/sum(sigma^-2)))
-  tau2h <- taudl
-  r <- 0
-  autoadj <- 0
-  stepadj <- 0.5
-  while(1) {
-    wi <- (sigma^2 + tau2h)^-1
-    ti <- sum(wi^2 * ((y - sum(wi*y)/sum(wi))^2 + 1/sum(wi) - sigma^2)) / sum(wi^2)
-    if (ti <= 0) {
-      tau2h <- 0
-      break
-    } else {
-      if (abs(ti - tau2h)/(1 + tau2h) < 1e-5) {
-        break
-      } else if (r == maxiter && autoadj == 1) {
-        break
-      } else if (r == maxiter && autoadj == 0) {
-        r <- 0
-        autoadj <- 1
-      } else if (autoadj == 1) {
-        r <- r + 1
-        tau2h <- tau2h + (ti - tau2h)*stepadj
-      } else {
-        r <- r + 1
-        tau2h <- ti
-      }
-    }
-  }
+  tau2h <- tau2h_reml(y = y, se = sigma, maxiter = maxiter)
+  
   w <- (sigma^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)
 
@@ -101,8 +85,8 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
     method <- "HK"
   } else if (vartype == "SJBC") {
     lambda <- sigma^2 + tau2h
-    h <- 2*w/sum(w) - sum(w^2*lambda)/lambda/sum(w)^2
-    vmuhat <- sum(w^2*(y - muhat)^2/(1 - h))/sum(w)^2
+    h <- 2.0*w/sum(w) - sum(w^2*lambda)/lambda/sum(w)^2
+    vmuhat <- sum(w^2*(y - muhat)^2/(1.0 - h))/sum(w)^2
     method <- "SJ"
   } else if (vartype == "CL") {
     vmuhat <- 1/sum(w)
@@ -112,10 +96,10 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
     method <- "HK"
   }
 
-  lpi <- muhat - stats::qt(1-0.05/2, k - 2)*sqrt(tau2h + vmuhat)
-  upi <- muhat + stats::qt(1-0.05/2, k - 2)*sqrt(tau2h + vmuhat)
-  lci <- muhat - stats::qt(1-0.05/2, k - 1)*sqrt(vmuhat)
-  uci <- muhat + stats::qt(1-0.05/2, k - 1)*sqrt(vmuhat)
+  lpi <- muhat - stats::qt(1.0 - alpha*0.5, k - 2)*sqrt(tau2h + vmuhat)
+  upi <- muhat + stats::qt(1.0 - alpha*0.5, k - 2)*sqrt(tau2h + vmuhat)
+  lci <- muhat - stats::qt(1.0 - alpha*0.5, k - 1)*sqrt(vmuhat)
+  uci <- muhat + stats::qt(1.0 - alpha*0.5, k - 1)*sqrt(vmuhat)
   
   res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci,
               tau2h = tau2h, method = method, y = y, se = sigma, alpha = alpha)
