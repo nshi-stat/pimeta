@@ -44,7 +44,7 @@ pima_boot(y, sigma, alpha = 0.05, B = 25000, maxit1 = 1e+05,
 A subroutine for the parametric bootstrap PI
 based on confidence distribution (Nagashima et al., 2018).
 A parametric bootstrap confidence interval is also calculated
-based on similar sampling method.
+based on the same sampling method for bootstrap PI.
 }
 \examples{
 data(sbp, package = "pimeta")
@@ -74,6 +74,11 @@ a confidence distribution approach.
 \emph{Stat Methods Med Res}.
 \emph{In press}.
 \url{https://doi.org/10.1177/0962280218773520}.
+
+Hartung, J. (1999).
+An alternative method for meta-analysis.
+\emph{Biom J.}
+\strong{41}(8): 901-916.
 }
 \seealso{
 \code{\link[=pima]{pima()}}.
