@@ -62,6 +62,17 @@ Random effects meta-analysis: Coverage performance of 95%
 confidence and prediction intervals following REML estimation.
 \emph{Stat Med.}
 \strong{36}(2): 301-317.
+
+Hartung, J., and Knapp, G. (2001).
+On tests of the overall treatment effect in meta-analysis with
+normally distributed responses.
+\emph{Stat Med.}
+\strong{20}(12): 1771-1782.
+
+Sidik, K., and Jonkman, J. N. (2006).
+Robust variance estimation for random effects meta-analysis.
+\emph{Comput Stat Data Anal.}
+\strong{50}(12): 3681-3701.
 }
 \seealso{
 \code{\link[=pima]{pima()}}.
