@@ -12,7 +12,7 @@ Description: An implementation of prediction intervals for random-effects meta-a
   <doi:10.1002/sim.7140>, and Nagashima et al. (2018) <doi:10.1177/0962280218773520>,
   <arXiv:1804.01054>.
 Depends: R (>= 3.0.0)
-Imports: stats, Rcpp (>= 0.12.18)
+Imports: stats, Rcpp (>= 0.12.18), ggplot2 (>= 3.0.0)
 Suggests: knitr, rmarkdown
 LinkingTo: Rcpp, RcppEigen
 License: GPL-3

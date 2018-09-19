@@ -12,44 +12,23 @@ vignette: >
 The `pimeta` package is easy.
 Load your data and then pass it the `pima` function!
 
-```r
+```{r, echo = TRUE, fig.width = 5, fig.height = 3}
 require("pimeta")
 data(sbp, package = "pimeta")
 
 # a parametric bootstrap prediction interval
 set.seed(20161102)
-pima(y  = sbp$y,      # effect size estimates
-     se = sbp$sigmak, # within studies standard errors
-     B  = 50000       # some options (e.g., number of bootstrap samples)
+out <- pima(
+  y  = sbp$y,      # effect size estimates
+  se = sbp$sigmak, # within studies standard errors
+  B  = 5000        # some options (e.g., number of bootstrap samples)
 )
-```
-
-```
-> # a parametric bootstrap prediction interval
-> set.seed(20161102)
-> pima(y  = sbp$y,      # effect size estimates
-+      se = sbp$sigmak, # within studies standard errors
-+      B  = 50000       # some options (e.g., number of bootstrap samples)
-+ )
-
-Prediction Interval for Random-Effects Meta-Analysis
-
-A parametric bootstrap prediction interval
- Heterogeneity variance: DerSimonian-Laird
- SE for average treatment effect: Hartung
-
-Average treatment effect [95%PI]:
- -0.3341 [-0.8769, 0.2248]
-
-Average treatment effect [95%CI]:
- -0.3341 [-0.5660, -0.0976]
-
-Heterogeneity variance (tau^2):
- 0.0282
+out
+plot(out, base_size = 10)
 ```
 
 Several type of methods are supported.
-```r
+```{r, echo = TRUE}
 # Higgins-Thompson-Spiegelhalter prediction interval
 pima(sbp$y, sbp$sigmak, method = "HTS")
 
@@ -58,62 +37,4 @@ pima(sbp$y, sbp$sigmak, method = "HK")
 
 # Partlett-Riley prediction interval (Sidik and Jonkman's SE)
 pima(sbp$y, sbp$sigmak, method = "SJ")
-```
-
-```
-> # Higgins-Thompson-Spiegelhalter prediction interval
-> pima(sbp$y, sbp$sigmak, method = "HTS")
-
-Prediction Interval for Random-Effects Meta-Analysis
-
-Higgins-Thompson-Spiegelhalter prediction interval
- Heterogeneity variance: DerSimonian-Laird
- SE for average treatment effect: standard
-
-Average treatment effect [95%PI]:
- -0.3341 [-0.7598, 0.0917]
-
-Average treatment effect [95%CI]:
- -0.3341 [-0.5068, -0.1613]
-
-Heterogeneity variance (tau^2):
- 0.0282
-
-> 
-> # Partlett-Riley prediction interval (Hartung and Knapp's SE)
-> pima(sbp$y, sbp$sigmak, method = "HK")
-
-Prediction Interval for Random-Effects Meta-Analysis
-
-Partlett-Riley prediction interval
- Heterogeneity variance: REML
- SE for average treatment effect: Hartung-Knapp
-
-Average treatment effect [95%PI]:
- -0.3287 [-0.9887, 0.3312]
-
-Average treatment effect [95%CI]:
- -0.3287 [-0.5761, -0.0814]
-
-Heterogeneity variance (tau^2):
- 0.0700
-
-> 
-> # Partlett-Riley prediction interval (Sidik and Jonkman's SE)
-> pima(sbp$y, sbp$sigmak, method = "SJ")
-
-Prediction Interval for Random-Effects Meta-Analysis
-
-Partlett-Riley prediction interval
- Heterogeneity variance: REML
- SE for average treatment effect: Sidik-Jonkman
-
-Average treatment effect [95%PI]:
- -0.3287 [-0.9835, 0.3261]
-
-Average treatment effect [95%CI]:
- -0.3287 [-0.5625, -0.0950]
-
-Heterogeneity variance (tau^2):
- 0.0700
 ```

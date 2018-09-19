@@ -190,6 +190,8 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
                         vartype = "CL",
                         maxiter = maxiter)
   }
+  res <- append(res, list(i2h = i2h(se, res$tau2h)))
+  class(res) <- "pima"
   
   return(res)
   
@@ -230,7 +232,10 @@ print.pima <- function(x, digits = 4, ...) {
     cat(paste0("A prediction interval with REML and standard SE\n",
                " Heterogeneity variance: REML\n",
                " SE for average treatment effect: standard\n\n"))
-  }  
+  }
+  
+  cat(paste0("No. of studies: ", length(x$y), "\n\n"))
+  
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%PI]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lpi, digits), nsmall = digits), ", ",
@@ -241,9 +246,112 @@ print.pima <- function(x, digits = 4, ...) {
              format(round(x$lci, digits), nsmall = digits), ", ",
              format(round(x$uci, digits), nsmall = digits), "]\n\n"))
   
-  cat(paste0("Heterogeneity variance (tau^2):\n"))
-  cat(paste0(" ", format(round(x$tau2, digits), nsmall = digits), "\n\n"))
+  cat(paste0("Heterogeneity measure\n"))
+  cat(paste0(" tau2: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
+  cat(paste0(" I^2:  ", format(round(x$i2h, 1), nsmall = 1), "%\n\n"))
   
   invisible(x)
+  
+}
+
+
+#' Plot Results
+#' 
+#' A function for plotting of `pima` objects.
+#'
+#' @param x `pima` object to plot
+#' @param y is not used
+#' @param title graph title
+#' @param base_size base font size
+#' @param base_family base font family
+#' @param ... further arguments passed to or from other methods.
+#' @export
+#' @method plot pima
+plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
+                      base_family = "", ...) {
+  
+  k <- length(x$y)
+  id <- c(
+    paste0("  ", 1:k),
+    paste0("  95%CI (I^2 = ", sprintf("%4.1f", x$i2h), "%)"),
+    paste0("  95%PI")
+  )
+  df1 <- data.frame(
+    id = id,
+    idodr = c((k+3):4, 2:1),
+    y = c(x$y, NA, NA),
+    lcl = c(x$y + qnorm(0.025)*x$se, NA, NA),
+    ucl = c(x$y + qnorm(0.975)*x$se, NA, NA),
+    shape = c(rep(15, k), 18, 18),
+    swidth = c(rep(1, k), 3, 3)
+  )
+  df1 <- data.frame(
+    df1,
+    size = c(1/x$se, 1, 1),
+    limits = c(paste0(sprintf("%3.2 f", df1$y[1:k]), " (",
+                      sprintf("%3.2 f", df1$lcl[1:k]), ", ",
+                      sprintf("%3.2 f", df1$ucl[1:k]), ")"),
+               paste0(sprintf("%3.2 f", x$muhat), " (",
+                      sprintf("%3.2 f", x$lci), ", ",
+                      sprintf("%3.2 f", x$uci), ")"),
+               paste0(sprintf("%3.2 f", x$muhat), " (",
+                      sprintf("%3.2 f", x$lpi), ", ",
+                      sprintf("%3.2 f", x$upi), ")")
+    ),
+    lx = rep(max(df1$ucl, na.rm = TRUE) + 1.7, k + 2)
+  )
+  df2 <- data.frame(id = "Study", idodr = k + 4, y = NA, lcl = NA, ucl = NA,
+                    shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
+  df3 <- data.frame(id = "Overall", idodr = 3, y = NA, lcl = NA, ucl = NA,
+                    shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
+  df4 <- data.frame(x = c(x$lci, x$muhat, x$uci), ymax = c(2, 2 + 0.25, 2),
+                    ymin = c(2, 2 - 0.25, 2), y = c(2, 2, 2))
+  df5 <- data.frame(x = c(x$lpi, x$muhat, x$upi), ymax = c(1, 1 + 0.25, 1),
+                    ymin = c(1, 1 - 0.25, 1), y = c(1, 1, 1))
+  df1 <- rbind(df3, df2, df1)
+  
+  ggplot <- ggplot2::ggplot
+  aes <- ggplot2::aes
+  geom_errorbarh <- ggplot2::geom_errorbarh
+  geom_point <- ggplot2::geom_point
+  geom_ribbon <- ggplot2::geom_ribbon
+  geom_vline <- ggplot2::geom_vline
+  geom_text <- ggplot2::geom_text
+  scale_y_discrete <- ggplot2::scale_y_discrete
+  scale_x_continuous <- ggplot2::scale_x_continuous
+  scale_shape_identity <- ggplot2::scale_shape_identity
+  ylab <- ggplot2::ylab
+  xlab <- ggplot2::xlab
+  ggtitle <- ggplot2::ggtitle
+  theme_classic <- ggplot2::theme_classic
+  theme <- ggplot2::theme
+  element_text <- ggplot2::element_text
+  element_line <- ggplot2::element_line
+  element_blank <- ggplot2::element_blank
+  element_blank <- ggplot2::element_blank
+  rel <- ggplot2::rel
+  
+  suppressWarnings(print(
+    p <- ggplot(df1, aes(x = y, y = reorder(id, idodr))) +
+      geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
+      geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
+      geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
+                  colour = "black", fill = "black") +
+      geom_ribbon(data = df5, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
+                  colour = "black", fill = "black") +
+      geom_vline(xintercept = x$muhat, lty = 2) +
+      geom_vline(xintercept = 0, lty = 1) +
+      geom_text(aes(label = limits, x = lx), size = base_size*0.282, hjust = 1) +
+      scale_y_discrete() +
+      scale_x_continuous() +
+      scale_shape_identity() +
+      ylab(NULL) +
+      xlab("  ") +
+      ggtitle(title) +
+      theme_classic(base_size = base_size, base_family = "") +
+      theme(axis.text.y = element_text(hjust = 0), axis.ticks.y = element_blank()) +
+      theme(axis.line.x = element_line(), axis.line.y = element_blank(),
+            plot.title = element_text(hjust = 0.5, size = rel(0.8)))
+  ))
   
 }
