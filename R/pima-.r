@@ -270,6 +270,8 @@ print.pima <- function(x, digits = 4, ...) {
 plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
                       base_family = "", ...) {
   
+  idodr <- lcl <- limits <- lx <- shape <- size <- ucl <- ymax <- ymin <- NULL
+  
   k <- length(x$y)
   id <- c(
     paste0("  ", 1:k),
@@ -278,10 +280,10 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   )
   df1 <- data.frame(
     id = id,
-    idodr = c((k+3):4, 2:1),
+    idodr = c((k + 3):4, 2:1),
     y = c(x$y, NA, NA),
-    lcl = c(x$y + qnorm(0.025)*x$se, NA, NA),
-    ucl = c(x$y + qnorm(0.975)*x$se, NA, NA),
+    lcl = c(x$y + stats::qnorm(0.025)*x$se, NA, NA),
+    ucl = c(x$y + stats::qnorm(0.975)*x$se, NA, NA),
     shape = c(rep(15, k), 18, 18),
     swidth = c(rep(1, k), 3, 3)
   )
@@ -332,7 +334,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   rel <- ggplot2::rel
   
   suppressWarnings(print(
-    p <- ggplot(df1, aes(x = y, y = reorder(id, idodr))) +
+    p <- ggplot(df1, aes(x = y, y = stats::reorder(id, idodr))) +
       geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
       geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
       geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
