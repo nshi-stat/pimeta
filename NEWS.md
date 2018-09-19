@@ -13,6 +13,7 @@
     - Sidik--Jonkman estimator
     - Sidik--Jonkman improved estimator
     - Empirical Bayes estimator
+* Forest plot.
 
 
 ## Version 1.1.1 (2018-09-15)
