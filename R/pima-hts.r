@@ -62,9 +62,8 @@ pima_hts <- function(y, sigma, alpha = 0.05) {
   lci <- muhat - stats::qt(1 - alpha*0.5, k - 1)*sqrt(vmuhat)
   uci <- muhat + stats::qt(1 - alpha*0.5, k - 1)*sqrt(vmuhat)
   res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci,
-              tau2 = tau2h, method = "HTS", y = y, se = sigma, alpha = alpha)
-  class(res) <- "pima" 
-  
+              tau2h = tau2h, method = "HTS", y = y, se = sigma, alpha = alpha)
+
   return(res)
 
 }

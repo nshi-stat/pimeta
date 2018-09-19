@@ -103,8 +103,7 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
   
   res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci,
               tau2h = tau2h, method = method, y = y, se = sigma, alpha = alpha)
-  class(res) <- "pima" 
-  
+
   return(res)
 
 }

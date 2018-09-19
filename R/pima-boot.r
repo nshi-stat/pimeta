@@ -102,10 +102,9 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   )
   
   res <- append(append(muhat, res),
-                list(tau2 = tau2h, method = "boot", y = y, se = sigma,
+                list(tau2h = tau2h, method = "boot", y = y, se = sigma,
                      alpha = alpha, rnd = rndtau2))
-  class(res) <- "pima"
-  
+
   return(res)
 
 }
