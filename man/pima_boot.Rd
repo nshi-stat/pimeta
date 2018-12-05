@@ -24,7 +24,7 @@ pima_boot(y, sigma, alpha = 0.05, B = 25000, maxit1 = 1e+05,
 
 \item{lower}{the lower limit of random numbers of \eqn{\tau^2}}
 
-\item{upper}{the lower upper of random numbers of \eqn{\tau^2}}
+\item{upper}{the upper limit of random numbers of \eqn{\tau^2}}
 
 \item{maxit2}{the maximum number of iteration for numerical inversions}
 
