@@ -1,6 +1,6 @@
 #' Maximum likelihood estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of a maximum likelihood estimator
+#' Returns a maximum likelihood estimator
 #' for \eqn{\tau^2} (e.g., DerSimonian & Laird, 1986).
 #' 
 #' @name tau2h_ml

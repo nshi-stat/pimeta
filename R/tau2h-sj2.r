@@ -1,6 +1,6 @@
 #' Sidik--Jonkman improved estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of the Sidik--Jonkman improved estimator
+#' Returns the Sidik--Jonkman improved estimator
 #' for \eqn{\tau^2} (Sidik & Jonkman, 2007).
 #' 
 #' @name tau2h_sj2

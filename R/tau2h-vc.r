@@ -1,6 +1,6 @@
 #' Variance component type estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of the variance component type estimator
+#' Returns the variance component type estimator
 #' for \eqn{\tau^2} (Hedges, 1983).
 #' 
 #' @name tau2h_vc

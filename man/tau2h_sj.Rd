@@ -17,7 +17,7 @@ tau2h_sj(y, se)
 }
 }
 \description{
-A subroutine of the Sidik--Jonkman estimator
+Returns the Sidik--Jonkman estimator
 for \eqn{\tau^2} (Sidik & Jonkman, 2005).
 }
 \examples{

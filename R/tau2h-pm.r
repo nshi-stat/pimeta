@@ -1,6 +1,6 @@
 #' Paule--Mandel estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of the Paule--Mandel estimator
+#' Returns the Paule--Mandel estimator
 #' for \eqn{\tau^2} (Paule & Mandel, 1982).
 #' 
 #' @name tau2h_pm
@@ -36,15 +36,15 @@ tau2h_pm <- function(y, se) {
     qgen <- sum(wi * (y - muhat)^2) - (k - 1)
   }
   
-  if (qgen(0, yi, se) < 0) {
+  if (qgen(0, y, se) < 0) {
     tau2h <- 0  
   } else {
     upper <- 20
-    while(qgen(upper, yi, se) > 0) {
+    while(qgen(upper, y, se) > 0) {
       upper <- upper*2
     }
     res <- try(
-      uniroot(qgen, interval = c(0, upper), y = yi, se = sqrt(vi)),
+      uniroot(qgen, interval = c(0, upper), y = y, se = se),
       silent = FALSE
     )
     if (class(res) == "try-error") {

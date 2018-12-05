@@ -17,7 +17,7 @@ tau2h_pm(y, se)
 }
 }
 \description{
-A subroutine of the Paule--Mandel estimator
+Returns the Paule--Mandel estimator
 for \eqn{\tau^2} (Paule & Mandel, 1982).
 }
 \examples{

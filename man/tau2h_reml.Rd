@@ -19,7 +19,7 @@ tau2h_reml(y, se, maxiter = 100)
 }
 }
 \description{
-A subroutine of a restricted maximum likelihood estimator
+Returns a restricted maximum likelihood estimator
 for \eqn{\tau^2} (e.g., DerSimonian & Laird, 1986).
 }
 \examples{

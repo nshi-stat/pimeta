@@ -17,7 +17,7 @@ tau2h_hm(y, se)
 }
 }
 \description{
-A subroutine of the Hartung--Makambi estimator
+Returns the Hartung--Makambi estimator
 for \eqn{\tau^2} (Hartung & Makambi, 1983).
 }
 \examples{

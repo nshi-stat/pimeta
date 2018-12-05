@@ -1,6 +1,6 @@
 #' DerSimonian--Laird estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of the DerSimonian--Laird estimator
+#' Returns the DerSimonian--Laird estimator
 #' for \eqn{\tau^2} (DerSimonian & Laird, 1986).
 #' 
 #' @name tau2h_dl

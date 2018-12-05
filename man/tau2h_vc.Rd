@@ -17,7 +17,7 @@ tau2h_vc(y, se)
 }
 }
 \description{
-A subroutine of the variance component type estimator
+Returns the variance component type estimator
 for \eqn{\tau^2} (Hedges, 1983).
 }
 \examples{

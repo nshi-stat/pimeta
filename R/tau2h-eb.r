@@ -1,6 +1,6 @@
 #' Empirical Bayes estimator for \eqn{\tau^2}
 #' 
-#' A subroutine of an Empirical Bayes estimator
+#' Returns an Empirical Bayes estimator
 #' for \eqn{\tau^2} (Morris, 1983).
 #' 
 #' @name tau2h_eb

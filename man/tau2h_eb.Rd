@@ -19,7 +19,7 @@ tau2h_eb(y, se, maxiter = 100)
 }
 }
 \description{
-A subroutine of an Empirical Bayes estimator
+Returns an Empirical Bayes estimator
 for \eqn{\tau^2} (Morris, 1983).
 }
 \examples{
