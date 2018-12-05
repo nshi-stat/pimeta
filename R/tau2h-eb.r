@@ -40,7 +40,7 @@ tau2h_eb <- function(y, se, maxiter = 100) {
   stepadj <- 0.5
   while(1) {
     wi <- (se^2 + tau2h)^-1
-    ti <- sum(wi*(k/(k + 1.0)*(y - sum(wi*y)/sum(wi))^2 - se^2))/sum(wi^2)
+    ti <- sum(wi*(k/(k - 1.0)*(y - sum(wi*y)/sum(wi))^2 - se^2))/sum(wi)
     if (ti <= 0) {
       tau2h <- 0.0
       break
