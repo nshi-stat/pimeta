@@ -15,7 +15,7 @@
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
 #' @param eps the desired level of accuracy for the exact distribution function of \eqn{Q}
 #' @param lower the lower limit of random numbers of \eqn{\tau^2}
-#' @param upper the lower upper of random numbers of \eqn{\tau^2}
+#' @param upper the upper limit of random numbers of \eqn{\tau^2}
 #' @param maxit2 the maximum number of iteration for numerical inversions
 #' @param tol the desired level of accuracy for numerical inversions
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
