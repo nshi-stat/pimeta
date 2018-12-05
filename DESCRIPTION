@@ -18,4 +18,4 @@ LinkingTo: Rcpp, RcppEigen
 License: GPL-3
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
