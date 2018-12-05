@@ -15,7 +15,7 @@
 #' DerSimonian, R., and Laird, N. (1986).
 #' Meta-analysis in clinical trials.
 #' \emph{Control Clin Trials.}
-#' \strong{7}(3): 177-188. 
+#' \strong{7}(3): 177-188.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' pimeta::tau2h_dl(sbp$y, sbp$sigmak)
