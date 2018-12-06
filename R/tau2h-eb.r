@@ -1,35 +1,28 @@
-#' Empirical Bayes estimator for \eqn{\tau^2}
-#' 
-#' Returns an Empirical Bayes estimator
-#' for \eqn{\tau^2} (Morris, 1983).
-#' 
-#' @name tau2h_eb
-#' @rdname tau2h_eb
-#' @param y the effect size estimates vector
-#' @param se the within studies standard errors vector
-#' @param maxiter the maximum number of iterations
-#' @return
-#' \itemize{
-#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
-#' }
-#' @references
-#' Morris, C. N. (1983).
-#' Parametric empirical Bayes inference: theory and applications.
-#' \emph{J Am Stat Assoc.}
-#' \strong{78}(381): 47-55.
-#' @examples
-#' data(sbp, package = "pimeta")
-#' pimeta::tau2h_eb(sbp$y, sbp$sigmak)
-#' @export
+# Empirical Bayes estimator for \eqn{\tau^2}
+# 
+# Returns an Empirical Bayes estimator
+# for \eqn{\tau^2} (Morris, 1983).
+# 
+# @name tau2h_eb
+# @rdname tau2h_eb
+# @param y the effect size estimates vector
+# @param se the within studies standard errors vector
+# @param maxiter the maximum number of iterations
+# @return
+# \itemize{
+# \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+# }
+# @references
+# Morris, C. N. (1983).
+# Parametric empirical Bayes inference: theory and applications.
+# \emph{J Am Stat Assoc.}
+# \strong{78}(381): 47-55.
+# @examples
+# data(sbp, package = "pimeta")
+# pimeta::tau2h_eb(sbp$y, sbp$sigmak)
+# @export
 tau2h_eb <- function(y, se, maxiter = 100) {
-  
-  ## .. need more more strictry check.
-  if (length(se) != length(y)) {
-    stop("'y' and 'se' should have the same length.")
-  } else if (min(se) < 0.0) {
-    stop("'se' should be positive.")
-  }
-  
+
   k <- length(y)
   tau2h <- tau2h_dl(y, se)
   r <- 0

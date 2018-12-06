@@ -1,35 +1,28 @@
-#' Restricted maximum likelihood estimator for \eqn{\tau^2}
-#' 
-#' Returns a restricted maximum likelihood estimator
-#' for \eqn{\tau^2} (e.g., DerSimonian & Laird, 1986).
-#' 
-#' @name tau2h_reml
-#' @rdname tau2h_reml
-#' @param y the effect size estimates vector
-#' @param se the within studies standard errors vector
-#' @param maxiter the maximum number of iterations
-#' @return
-#' \itemize{
-#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
-#' }
-#' @references
-#' DerSimonian, R., and Laird, N. (1986).
-#' Meta-analysis in clinical trials.
-#' \emph{Control Clin Trials.}
-#' \strong{7}(3): 177-188. 
-#' @examples
-#' data(sbp, package = "pimeta")
-#' pimeta::tau2h_reml(sbp$y, sbp$sigmak)
-#' @export
+# Restricted maximum likelihood estimator for \eqn{\tau^2}
+# 
+# Returns a restricted maximum likelihood estimator
+# for \eqn{\tau^2} (e.g., DerSimonian & Laird, 1986).
+# 
+# @name tau2h_reml
+# @rdname tau2h_reml
+# @param y the effect size estimates vector
+# @param se the within studies standard errors vector
+# @param maxiter the maximum number of iterations
+# @return
+# \itemize{
+# \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+# }
+# @references
+# DerSimonian, R., and Laird, N. (1986).
+# Meta-analysis in clinical trials.
+# \emph{Control Clin Trials.}
+# \strong{7}(3): 177-188. 
+# @examples
+# data(sbp, package = "pimeta")
+# pimeta::tau2h_reml(sbp$y, sbp$sigmak)
+# @export
 tau2h_reml <- function(y, se, maxiter = 100) {
-  
-  ## .. need more more strictry check.
-  if (length(se) != length(y)) {
-    stop("'y' and 'se' should have the same length.")
-  } else if (min(se) < 0.0) {
-    stop("'se' should be positive.")
-  }
-  
+
   tau2h <- tau2h_dl(y, se)
   r <- 0
   
