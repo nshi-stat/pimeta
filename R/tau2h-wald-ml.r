@@ -46,11 +46,11 @@ tau2h_wald_ml <- function(se, tau2h, alpha = 0.05) {
   } else if (tau2h < 0.0) {
     stop("'tau2h' should be positive.")
   }
-  
+
   wi <- (se^2 + tau2h)^-1
   vtau2h <- 2.0*sum(wi^2)^-1
-  lci <- muhat - stats::qnorm(1.0 - alpha*0.5)*sqrt(vtau2h)
-  uci <- muhat + stats::qnorm(1.0 - alpha*0.5)*sqrt(vtau2h)
+  lci <- max(0.0, tau2h - stats::qnorm(1.0 - alpha*0.5)*sqrt(vtau2h))
+  uci <- tau2h + stats::qnorm(1.0 - alpha*0.5)*sqrt(vtau2h)
   res <- list(lci = lci, uci = uci, alpha = alpha)
   
   return(res)

@@ -25,7 +25,7 @@
 # @export
 tau2h_bm <- function(y, se, maxiter = 100) {
 
-  tau2h <- tau2h_ml(y, se, maxiter = maxiter)
+  tau2h <- tau2h_ml(y, se, maxiter = maxiter)$tau2h
   if (tau2h > 0) {
     wi <- (se^2 + tau2h)^-1
     vml <- 2.0*sum(wi^2)^-1
@@ -36,6 +36,6 @@ tau2h_bm <- function(y, se, maxiter = 100) {
     tau2h <- vml
   }
 
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }

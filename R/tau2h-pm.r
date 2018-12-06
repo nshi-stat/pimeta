@@ -46,6 +46,6 @@ tau2h_pm <- function(y, se) {
     tau2h <- res$root
   }
 
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }

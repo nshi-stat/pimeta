@@ -28,6 +28,6 @@ tau2h_hm <- function(y, se) {
   qhm <- sum(vi*(y - sum(y*vi)/sum(vi))^2)
   tau2h <- max(0.0, qhm^2/((sum(vi) - sum(vi^2)/sum(vi))*(2.0*(k - 1.0) + qhm)))
   
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }
