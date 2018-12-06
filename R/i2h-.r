@@ -23,6 +23,29 @@
 #' @export
 i2h <- function(se, tau2h) {
   
+  # initial check
+  if (is.null(se)) {
+    stop("'se' is a null value.")
+  } else if (is.null(tau2h)) {
+    stop("'tau2h' is a null value.")
+  } else if (any(is.na(se))) {
+    stop("'se' has missing value(s).")
+  } else if (is.na(tau2h)) {
+    stop("'tau2h' is a missing value.")
+  } else if (any(is.infinite(se))) {
+    stop("'se' has infinite value(s).")
+  } else if (is.infinite(tau2h)) {
+    stop("'tau2h' is an infinite value.")
+  } else if (any(is.nan(se))) {
+    stop("'se' has NaN(s).")
+  } else if (is.nan(tau2h)) {
+    stop("'tau2h' is NaN.")
+  } else if (min(se) < 0.0) {
+    stop("'se' should be positive.")
+  } else if (tau2h < 0.0) {
+    stop("'tau2h' should be positive.")
+  }
+  
   k <- length(se)
   wi <- se^-2
   s2h <- sum(wi)*(k - 1)/(sum(wi)^2 - sum(wi^2))
