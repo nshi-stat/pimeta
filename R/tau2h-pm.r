@@ -12,8 +12,8 @@
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 #' }
 #' @references
-#' Mandel, R. C., and Mandel, K. H. (1982).
-#' Consensus values and weighting factors. 
+#' Paule, R. C., and Mandel, K. H. (1982).
+#' Consensus values and weighting factors.
 #' \emph{J Res Natl Inst Stand Techno.}
 #' \strong{87}(5): 377-385. 
 #' @examples

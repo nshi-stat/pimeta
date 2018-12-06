@@ -27,7 +27,7 @@ pimeta::tau2h_hm(sbp$y, sbp$sigmak)
 \references{
 Hartung, J., and Makambi, K. H. (2003).
 Reducing the number of unjustified significant results
-in meta-analysis. 
+in meta-analysis.
 \emph{Commun Stat Simul Comput.}
 \strong{32}(4): 1179-1190.
 }

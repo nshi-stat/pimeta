@@ -16,7 +16,7 @@
 #' Thompson, S. G., and Sharp, S. J. (1999).
 #' Explaining heterogeneity in meta-analysis: a comparison of methods.
 #' \emph{Stat Med.}
-#' \strong{18}(20): 2693-2708. 
+#' \strong{18}(20): 2693-2708.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' pimeta::tau2h_areml(sbp$y, sbp$sigmak)

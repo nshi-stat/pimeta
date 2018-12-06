@@ -14,10 +14,9 @@
 #' }
 #' @references
 #' Morris, C. N. (1983).
-#' Parametric empirical Bayes inference: theory and 
-#' applications.
+#' Parametric empirical Bayes inference: theory and applications.
 #' \emph{J Am Stat Assoc.}
-#' \strong{78}(381): 47-55. 
+#' \strong{78}(381): 47-55.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' pimeta::tau2h_eb(sbp$y, sbp$sigmak)

@@ -25,8 +25,8 @@ data(sbp, package = "pimeta")
 pimeta::tau2h_pm(sbp$y, sbp$sigmak)
 }
 \references{
-Mandel, R. C., and Mandel, K. H. (1982).
-Consensus values and weighting factors. 
+Paule, R. C., and Mandel, K. H. (1982).
+Consensus values and weighting factors.
 \emph{J Res Natl Inst Stand Techno.}
 \strong{87}(5): 377-385.
 }
