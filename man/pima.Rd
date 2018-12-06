@@ -21,19 +21,19 @@ pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
 \item \code{boot}: A parametric bootstrap prediction interval
            (Nagashima et al., 2018).
 \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
-           the DerSimonian & Laird estimator for \eqn{\tau^2} with
+           (the DerSimonian & Laird estimator for \eqn{\tau^2} with
            a standard SE estimator for the average effect,
-           \eqn{(1/\sum{\hat{w}_i})^{-1}}.
-\item \code{HK}: Partlett--Riley (2017) prediction interval /
-           the REML estimator for \eqn{\tau^2} with
-           the Hartung and Knapp (2001)'s SE estimator for the average effect.
+           \eqn{(1/\sum{\hat{w}_i})^{-1}}).
+\item \code{HK}: Partlett--Riley (2017) prediction interval
+           (the REML estimator for \eqn{\tau^2} with
+           the Hartung and Knapp (2001)'s SE estimator for the average effect).
 \item \code{SJ}: Partlett--Riley (2017) prediction interval /
-           the REML estimator for \eqn{\tau^2} with
+           (the REML estimator for \eqn{\tau^2} with
            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
-           for the average effect.
+           for the average effect).
 \item \code{CL}: a prediction interval with REML and standard SE /
-           the REML estimator for \eqn{\tau^2} with
-           a standard SE estimator for the average effect.
+           (the REML estimator for \eqn{\tau^2} with
+           a standard SE estimator for the average effect).
 }}
 
 \item{B}{the number of bootstrap samples}

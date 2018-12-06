@@ -1,31 +1,27 @@
-#' Calculating Prediction Intervals
+#' Calculating Confidence Intervals
 #' 
-#' This function calculates prediction intervals using \code{pima_boot},
-#' \code{pima_hts}, or \code{pima_htsreml} functions.
+#' This function calculates confidence intervals.
 #'
-#' @name pima
-#' @rdname pima
+#' @name cima
+#' @rdname cima
 #' @param y the effect size estimates vector
 #' @param se the within studies standard errors vector
 #' @param alpha the alpha level of the prediction interval
 #' @param method the calculation method for the pretiction interval (default = "boot").
 #' \itemize{
-#' \item \code{boot}: A parametric bootstrap prediction interval
+#' \item \code{boot}: A parametric bootstrap confidenceS interval
 #'            (Nagashima et al., 2018).
-#' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
+#' \item \code{DL}: A Wald-type confidence interval
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            a standard SE estimator for the average effect,
 #'            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
-#' \item \code{HK}: Partlett--Riley (2017) prediction interval
+#' \item \code{HK}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Hartung and Knapp (2001)'s SE estimator for the average effect).
-#' \item \code{SJ}: Partlett--Riley (2017) prediction interval /
+#' \item \code{SJ}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
 #'            for the average effect).
-#' \item \code{CL}: a prediction interval with REML and standard SE /
-#'            (the REML estimator for \eqn{\tau^2} with
-#'            a standard SE estimator for the average effect).
 #' }
 #' @param B the number of bootstrap samples
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
@@ -40,21 +36,9 @@
 #' \itemize{
 #' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
 #' \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
-#' \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 #' }
 #' @references
-#' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
-#' A re-evaluation of random-effects meta-analysis.
-#' \emph{J R Stat Soc Ser A Stat Soc.}
-#' \strong{172}(1): 137-159.
-#' 
-#' Partlett, C, and Riley, R. D. (2017).
-#' Random effects meta-analysis: Coverage performance of 95%
-#' confidence and prediction intervals following REML estimation.
-#' \emph{Stat Med.}
-#' \strong{36}(2): 301-317.
-#' 
 #' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
 #' Prediction intervals for random-effects meta-analysis:
 #' a confidence distribution approach.
@@ -62,101 +46,53 @@
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
 #' @seealso
-#' \code{\link[=pima_boot]{pima_boot()}},
-#' \code{\link[=pima_hts]{pima_hts()}},
-#' \code{\link[=pima_htsreml]{pima_htsreml()}}.
+#' \code{\link[=pima_boot]{pima_boot()}}
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
-#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, B = 50000)}
-#' # 
-#' # Prediction Interval for Random-Effects Meta-Analysis
-#' # 
-#' # A parametric bootstrap prediction interval
-#' #  Heterogeneity variance: DerSimonian-Laird
-#' #  SE for average treatment effect: Hartung
-#' # 
-#' # Average treatment effect [95%PI]:
-#' #  -0.3341 [-0.8769, 0.2248]
-#' # 
-#' # Average treatment effect [95%CI]:
-#' #  -0.3341 [-0.5660, -0.0976]
-#' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0282
-#'  
-#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")}
-#' # 
-#' # Prediction Interval for Random-Effects Meta-Analysis
-#' # 
-#' # Higgins-Thompson-Spiegelhalter prediction interval
-#' #  Heterogeneity variance: DerSimonian-Laird
-#' #  SE for average treatment effect: standard
-#' # 
-#' # Average treatment effect [95%PI]:
-#' #  -0.3341 [-0.7598, 0.0917]
-#' # 
-#' # Average treatment effect [95%CI]:
-#' #  -0.3341 [-0.5068, -0.1613]
-#' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0282
-#' 
-#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HK")}
-#' # 
-#' # Prediction Interval for Random-Effects Meta-Analysis
-#' # 
-#' # Partlett-Riley prediction interval
-#' #  Heterogeneity variance: REML
-#' #  SE for average treatment effect: Hartung-Knapp
-#' # 
-#' # Average treatment effect [95%PI]:
-#' #  -0.3287 [-0.9887, 0.3312]
-#' # 
-#' # Average treatment effect [95%CI]:
-#' #  -0.3287 [-0.5761, -0.0814]
-#' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0700
-#' 
-#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")}
-#' # 
-#' # Prediction Interval for Random-Effects Meta-Analysis
-#' # 
-#' # Partlett-Riley prediction interval
-#' #  Heterogeneity variance: REML
-#' #  SE for average treatment effect: Hartung-Knapp
-#' # 
-#' # Average treatment effect [95%PI]:
-#' #  -0.3287 [-0.9835, 0.3261]
-#' # 
-#' # Average treatment effect [95%CI]:
-#' #  -0.3287 [-0.5625, -0.0950]
-#' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0700
+#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, B = 25000)}
 #' @export
-pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
+cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
   
-  ## .. may be need more more strictry check.
+  # initial check
+  lstm <- c("boot", "DL", "HK", "SJ")
   method <- match.arg(method)
-  
-  if (!is.element(method, c("boot", "HTS", "HK", "SJ", "CL")))
-    stop("Unknown 'method' specified.")
-  
-  if (length(se) != length(y)) 
+
+  if (is.null(y)) {
+    stop("'y' is a null value.")
+  } else if (is.null(se)) {
+    stop("'se' is a null value.")
+  } else if (any(is.na(y))) {
+    stop("'y' has missing value(s).")
+  } else if (any(is.na(se))) {
+    stop("'se' has missing value(s).")
+  } else if (any(is.infinite(y))) {
+    stop("'y' has infinite value(s).")
+  } else if (any(is.infinite(se))) {
+    stop("'se' has infinite value(s).")
+  } else if (any(is.nan(y))) {
+    stop("'y' has NaN(s).")
+  } else if (any(is.nan(se))) {
+    stop("'se' has NaN(s).")
+  } else if (length(se) != length(y)) {
     stop("'y' and 'se' should have the same length.")
-  
-  if (min(se) < 0.0)
+  } else if (min(se) < 0.0) {
     stop("'se' should be positive.")
-  
-  if (B < 1)
+  } else if (!is.element(method, lstm)) {
+    stop("Unknown 'method' specified.")
+  } else if (alpha < 0.0 | alpha > 1.0) {
+    stop("'alpha' should be 0.0 < alpha < 1.0.")
+  } else if (B < 1) {
     stop("'B' should be grater than 1.")
+  }
   
   if (method == "boot") {
+    if (B < 1000) {
+      warning("'B' > 1000 is recommended.")
+    }
     res <- pima_boot(y      = y, 
                      sigma  = se, 
                      alpha  = alpha,
@@ -167,7 +103,7 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
                      upper  = upper, 
                      maxit2 = maxit2,
                      rnd    = rnd)
-  } else if (method == "HTS") {
+  } else if (method == "DL") {
     res <- pima_hts(y      = y, 
                     sigma  = se, 
                     alpha  = alpha)
@@ -183,15 +119,9 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
                         alpha   = alpha,
                         vartype = "SJBC",
                         maxiter = maxiter)
-  } else if (method == "CL") {
-    res <- pima_htsreml(y       = y, 
-                        sigma   = se, 
-                        alpha   = alpha,
-                        vartype = "CL",
-                        maxiter = maxiter)
   }
   res <- append(res, list(i2h = i2h(se, res$tau2h)))
-  class(res) <- "pima"
+  class(res) <- "cima"
   
   return(res)
   
@@ -207,40 +137,31 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
 #'               of significant digits to be printed in values.
 #' @param ... further arguments passed to or from other methods.
 #' @export
-#' @method print pima
-print.pima <- function(x, digits = 4, ...) {
+#' @method print cima
+print.cima <- function(x, digits = 4, ...) {
   
   cat("\nPrediction Interval for Random-Effects Meta-Analysis\n\n")
   
   if (x$method == "boot") {
-    cat(paste0("A parametric bootstrap prediction interval\n",
+    cat(paste0("A parametric bootstrap confidence interval\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
                " SE for average treatment effect: Hartung\n\n"))
-  } else if (x$method == "HTS") {
-    cat(paste0("Higgins-Thompson-Spiegelhalter prediction interval\n",
+  } else if (x$method == "DL") {
+    cat(paste0("A Wald-type interval\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
                " SE for average treatment effect: standard\n\n"))
   } else if (x$method == "HK") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("A Wald-type t-distribution confidence interval\n",
                " Heterogeneity variance: REML\n",
                " SE for average treatment effect: Hartung-Knapp\n\n"))
   } else if (x$method == "SJ") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("A Wald-type t-distribution confidence interval\n",
                " Heterogeneity variance: REML\n",
                " SE for average treatment effect: Sidik-Jonkman\n\n"))
-  } else if (x$method == "CL") {
-    cat(paste0("A prediction interval with REML and standard SE\n",
-               " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: standard\n\n"))
   }
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))
-  
-  cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%PI]:\n"))
-  cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
-             format(round(x$lpi, digits), nsmall = digits), ", ",
-             format(round(x$upi, digits), nsmall = digits), "]\n\n"))
-  
+
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%CI]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lci, digits), nsmall = digits), ", ",
@@ -266,8 +187,8 @@ print.pima <- function(x, digits = 4, ...) {
 #' @param base_family base font family
 #' @param ... further arguments passed to or from other methods.
 #' @export
-#' @method plot pima
-plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
+#' @method plot cima
+plot.cima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
                       base_family = "", ...) {
   
   idodr <- lcl <- limits <- lx <- shape <- size <- ucl <- ymax <- ymin <- NULL
@@ -275,40 +196,34 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   k <- length(x$y)
   id <- c(
     paste0("  ", 1:k),
-    paste0("  95%CI (I^2 = ", sprintf("%4.1f", x$i2h), "%)"),
-    paste0("  95%PI")
+    paste0("  95%CI (I^2 = ", sprintf("%4.1f", x$i2h), "%)")
   )
   df1 <- data.frame(
     id = id,
-    idodr = c((k + 3):4, 2:1),
-    y = c(x$y, NA, NA),
-    lcl = c(x$y + stats::qnorm(0.025)*x$se, NA, NA),
-    ucl = c(x$y + stats::qnorm(0.975)*x$se, NA, NA),
-    shape = c(rep(15, k), 18, 18),
-    swidth = c(rep(1, k), 3, 3)
+    idodr = c((k + 2):3, 1),
+    y = c(x$y, NA),
+    lcl = c(x$y + stats::qnorm(0.025)*x$se, NA),
+    ucl = c(x$y + stats::qnorm(0.975)*x$se, NA),
+    shape = c(rep(15, k), 18),
+    swidth = c(rep(1, k), 3)
   )
   df1 <- data.frame(
     df1,
-    size = c(1/x$se, 1, 1),
+    size = c(1/x$se, 1),
     limits = c(paste0(sprintf("%3.2 f", df1$y[1:k]), " (",
                       sprintf("%3.2 f", df1$lcl[1:k]), ", ",
                       sprintf("%3.2 f", df1$ucl[1:k]), ")"),
                paste0(sprintf("%3.2 f", x$muhat), " (",
                       sprintf("%3.2 f", x$lci), ", ",
-                      sprintf("%3.2 f", x$uci), ")"),
-               paste0(sprintf("%3.2 f", x$muhat), " (",
-                      sprintf("%3.2 f", x$lpi), ", ",
-                      sprintf("%3.2 f", x$upi), ")")
+                      sprintf("%3.2 f", x$uci), ")")
     ),
-    lx = rep(max(df1$ucl, na.rm = TRUE) + 1.7, k + 2)
+    lx = rep(max(df1$ucl, na.rm = TRUE) + 1.7, k + 1)
   )
-  df2 <- data.frame(id = "Study", idodr = k + 4, y = NA, lcl = NA, ucl = NA,
+  df2 <- data.frame(id = "Study", idodr = k + 3, y = NA, lcl = NA, ucl = NA,
                     shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
-  df3 <- data.frame(id = "Overall", idodr = 3, y = NA, lcl = NA, ucl = NA,
+  df3 <- data.frame(id = "Overall", idodr = 2, y = NA, lcl = NA, ucl = NA,
                     shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
-  df4 <- data.frame(x = c(x$lci, x$muhat, x$uci), ymax = c(2, 2 + 0.25, 2),
-                    ymin = c(2, 2 - 0.25, 2), y = c(2, 2, 2))
-  df5 <- data.frame(x = c(x$lpi, x$muhat, x$upi), ymax = c(1, 1 + 0.25, 1),
+  df4 <- data.frame(x = c(x$lci, x$muhat, x$uci), ymax = c(1, 1 + 0.25, 1),
                     ymin = c(1, 1 - 0.25, 1), y = c(1, 1, 1))
   df1 <- rbind(df3, df2, df1)
   
@@ -338,8 +253,6 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
       geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
       geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
       geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
-                  colour = "black", fill = "black") +
-      geom_ribbon(data = df5, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
                   colour = "black", fill = "black") +
       geom_vline(xintercept = x$muhat, lty = 2) +
       geom_vline(xintercept = 0, lty = 1) +
