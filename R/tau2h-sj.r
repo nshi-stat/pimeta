@@ -27,6 +27,6 @@ tau2h_sj <- function(y, se) {
   w <- (1.0 + se^2/tau2h0)^-1
   tau2h <- max(0.0, sum(w*(y - sum(y*w)/sum(w)))/(k - 1.0))
   
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }

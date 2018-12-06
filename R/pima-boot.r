@@ -91,7 +91,7 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
     rndtau2 <- rnd
   }
 
-  tau2h <- tau2h_dl(y = y, se = sigma)
+  tau2h <- tau2h_dl(y = y, se = sigma)$tau2h
   w <- (sigma^2 + tau2h)^-1
   muhat <- list(muhat = sum(y*w) / sum(w))
   res <- bootPICppWrap(

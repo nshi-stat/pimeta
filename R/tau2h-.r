@@ -178,15 +178,15 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   } else if (method == "BM") {
     res <- tau2h_bm(y = y, se = se, maxiter = maxiter)
   }
-  
+
   # confidence interval
   if (methodci == "ML") {
-    tau2h <- tau2h_ml(y = y, se = se, maxiter = maxiter)
-    resci <- tau2h_wald_ml(se = se, tau2h = tau2h, alpha = alpha)
+    tau2hml <- tau2h_ml(y = y, se = se, maxiter = maxiter)
+    resci <- tau2h_wald_ml(se = se, tau2h = tau2hml$tau2h, alpha = alpha)
     res <- append(res, resci)
   } else if (methodci == "REML") {
-    tau2h <- tau2h_reml(y = y, se = se, maxiter = maxiter)
-    resci <- tau2h_wald_reml(se = se, tau2h = tau2h, alpha = alpha)
+    tau2hreml <- tau2h_reml(y = y, se = se, maxiter = maxiter)
+    resci <- tau2h_wald_reml(se = se, tau2h = tau2hreml$tau2h, alpha = alpha)
     res <- append(res, resci)
   }
   

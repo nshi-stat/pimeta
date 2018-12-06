@@ -53,7 +53,7 @@ pima_hts <- function(y, sigma, alpha = 0.05) {
   }
 
   k <- length(y)
-  tau2h <- tau2h_dl(y = y, se = sigma)
+  tau2h <- tau2h_dl(y = y, se = sigma)$tau2h
   w <- (sigma^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)
   vmuhat <- 1/sum(w)

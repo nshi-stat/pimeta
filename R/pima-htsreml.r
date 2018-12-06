@@ -75,7 +75,7 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
   }
 
   k <- length(y)
-  tau2h <- tau2h_reml(y = y, se = sigma, maxiter = maxiter)
+  tau2h <- tau2h_reml(y = y, se = sigma, maxiter = maxiter)$tau2h
   
   w <- (sigma^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)

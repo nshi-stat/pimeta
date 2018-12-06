@@ -32,6 +32,6 @@ tau2h_hs <- function(y, se) {
   vi <- se^-2
   tau2h <- max(0.0, (sum(vi*(y - sum(vi*y)/sum(vi))^2) - (k - 1.0)) / (sum(vi)))
   
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }

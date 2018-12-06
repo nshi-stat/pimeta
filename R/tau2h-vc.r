@@ -22,6 +22,6 @@ tau2h_vc <- function(y, se) {
   k <- length(y)
   tau2h <- max(0.0, sum(y - sum(y)/k)^2/(k - 1.0) - sum(se)/k)
   
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }

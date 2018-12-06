@@ -23,7 +23,7 @@
 # @export
 tau2h_areml <- function(y, se, maxiter = 100) {
 
-  tau2h <- tau2h_dl(y, se)
+  tau2h <- tau2h_dl(y, se)$tau2h
   r <- 0
   k <- length(y)
   
@@ -60,6 +60,6 @@ tau2h_areml <- function(y, se, maxiter = 100) {
     }
   }
   
-  return(tau2h)
+  return(list(tau2h = tau2h))
   
 }
