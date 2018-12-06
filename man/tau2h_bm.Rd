@@ -4,12 +4,14 @@
 \alias{tau2h_bm}
 \title{Bayes modal estimator for \eqn{\tau^2}}
 \usage{
-tau2h_bm(y, se)
+tau2h_bm(y, se, maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
 
 \item{se}{the within studies standard errors vector}
+
+\item{maxiter}{the maximum number of iterations}
 }
 \value{
 \itemize{

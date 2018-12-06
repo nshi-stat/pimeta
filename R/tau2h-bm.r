@@ -8,6 +8,7 @@
 #' @rdname tau2h_bm
 #' @param y the effect size estimates vector
 #' @param se the within studies standard errors vector
+#' @param maxiter the maximum number of iterations
 #' @return
 #' \itemize{
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
@@ -22,7 +23,7 @@
 #' data(sbp, package = "pimeta")
 #' pimeta::tau2h_bm(sbp$y, sbp$sigmak)
 #' @export
-tau2h_bm <- function(y, se) {
+tau2h_bm <- function(y, se, maxiter = 100) {
   
   ## .. need more more strictry check.
   if (length(se) != length(y)) {
@@ -31,7 +32,7 @@ tau2h_bm <- function(y, se) {
     stop("'se' should be positive.")
   }
   
-  tau2h <- tau2h_ml(y, se)
+  tau2h <- tau2h_ml(y, se, maxiter = maxiter)
   if (tau2h > 0) {
     wi <- (se^2 + tau2h)^-1
     vml <- 2.0*sum(wi^2)^-1
