@@ -75,5 +75,5 @@ a confidence distribution approach.
 \url{https://doi.org/10.1177/0962280218773520}.
 }
 \seealso{
-\code{\link[=pima_boot]{pima_boot()}}
+\code{\link[=pima]{pima()}}
 }
