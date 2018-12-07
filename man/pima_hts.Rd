@@ -29,29 +29,14 @@ based on the DerSimonian-Laird estimator (Higgins et al., 2009)
 \examples{
 data(sbp, package = "pimeta")
 pimeta::pima_hts(sbp$y, sbp$sigmak)
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
-# Higgins-Thompson-Spiegelhalter prediction interval
-#  Heterogeneity variance: DerSimonian-Laird
-#  SE for average treatment effect: standard
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3341 [-0.7598, 0.0917]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3341 [-0.5068, -0.1613]
-# 
-# Heterogeneity variance (tau^2):
-#  0.0282
-# 
 }
 \references{
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 A re-evaluation of random-effects meta-analysis.
 \emph{J R Stat Soc Ser A Stat Soc.}
 \strong{172}(1): 137-159.
+\url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
 }
 \seealso{
-\code{\link[=pima]{pima()}}.
+\code{\link[=pima]{pima}}.
 }

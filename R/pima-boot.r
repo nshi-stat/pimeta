@@ -38,8 +38,9 @@
 #' An alternative method for meta-analysis.
 #' \emph{Biom J.}
 #' \strong{41}(8): 901-916.
+#' \url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 #' @seealso
-#' \code{\link[=pima]{pima()}}.
+#' \code{\link[=pima]{pima}}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
@@ -88,9 +89,7 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
 
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
-  } else if (!is.element(method, lstm)) {
-    stop("Unknown 'method' specified.")
-  } else if (lower <= upper) {
+  } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
   

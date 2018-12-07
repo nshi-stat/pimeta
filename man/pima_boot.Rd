@@ -79,7 +79,8 @@ Hartung, J. (1999).
 An alternative method for meta-analysis.
 \emph{Biom J.}
 \strong{41}(8): 901-916.
+\url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 }
 \seealso{
-\code{\link[=pima]{pima()}}.
+\code{\link[=pima]{pima}}.
 }

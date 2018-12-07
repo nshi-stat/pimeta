@@ -8,7 +8,7 @@
   base_size = 16, base_family = "", ...)
 }
 \arguments{
-\item{x}{`pima` object to plot}
+\item{x}{`cima` object to plot}
 
 \item{y}{is not used}
 
@@ -21,5 +21,5 @@
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-A function for plotting of `pima` objects.
+A function for plotting of `cima` objects.
 }
