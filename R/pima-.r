@@ -149,6 +149,7 @@
 #' # Heterogeneity measure
 #' #  tau2: 0.0700
 #' #  I^2:  85.5%
+#'
 #' @export
 pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
