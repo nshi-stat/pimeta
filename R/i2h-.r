@@ -1,7 +1,7 @@
 #' \eqn{I^2} heterogeneity measure
 #' 
-#' A subroutine of a estimator for
-#' \eqn{I^2} (Higgins & Thompson, 2002).
+#' Returns the estimator for
+#' (Higgins & Thompson, 2002).
 #' 
 #' @name i2h
 #' @rdname i2h
@@ -15,7 +15,8 @@
 #' Higgins, J. P. T., and Thompson, S. G. (2002).
 #' Quantifying heterogeneity in a meta-analysis.
 #' \emph{Stat Med.}
-#' \strong{21}(11): 1539-1558. 
+#' \strong{21}(11): 1539-1558.
+#' \url{https://doi.org/10.1002/sim.1186}
 #' @examples
 #' data(sbp, package = "pimeta")
 #' tau2h <- pimeta::tau2h_dl(sbp$y, sbp$sigmak)

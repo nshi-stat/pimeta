@@ -28,12 +28,15 @@ in people with eating disorders.
 Roberts, M. E., Tchanturia, K., Stahl, D.,
 Southgate, L., and Treasure, J. (2007).
 A systematic review and meta-analysis of set-shifting
-ability in eating disorders. \emph{Psychol Med.}
+ability in eating disorders.
+\emph{Psychol Med.}
 \strong{37}(8): 1075-1084.
+\url{https://doi.org/10.1017/S0033291707009877}
 
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 A re-evaluation of random-effects meta-analysis.
 \emph{J R Stat Soc Ser A Stat Soc.}
 \strong{172}(1): 137-159.
+\url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
 }
 \keyword{datasets}
