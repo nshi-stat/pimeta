@@ -1,6 +1,9 @@
 #' Calculating Confidence Intervals
 #' 
 #' This function calculates confidence intervals.
+#' 
+#' @details Excellent reviews of heterogeneity variance estimation
+#' have been published (e.g., Veroniki, et al., 2018).
 #'
 #' @name cima
 #' @rdname cima
@@ -11,17 +14,21 @@
 #' \itemize{
 #' \item \code{boot}: A parametric bootstrap confidenceS interval
 #'            (Nagashima et al., 2018).
-#' \item \code{DL}: A Wald-type confidence interval
+#' \item \code{DL}: A Wald-type t-distribution confidence interval
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            a standard SE estimator for the average effect,
-#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
+#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
 #' \item \code{HK}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            the Hartung and Knapp (2001)'s SE estimator for the average effect).
+#'            the Hartung and Knapp (2001)'s SE estimator for the average effect, \eqn{df=K-1}).
 #' \item \code{SJ}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
-#'            for the average effect).
+#'            for the average effect, \eqn{df=K-1}).
+#' \item \code{PL}: Profile likelihood confidence interval
+#'            (the ML estimator for \eqn{\tau^2} with
+#'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
+#'            for the average effect, \eqn{df=K-1}).
 #' }
 #' @param B the number of bootstrap samples
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
@@ -39,18 +46,52 @@
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 #' }
 #' @references
+#' Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
+#' Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2016).
+#' Methods to calculate uncertainty in the estimated overall effect
+#' size from a random‐effects meta‐analysis
+#' \emph{Res Syn Meth.}
+#' \emph{In press}.
+#' \url{https://doi.org/10.1002/jrsm.1319}.
+#' 
 #' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
 #' Prediction intervals for random-effects meta-analysis:
 #' a confidence distribution approach.
 #' \emph{Stat Methods Med Res}.
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
+#' 
+#' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
+#' A re-evaluation of random-effects meta-analysis.
+#' \emph{J R Stat Soc Ser A Stat Soc.}
+#' \strong{172}(1): 137-159.
+#' \url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
+#'  
+#' Partlett, C, and Riley, R. D. (2017).
+#' Random effects meta-analysis: Coverage performance of 95%
+#' confidence and prediction intervals following REML estimation.
+#' \emph{Stat Med.}
+#' \strong{36}(2): 301-317.
+#' \url{https://doi.org/10.1002/sim.7140}
+#' 
+#' Hartung, J., and Knapp, G. (2001).
+#' On tests of the overall treatment effect in meta-analysis with
+#' normally distributed responses.
+#' \emph{Stat Med.}
+#' \strong{20}(12): 1771-1782.
+#' \url{https://doi.org/10.1002/sim.791}
+#' 
+#' Sidik, K., and Jonkman, J. N. (2006).
+#' Robust variance estimation for random effects meta-analysis.
+#' \emph{Comput Stat Data Anal.}
+#' \strong{50}(12): 3681-3701.
+#' \url{https://doi.org/10.1016/j.csda.2005.07.019}
 #' @seealso
-#' \code{\link[=pima]{pima()}}
+#' \code{\link[=pima]{pima}}
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
-#' \donttest{pimeta::pima(sbp$y, sbp$sigmak, B = 25000)}
+#' \donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 25000)}
 #' @export
 cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
@@ -87,7 +128,7 @@ cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
     stop("'y' and 'se' should have the same length.")
   } else if (!is.element(method, lstm)) {
     stop("Unknown 'method' specified.")
-  } else if (lower <= upper) {
+  } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
   
@@ -181,9 +222,9 @@ print.cima <- function(x, digits = 4, ...) {
 
 #' Plot Results
 #' 
-#' A function for plotting of `pima` objects.
+#' A function for plotting of `cima` objects.
 #'
-#' @param x `pima` object to plot
+#' @param x `cima` object to plot
 #' @param y is not used
 #' @param title graph title
 #' @param base_size base font size
