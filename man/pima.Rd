@@ -148,6 +148,10 @@ set.seed(20161102)
 # Heterogeneity measure
 #  tau2: 0.0700
 #  I^2:  85.5\%
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6b18bca188758eb16f34b670c493b68d832e0c32
 }
 \references{
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
