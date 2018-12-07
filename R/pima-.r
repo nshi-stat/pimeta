@@ -48,12 +48,14 @@
 #' A re-evaluation of random-effects meta-analysis.
 #' \emph{J R Stat Soc Ser A Stat Soc.}
 #' \strong{172}(1): 137-159.
-#' 
+#' \url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
+#'  
 #' Partlett, C, and Riley, R. D. (2017).
 #' Random effects meta-analysis: Coverage performance of 95%
 #' confidence and prediction intervals following REML estimation.
 #' \emph{Stat Med.}
 #' \strong{36}(2): 301-317.
+#' \url{https://doi.org/10.1002/sim.7140}
 #' 
 #' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
 #' Prediction intervals for random-effects meta-analysis:
@@ -62,9 +64,9 @@
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
 #' @seealso
-#' \code{\link[=pima_boot]{pima_boot()}},
-#' \code{\link[=pima_hts]{pima_hts()}},
-#' \code{\link[=pima_htsreml]{pima_htsreml()}}.
+#' \code{\link[=pima_boot]{pima_boot}},
+#' \code{\link[=pima_hts]{pima_hts}},
+#' \code{\link[=pima_htsreml]{pima_htsreml}}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
@@ -75,15 +77,18 @@
 #' # A parametric bootstrap prediction interval
 #' #  Heterogeneity variance: DerSimonian-Laird
 #' #  SE for average treatment effect: Hartung
+#' #
+#' # No. of studies: 10
 #' # 
 #' # Average treatment effect [95%PI]:
-#' #  -0.3341 [-0.8769, 0.2248]
+#' #  -0.3341 [-0.8715, 0.2144]
 #' # 
 #' # Average treatment effect [95%CI]:
-#' #  -0.3341 [-0.5660, -0.0976]
+#' #  -0.3341 [-0.5655, -0.0988]
 #' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0282
+#' # Heterogeneity measure
+#' #  tau2: 0.0282
+#' #  I^2:  70.5%
 #'  
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")}
 #' # 
@@ -93,14 +98,17 @@
 #' #  Heterogeneity variance: DerSimonian-Laird
 #' #  SE for average treatment effect: standard
 #' # 
+#' # No. of studies: 10
+#' # 
 #' # Average treatment effect [95%PI]:
 #' #  -0.3341 [-0.7598, 0.0917]
 #' # 
 #' # Average treatment effect [95%CI]:
 #' #  -0.3341 [-0.5068, -0.1613]
 #' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0282
+#' # Heterogeneity measure
+#' #  tau2: 0.0282
+#' #  I^2:  70.5%
 #' 
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HK")}
 #' # 
@@ -110,22 +118,27 @@
 #' #  Heterogeneity variance: REML
 #' #  SE for average treatment effect: Hartung-Knapp
 #' # 
+#' # No. of studies: 10
+#' # 
 #' # Average treatment effect [95%PI]:
 #' #  -0.3287 [-0.9887, 0.3312]
 #' # 
 #' # Average treatment effect [95%CI]:
 #' #  -0.3287 [-0.5761, -0.0814]
 #' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0700
+#' # Heterogeneity measure
+#' #  tau2: 0.0700
+#' #  I^2:  85.5%
 #' 
 #' \donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")}
 #' # 
 #' # Prediction Interval for Random-Effects Meta-Analysis
 #' # 
 #' # Partlett-Riley prediction interval
-#' #  Heterogeneity variance: REML
-#' #  SE for average treatment effect: Hartung-Knapp
+#' # Heterogeneity variance: REML
+#' # SE for average treatment effect: Sidik-Jonkman
+#' # 
+#' # No. of studies: 10
 #' # 
 #' # Average treatment effect [95%PI]:
 #' #  -0.3287 [-0.9835, 0.3261]
@@ -133,8 +146,9 @@
 #' # Average treatment effect [95%CI]:
 #' #  -0.3287 [-0.5625, -0.0950]
 #' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0700
+#' # Heterogeneity measure
+#' #  tau2: 0.0700
+#' #  I^2:  85.5%
 #' @export
 pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
@@ -171,7 +185,7 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
     stop("'y' and 'se' should have the same length.")
   } else if (!is.element(method, lstm)) {
     stop("Unknown 'method' specified.")
-  } else if (lower <= upper) {
+  } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
 

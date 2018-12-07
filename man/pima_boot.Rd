@@ -50,22 +50,6 @@ based on the same sampling method for bootstrap PI.
 data(sbp, package = "pimeta")
 set.seed(20161102)
 \donttest{pimeta::pima_boot(sbp$y, sbp$sigmak, B = 50000)}
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
-# A parametric bootstrap prediction interval
-#  Heterogeneity variance: DerSimonian-Laird
-#  SE for average treatment effect: Hartung
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3341 [-0.8769, 0.2248]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3341 [-0.5660, -0.0976]
-# 
-# Heterogeneity variance (tau^2):
-#  0.0282
-# 
 }
 \references{
 Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
@@ -79,7 +63,8 @@ Hartung, J. (1999).
 An alternative method for meta-analysis.
 \emph{Biom J.}
 \strong{41}(8): 901-916.
+\url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 }
 \seealso{
-\code{\link[=pima]{pima()}}.
+\code{\link[=pima]{pima}}.
 }

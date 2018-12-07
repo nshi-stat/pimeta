@@ -38,28 +38,13 @@
 #' An alternative method for meta-analysis.
 #' \emph{Biom J.}
 #' \strong{41}(8): 901-916.
+#' \url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 #' @seealso
-#' \code{\link[=pima]{pima()}}.
+#' \code{\link[=pima]{pima}}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
 #' \donttest{pimeta::pima_boot(sbp$y, sbp$sigmak, B = 50000)}
-#' # 
-#' # Prediction Interval for Random-Effects Meta-Analysis
-#' # 
-#' # A parametric bootstrap prediction interval
-#' #  Heterogeneity variance: DerSimonian-Laird
-#' #  SE for average treatment effect: Hartung
-#' # 
-#' # Average treatment effect [95%PI]:
-#' #  -0.3341 [-0.8769, 0.2248]
-#' # 
-#' # Average treatment effect [95%CI]:
-#' #  -0.3341 [-0.5660, -0.0976]
-#' # 
-#' # Heterogeneity variance (tau^2):
-#' #  0.0282
-#' # 
 #' @export
 pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
                    eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
@@ -88,9 +73,7 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
 
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
-  } else if (!is.element(method, lstm)) {
-    stop("Unknown 'method' specified.")
-  } else if (lower <= upper) {
+  } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
   

@@ -39,22 +39,6 @@ based on the REML estimator (Partlett & Riley, 2017)
 \examples{
 data(sbp, package = "pimeta")
 pimeta::pima_htsreml(sbp$y, sbp$sigmak)
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
-# Partlett-Riley prediction interval
-#  Heterogeneity variance: REML
-#  SE for average treatment effect: Hartung-Knapp
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3287 [-0.9887, 0.3312]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3287 [-0.5761, -0.0814]
-# 
-# Heterogeneity variance (tau^2):
-#  0.0700
-#
 }
 \references{
 Partlett, C, and Riley, R. D. (2017).
@@ -62,18 +46,21 @@ Random effects meta-analysis: Coverage performance of 95%
 confidence and prediction intervals following REML estimation.
 \emph{Stat Med.}
 \strong{36}(2): 301-317.
+\url{https://doi.org/10.1002/sim.7140}
 
 Hartung, J., and Knapp, G. (2001).
 On tests of the overall treatment effect in meta-analysis with
 normally distributed responses.
 \emph{Stat Med.}
 \strong{20}(12): 1771-1782.
+\url{https://doi.org/10.1002/sim.791}
 
 Sidik, K., and Jonkman, J. N. (2006).
 Robust variance estimation for random effects meta-analysis.
 \emph{Comput Stat Data Anal.}
 \strong{50}(12): 3681-3701.
+\url{https://doi.org/10.1016/j.csda.2005.07.019}
 }
 \seealso{
-\code{\link[=pima]{pima()}}.
+\code{\link[=pima]{pima}}.
 }
