@@ -65,15 +65,23 @@
 pima_htsreml <- function(y, sigma, alpha = 0.05,
                          vartype = c("HK", "SJBC", "CL"), maxiter = 100) {
 
-  vartype <- match.arg(vartype)
-
-  ## .. need more more strictry check.
+  # initial check
+  lstm <- c("HK", "SJBC", "CL")
+  method <- match.arg(method)
+  
+  util_check_num(y)
+  util_check_num(sigma)
+  util_check_num(alpha)
+  util_check_nonneg(sigma)
+  util_check_inrange(alpha, 0.0, 1.0)
+  
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
-  } else if (min(sigma) < 0.0) {
-    stop("'sigma' should be positive.")
+  } else if (!is.element(method, lstm)) {
+    stop("Unknown 'method' specified.")
   }
-
+  
+  # estimation
   k <- length(y)
   tau2h <- tau2h_reml(y = y, se = sigma, maxiter = maxiter)$tau2h
   

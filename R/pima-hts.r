@@ -45,13 +45,18 @@
 #' @export
 pima_hts <- function(y, sigma, alpha = 0.05) {
 
-  ## .. need more more strictry check.
+  # initial check
+  util_check_num(y)
+  util_check_num(sigma)
+  util_check_num(alpha)
+  util_check_nonneg(sigma)
+  util_check_inrange(alpha, 0.0, 1.0)
+
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
-  } else if (min(sigma) < 0.0) {
-    stop("'sigma' should be positive.")
   }
 
+  # estimation  
   k <- length(y)
   tau2h <- tau2h_dl(y = y, se = sigma)$tau2h
   w <- (sigma^2 + tau2h)^-1

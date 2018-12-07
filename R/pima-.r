@@ -141,21 +141,40 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
   
-  ## .. may be need more more strictry check.
+  # initial check
+  lstm <- c("boot", "HTS", "HK", "SJ", "CL")
   method <- match.arg(method)
   
-  if (!is.element(method, c("boot", "HTS", "HK", "SJ", "CL")))
-    stop("Unknown 'method' specified.")
+  util_check_num(y)
+  util_check_num(se)
+  util_check_num(alpha)
+  util_check_num(B)
+  util_check_num(maxit1)
+  util_check_num(eps)
+  util_check_num(lower)
+  util_check_num(upper)
+  util_check_num(maxit2)
+  util_check_num(tol)
+  util_check_num(maxiter)
+  util_check_nonneg(se)
+  util_check_inrange(alpha, 0.0, 1.0)
+  util_check_gt(B, 1)
+  util_check_gt(maxit1, 1)
+  util_check_gt(eps, 0)
+  util_check_ge(lower, 0)
+  util_check_gt(upper, 0)
+  util_check_gt(maxit2, 1)
+  util_check_gt(tol, 0)
+  util_check_gt(maxiter, 1)
   
-  if (length(se) != length(y)) 
+  if (length(se) != length(y)) {
     stop("'y' and 'se' should have the same length.")
-  
-  if (min(se) < 0.0)
-    stop("'se' should be positive.")
-  
-  if (B < 1)
-    stop("'B' should be grater than 1.")
-  
+  } else if (!is.element(method, lstm)) {
+    stop("Unknown 'method' specified.")
+  } else if (lower <= upper) {
+    stop("'upper' should be greater than 'lower'.")
+  }
+
   if (method == "boot") {
     res <- pima_boot(y      = y, 
                      sigma  = se, 

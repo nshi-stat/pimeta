@@ -65,15 +65,40 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
                    eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
                    tol = .Machine$double.eps^0.25, rnd = NULL) {
 
-  ## .. need more more strictry check.
+  # initial check
+  util_check_num(y)
+  util_check_num(sigma)
+  util_check_num(alpha)
+  util_check_num(B)
+  util_check_num(maxit1)
+  util_check_num(eps)
+  util_check_num(lower)
+  util_check_num(upper)
+  util_check_num(maxit2)
+  util_check_num(tol)
+  util_check_nonneg(sigma)
+  util_check_inrange(alpha, 0.0, 1.0)
+  util_check_gt(B, 1)
+  util_check_gt(maxit1, 1)
+  util_check_gt(eps, 0)
+  util_check_ge(lower, 0)
+  util_check_gt(upper, 0)
+  util_check_gt(maxit2, 1)
+  util_check_gt(tol, 0)
+
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
-  } else if (min(sigma) < 0.0) {
-    stop("'sigma' should be positive.")
-  } else if (B < 1) {
-    stop("'B' should be grater than 1.")
+  } else if (!is.element(method, lstm)) {
+    stop("Unknown 'method' specified.")
+  } else if (lower <= upper) {
+    stop("'upper' should be greater than 'lower'.")
   }
-
+  
+  if (B < 1000) {
+    warning("'B' > 1000 is recommended.")
+  }
+  
+  # random numbers generation
   if (is.null(rnd)) {
     rndtau2 <- rtau2CppWrap(
       n      = as.integer(B),

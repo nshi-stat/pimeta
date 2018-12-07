@@ -124,32 +124,34 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   method <- match.arg(method)
   methodci <- match.arg(methodci)
   
-  if (is.null(y)) {
-    stop("'y' is a null value.")
-  } else if (is.null(se)) {
-    stop("'se' is a null value.")
-  } else if (any(is.na(y))) {
-    stop("'y' has missing value(s).")
-  } else if (any(is.na(se))) {
-    stop("'se' has missing value(s).")
-  } else if (any(is.infinite(y))) {
-    stop("'y' has infinite value(s).")
-  } else if (any(is.infinite(se))) {
-    stop("'se' has infinite value(s).")
-  } else if (any(is.nan(y))) {
-    stop("'y' has NaN(s).")
-  } else if (any(is.nan(se))) {
-    stop("'se' has NaN(s).")
-  } else if (length(se) != length(y)) {
+  util_check_num(y)
+  util_check_num(se)
+  util_check_num(alpha)
+  util_check_num(B)
+  util_check_num(maxit1)
+  util_check_num(eps)
+  util_check_num(lower)
+  util_check_num(upper)
+  util_check_num(maxit2)
+  util_check_num(tol)
+  util_check_num(maxiter)
+  util_check_nonneg(se)
+  util_check_inrange(alpha, 0.0, 1.0)
+  util_check_gt(B, 1)
+  util_check_gt(maxit1, 1)
+  util_check_gt(eps, 0)
+  util_check_ge(lower, 0)
+  util_check_gt(upper, 0)
+  util_check_gt(maxit2, 1)
+  util_check_gt(tol, 0)
+  util_check_gt(maxiter, 1)
+  
+  if (length(se) != length(y)) {
     stop("'y' and 'se' should have the same length.")
-  } else if (min(se) < 0.0) {
-    stop("'se' should be positive.")
   } else if (!is.element(method, lstm)) {
     stop("Unknown 'method' specified.")
   } else if (!is.element(methodci, lstc)) {
     stop("Unknown 'methodci' specified.")
-  } else if (alpha < 0.0 | alpha > 1.0) {
-    stop("'alpha' should be 0.0 < alpha < 1.0.")
   }
   
   # point estiamte

@@ -46,7 +46,7 @@
 #' \emph{In press}.
 #' \url{https://doi.org/10.1177/0962280218773520}.
 #' @seealso
-#' \code{\link[=pima_boot]{pima_boot()}}
+#' \code{\link[=pima]{pima()}}
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
@@ -61,34 +61,37 @@ cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
   lstm <- c("boot", "DL", "HK", "SJ")
   method <- match.arg(method)
 
-  if (is.null(y)) {
-    stop("'y' is a null value.")
-  } else if (is.null(se)) {
-    stop("'se' is a null value.")
-  } else if (any(is.na(y))) {
-    stop("'y' has missing value(s).")
-  } else if (any(is.na(se))) {
-    stop("'se' has missing value(s).")
-  } else if (any(is.infinite(y))) {
-    stop("'y' has infinite value(s).")
-  } else if (any(is.infinite(se))) {
-    stop("'se' has infinite value(s).")
-  } else if (any(is.nan(y))) {
-    stop("'y' has NaN(s).")
-  } else if (any(is.nan(se))) {
-    stop("'se' has NaN(s).")
-  } else if (length(se) != length(y)) {
+  util_check_num(y)
+  util_check_num(se)
+  util_check_num(alpha)
+  util_check_num(B)
+  util_check_num(maxit1)
+  util_check_num(eps)
+  util_check_num(lower)
+  util_check_num(upper)
+  util_check_num(maxit2)
+  util_check_num(tol)
+  util_check_num(maxiter)
+  util_check_nonneg(se)
+  util_check_inrange(alpha, 0.0, 1.0)
+  util_check_gt(B, 1)
+  util_check_gt(maxit1, 1)
+  util_check_gt(eps, 0)
+  util_check_ge(lower, 0)
+  util_check_gt(upper, 0)
+  util_check_gt(maxit2, 1)
+  util_check_gt(tol, 0)
+  util_check_gt(maxiter, 1)
+  
+  if (length(se) != length(y)) {
     stop("'y' and 'se' should have the same length.")
-  } else if (min(se) < 0.0) {
-    stop("'se' should be positive.")
   } else if (!is.element(method, lstm)) {
     stop("Unknown 'method' specified.")
-  } else if (alpha < 0.0 | alpha > 1.0) {
-    stop("'alpha' should be 0.0 < alpha < 1.0.")
-  } else if (B < 1) {
-    stop("'B' should be grater than 1.")
+  } else if (lower <= upper) {
+    stop("'upper' should be greater than 'lower'.")
   }
   
+  # estimation
   if (method == "boot") {
     if (B < 1000) {
       warning("'B' > 1000 is recommended.")
