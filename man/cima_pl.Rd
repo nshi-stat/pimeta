@@ -4,7 +4,11 @@
 \alias{cima_pl}
 \alias{htsdl}
 <<<<<<< HEAD
+<<<<<<< HEAD
 \title{Profile likelihood confidence interval}
+=======
+\title{Brockwell--Gordon confidence interval}
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 =======
 \title{Brockwell--Gordon confidence interval}
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
@@ -28,8 +32,13 @@ cima_pl(y, se, alpha = 0.05)
 }
 \description{
 <<<<<<< HEAD
+<<<<<<< HEAD
 Returns a profile likelihood confidence interval
 for \eqn{\hat{\mu}} (Hardy & Thompson, 1996).
+=======
+Returns the Brockwell--Gordon confidence interval
+for \eqn{\hat{\mu}} (Brockwell & Gordon, 2007).
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 =======
 Returns the Brockwell--Gordon confidence interval
 for \eqn{\hat{\mu}} (Brockwell & Gordon, 2007).

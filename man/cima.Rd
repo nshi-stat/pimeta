@@ -32,8 +32,11 @@ cima(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
            for the average effect, \eqn{df=K-1}).
 <<<<<<< HEAD
+<<<<<<< HEAD
 \item \code{PL}: Profile likelihood confidence interval
            (Hardy & Thompson, 1996).
+=======
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 =======
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 }}

@@ -1,13 +1,19 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #' Profile likelihood confidence interval
 #'
 #' Returns a profile likelihood confidence interval
 #' for \eqn{\hat{\mu}} (Hardy & Thompson, 1996).
 =======
+=======
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 #' Brockwell--Gordon confidence interval
 #'
 #' Returns the Brockwell--Gordon confidence interval
 #' for \eqn{\hat{\mu}} (Brockwell & Gordon, 2007).
+<<<<<<< HEAD
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
+=======
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 #' 
 #' @name cima_pl
@@ -37,7 +43,10 @@
 #' @export
 cima_pl <- function(y, se, alpha = 0.05) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 
   # tbd
   if (0) {
@@ -45,6 +54,9 @@ cima_pl <- function(y, se, alpha = 0.05) {
   ll <- function(mu, tau2, y, se, k) {
     -0.5*log(2.0*pi) - 0.5*sum(log(se^2 + tau2)) - 0.5*sum((y - mu)^2/(se^2 + tau2))
   }
+<<<<<<< HEAD
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
+=======
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
   
   k <- length(y)
@@ -52,6 +64,7 @@ cima_pl <- function(y, se, alpha = 0.05) {
   w <- (se^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)
   
+<<<<<<< HEAD
 <<<<<<< HEAD
   upper <- abs(muhat)*100
   while(peqn(upper, muhat, alpha, y, se) > 0) {
@@ -75,18 +88,24 @@ cima_pl <- function(y, se, alpha = 0.05) {
     uniroot(peqn, interval = c(lower, muhat), muhat = muhat,
             alpha = alpha, y = y, se = se),
 =======
+=======
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
   llp <- function(mu, tau2, y, se, k) {
     
   }
   
   res <- try(
     uniroot(qgen, interval = c(muhat, upper), y = y, se = se),
+<<<<<<< HEAD
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
+=======
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
     silent = FALSE
   )
   if (class(res) == "try-error") {
     stop("Could not find a solution. Try another estimator.")
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
   lci <- res$root
   
@@ -147,6 +166,8 @@ tau2h_pl <- function(mu, y, se, maxiter = 100) {
   return(tau2h)
   
 =======
+=======
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
   tau2h <- res$root
   
   w <- (se^2 + tau2h)^-1
@@ -160,6 +181,9 @@ tau2h_pl <- function(mu, y, se, maxiter = 100) {
   return(res)
   }
   
+<<<<<<< HEAD
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
+=======
 >>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 }
 

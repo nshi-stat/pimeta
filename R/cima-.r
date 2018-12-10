@@ -27,7 +27,13 @@
 #'            for the average effect, \eqn{df=K-1}).
 #' \item \code{PL}: Profile likelihood confidence interval
 <<<<<<< HEAD
+<<<<<<< HEAD
 #'            (Hardy & Thompson, 1996).
+=======
+#'            (the ML estimator for \eqn{\tau^2} with
+#'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
+#'            for the average effect, \eqn{df=K-1}).
+>>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 =======
 #'            (the ML estimator for \eqn{\tau^2} with
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
