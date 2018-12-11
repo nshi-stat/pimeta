@@ -4,7 +4,8 @@
 #' its confidence interval.
 #' 
 #' @details Excellent reviews of heterogeneity variance estimation
-#' have been published (Sidik & Jonkman, 2007; Veroniki, et al., 2016).
+#' have been published (Sidik & Jonkman, 2007; Veroniki, et al., 2016;
+#' Langan, et al., 2018).
 #' 
 #' @name tau2h
 #' @rdname tau2h
@@ -40,6 +41,13 @@
 #'       \eqn{\hat{\tau}^2_l} and \eqn{\hat{\tau}^2_u}.
 #' }
 #' @references
+#' Sidik, K., and Jonkman, J. N. (2007).
+#' A comparison of heterogeneity variance estimators
+#' in combining results of studies.
+#' \emph{Stat Med.}
+#' \strong{26}(9): 1964-1981.
+#' \url{https://doi.org/10.1002/sim.2688}
+#' 
 #' Veroniki, A. A., Jackson, D., Viechtbauer, W.,
 #' Bender, R., Bowden, J., Knapp, G., Kuss, O.,
 #' Higgins, J. P. T., Langan, D., and Salanti, J. (2016).
@@ -49,12 +57,14 @@
 #' \strong{7}(1): 55-79.
 #' \url{https://doi.org/10.1002/jrsm.1164}
 #' 
-#' Sidik, K., and Jonkman, J. N. (2007).
-#' A comparison of heterogeneity variance estimators
-#' in combining results of studies.
-#' \emph{Stat Med.}
-#' \strong{26}(9): 1964-1981.
-#' \url{https://doi.org/10.1002/sim.2688}
+#' Langan, D., Higgins, J. P. T., Jackson, D.,
+#' Bowden, J., Veroniki, A. A., Kontopantelis, E.,
+#' Viechtbauer, W., and Simmonds, M. (2018).
+#' A comparison of heterogeneity variance estimators in
+#' simulated random‐effects meta‐analyses.
+#' \emph{Res Syn Meth.}
+#' \emph{In press.}
+#' \url{https://doi.org/10.1002/jrsm.1316}
 #' 
 #' DerSimonian, R., and Laird, N. (1986).
 #' Meta-analysis in clinical trials.
