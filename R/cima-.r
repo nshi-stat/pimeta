@@ -200,7 +200,7 @@ print.cima <- function(x, digits = 4, ...) {
   } else if (x$method == "SJ") {
     cat(paste0("A Wald-type t-distribution confidence interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: Sidik-Jonkman\n\n"))
+               " SE for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
   } else if (x$method == "PL") {
     cat(paste0("A profile likelihood confidence interval\n",
                " Heterogeneity variance: ML\n",

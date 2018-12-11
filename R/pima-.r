@@ -261,7 +261,7 @@ print.pima <- function(x, digits = 4, ...) {
   } else if (x$method == "SJ") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: Sidik-Jonkman\n\n"))
+               " SE for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
   } else if (x$method == "CL") {
     cat(paste0("A prediction interval with REML and standard SE\n",
                " Heterogeneity variance: REML\n",
