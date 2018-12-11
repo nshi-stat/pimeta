@@ -191,9 +191,6 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
   }
 
   if (method == "boot") {
-    if (B < 1000) {
-      warning("'B' > 1000 is recommended.")
-    }
     res <- pima_boot(y      = y, 
                      sigma  = se, 
                      alpha  = alpha,
