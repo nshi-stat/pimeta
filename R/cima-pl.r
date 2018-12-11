@@ -5,7 +5,6 @@
 #' 
 #' @name cima_pl
 #' @rdname cima_pl
-#' @aliases htsdl
 #' @param y the effect size estimates vector
 #' @param sigma the within studies standard errors vector
 #' @param alpha the alpha level of the prediction interval

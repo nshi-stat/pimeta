@@ -2,7 +2,6 @@
 % Please edit documentation in R/cima-pl.r
 \name{cima_pl}
 \alias{cima_pl}
-\alias{htsdl}
 \title{Profile likelihood confidence interval}
 \usage{
 cima_pl(y, se, alpha = 0.05)
