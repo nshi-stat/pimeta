@@ -26,19 +26,7 @@
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
 #'            for the average effect, \eqn{df=K-1}).
 #' \item \code{PL}: Profile likelihood confidence interval
-<<<<<<< HEAD
-<<<<<<< HEAD
 #'            (Hardy & Thompson, 1996).
-=======
-#'            (the ML estimator for \eqn{\tau^2} with
-#'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
-#'            for the average effect, \eqn{df=K-1}).
->>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
-=======
-#'            (the ML estimator for \eqn{\tau^2} with
-#'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
-#'            for the average effect, \eqn{df=K-1}).
->>>>>>> 2efdcfa597cf8a71a55b49e1d047d17a1dd22c0f
 #' }
 #' @param B the number of bootstrap samples
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
@@ -103,7 +91,7 @@
 #' set.seed(20161102)
 #' \donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 25000)}
 #' @export
-cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ"),
+cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
