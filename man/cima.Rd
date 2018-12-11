@@ -4,8 +4,8 @@
 \alias{cima}
 \title{Calculating Confidence Intervals}
 \usage{
-cima(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL"),
-  B = 25000, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
+cima(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL",
+  "BC"), B = 25000, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
   upper = 1000, maxit2 = 1000, tol = .Machine$double.eps^0.25,
   rnd = NULL, maxiter = 100)
 }
@@ -33,6 +33,7 @@ cima(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL"),
            for the average effect, \eqn{df=K-1}).
 \item \code{PL}: Profile likelihood confidence interval
            (Hardy & Thompson, 1996).
+\item \code{BC}: Bartlett-type correction (Noma, 2011).            
 }}
 
 \item{B}{the number of bootstrap samples}
@@ -113,6 +114,13 @@ Robust variance estimation for random effects meta-analysis.
 \emph{Comput Stat Data Anal.}
 \strong{50}(12): 3681-3701.
 \url{https://doi.org/10.1016/j.csda.2005.07.019}
+
+Noma H. (2011)
+Confidence intervals for a random-effects meta-analysis
+based on Bartlett-type corrections.
+\emph{Stat Med.}
+\strong{30}(28): 3304-3312.
+\url{https://doi.org/10.1002/sim.4350}
 }
 \seealso{
 \code{\link[=pima]{pima}}

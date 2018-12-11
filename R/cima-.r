@@ -27,6 +27,7 @@
 #'            for the average effect, \eqn{df=K-1}).
 #' \item \code{PL}: Profile likelihood confidence interval
 #'            (Hardy & Thompson, 1996).
+#' \item \code{BC}: Bartlett-type correction (Noma, 2011).            
 #' }
 #' @param B the number of bootstrap samples
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
@@ -84,6 +85,13 @@
 #' \emph{Comput Stat Data Anal.}
 #' \strong{50}(12): 3681-3701.
 #' \url{https://doi.org/10.1016/j.csda.2005.07.019}
+#' 
+#' Noma H. (2011)
+#' Confidence intervals for a random-effects meta-analysis
+#' based on Bartlett-type corrections.
+#' \emph{Stat Med.}
+#' \strong{30}(28): 3304-3312.
+#' \url{https://doi.org/10.1002/sim.4350}
 #' @seealso
 #' \code{\link[=pima]{pima}}
 #' @examples
@@ -91,13 +99,13 @@
 #' set.seed(20161102)
 #' \donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 25000)}
 #' @export
-cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL"),
+cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL", "BC"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
   
   # initial check
-  lstm <- c("boot", "DL", "HK", "SJ", "PL")
+  lstm <- c("boot", "DL", "HK", "SJ", "PL", "BC")
   method <- match.arg(method)
 
   util_check_num(y)
@@ -160,6 +168,10 @@ cima <- function(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL")
                         maxiter = maxiter)
   } else if (method == "PL") {
     res <- cima_pl(y     = y, 
+                   se    = se, 
+                   alpha = alpha)
+  } else if (method == "BC") {
+    res <- cima_bc(y     = y, 
                    se    = se, 
                    alpha = alpha)
   }
