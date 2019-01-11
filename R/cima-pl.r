@@ -35,12 +35,12 @@ cima_pl <- function(y, se, alpha = 0.05) {
   muhat <- sum(y*w) / sum(w)
   
   upper <- muhat + 10*sqrt(sum(w)^-1)
-  while(peqn(upper, muhat, alpha, y, se) > 0) {
+  while(peqn(upper, muhat, tau2h, alpha, y, se) > 0) {
     upper <- upper + 10*sqrt(sum(w)^-1)
   }
   res <- try(
     uniroot(peqn, interval = c(muhat, upper), muhat = muhat,
-            alpha = alpha, y = y, se = se),
+            tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {
@@ -49,12 +49,12 @@ cima_pl <- function(y, se, alpha = 0.05) {
   uci <- res$root
   
   lower <- muhat - 10*sqrt(sum(w)^-1)
-  while(peqn(lower, muhat, alpha, y, se) > 0) {
+  while(peqn(lower, muhat, tau2h, alpha, y, se) > 0) {
     lower <- lower - 10*sqrt(sum(w)^-1)
   }
   res <- try(
     uniroot(peqn, interval = c(lower, muhat), muhat = muhat,
-            alpha = alpha, y = y, se = se),
+            tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {
@@ -69,17 +69,13 @@ cima_pl <- function(y, se, alpha = 0.05) {
   
 }
 
-peqn <- function(mu, muhat, alpha, y, se) {
-  lpl(mu, y, se) - lpl(muhat, y, se) + 0.5*stats::qchisq(1.0 - alpha, 1)
-}
-
-lpl <- function(mu, y, se) {
+peqn <- function(mu, muhat, tau2h, alpha, y, se) {
   tau2mu <- tau2h_pl(mu, y, se)
-  -0.5*sum(log(se^2 + tau2mu)) - 0.5*sum((y - mu)^2/(se^2 + tau2mu))
+  ll(mu, tau2mu, y, se) - ll(muhat, tau2h, y, se) + 0.5*stats::qchisq(1.0 - alpha, 1)
 }
 
-ll <- function(muhat, tau2h, y, se) {
-  -0.5*sum(log(se^2 + tau2h)) - 0.5*sum((y - muhat)^2/(se^2 + tau2h))
+ll <- function(mu, tau2, y, se) {
+  -0.5*sum(log(se^2 + tau2)) - 0.5*sum((y - mu)^2/(se^2 + tau2))
 }
 
 tau2h_pl <- function(mu, y, se, maxiter = 100) {
