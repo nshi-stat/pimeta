@@ -20,10 +20,13 @@ pima_hts(y, sigma, alpha = 0.05)
 \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+\item \code{nup}: degrees of freedom for the prediction interval.
+\item \code{nuc}: degrees of freedom for the confidence interval.
 }
 }
 \description{
-A subroutine for the Higgins--Thompson--Spiegelhalter PI
+A function for the Higgins--Thompson--Spiegelhalter PI
 based on the DerSimonian-Laird estimator (Higgins et al., 2009)
 }
 \examples{

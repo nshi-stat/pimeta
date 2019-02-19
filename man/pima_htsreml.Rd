@@ -5,8 +5,8 @@
 \alias{htsreml}
 \title{Partlett--Riley prediction interval}
 \usage{
-pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "CL"),
-  maxiter = 100)
+pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "KR",
+  "CL", "APX"), maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -19,7 +19,8 @@ pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "CL"),
 \itemize{
 \item \code{HK}: the Hartung and Knapp (2001)'s estimator.
 \item \code{SJBC}: the Sidik and Jonkman (2006)'s bias coreccted estimator.
-\item \code{CL}: a standard estimator, \eqn{(1/\sum{\hat{w}_i})^{-1}}.
+\item \code{KR}: the Kenward and Roger (1997)'s approach.
+\item \code{APX}: an approximate estimator (DerSimonian & Laird, 1986), \eqn{(1/\sum{\hat{w}_i})^{-1}}.
 }}
 
 \item{maxiter}{the maximum number of iterations}
@@ -30,10 +31,13 @@ pima_htsreml(y, sigma, alpha = 0.05, vartype = c("HK", "SJBC", "CL"),
 \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+\item \code{nup}: degrees of freedom for the prediction interval.
+\item \code{nuc}: degrees of freedom for the confidence interval.
 }
 }
 \description{
-A subroutine for the Partlett--Riley PI
+A function for the Partlett--Riley PIs
 based on the REML estimator (Partlett & Riley, 2017)
 }
 \examples{
@@ -60,6 +64,18 @@ Robust variance estimation for random effects meta-analysis.
 \emph{Comput Stat Data Anal.}
 \strong{50}(12): 3681-3701.
 \url{https://doi.org/10.1016/j.csda.2005.07.019}
+
+Kenward, M. G., and Roger, J. H. (1997).
+Small sample inference for fixed effects from restricted
+maximum likelihood.
+\emph{Biometrics.}
+\strong{53}(3): 983-997.
+\url{https://doi.org/10.2307/2533558}
+
+DerSimonian, R., and Laird, N. (1986).
+Meta-analysis in clinical trials.
+\emph{Control Clin Trials.}
+\strong{7}(3): 177-188.
 }
 \seealso{
 \code{\link[=pima]{pima}}.

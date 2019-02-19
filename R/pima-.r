@@ -14,7 +14,7 @@
 #'            (Nagashima et al., 2018).
 #' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
-#'            a standard SE estimator for the average effect,
+#'            an approximate SE estimator for the average effect,
 #'            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
 #' \item \code{HK}: Partlett--Riley (2017) prediction interval
 #'            (the REML estimator for \eqn{\tau^2} with
@@ -23,9 +23,13 @@
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
 #'            for the average effect).
-#' \item \code{CL}: a prediction interval with REML and standard SE /
+#' \item \code{KR}: Partlett--Riley (2017) prediction interval /
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            a standard SE estimator for the average effect).
+#'            the Kenward and Roger (1997)'s approach
+#'            for the average effect).
+#' \item \code{APX}: Partlett--Riley (2017) prediction interval /
+#'            (the REML estimator for \eqn{\tau^2} with
+#'            an approximate SE estimator for the average effect).
 #' }
 #' @param B the number of bootstrap samples
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
@@ -42,6 +46,9 @@
 #' \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 #' \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+#' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+#' \item \code{nup}: degrees of freedom for the prediction interval.
+#' \item \code{nuc}: degrees of freedom for the confidence interval.
 #' }
 #' @references
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
@@ -96,7 +103,7 @@
 #' # 
 #' # Higgins-Thompson-Spiegelhalter prediction interval
 #' #  Heterogeneity variance: DerSimonian-Laird
-#' #  SE for average treatment effect: standard
+#' #  SE for average treatment effect: approximate
 #' # 
 #' # No. of studies: 10
 #' # 
@@ -151,13 +158,13 @@
 #' #  I^2:  85.5%
 #'
 #' @export
-pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
+pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
   
   # initial check
-  lstm <- c("boot", "HTS", "HK", "SJ", "CL")
+  lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
   method <- match.arg(method)
   
   util_check_num(y)
@@ -217,11 +224,17 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
                         alpha   = alpha,
                         vartype = "SJBC",
                         maxiter = maxiter)
-  } else if (method == "CL") {
+  } else if (method == "KR") {
     res <- pima_htsreml(y       = y, 
                         sigma   = se, 
                         alpha   = alpha,
-                        vartype = "CL",
+                        vartype = "KR",
+                        maxiter = maxiter)
+  } else if (method == "CL" | method == "APX") {
+    res <- pima_htsreml(y       = y, 
+                        sigma   = se, 
+                        alpha   = alpha,
+                        vartype = "APX",
                         maxiter = maxiter)
   }
   res <- append(res, list(i2h = i2h(se, res$tau2h)))
@@ -244,16 +257,19 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"
 #' @method print pima
 print.pima <- function(x, digits = 4, ...) {
   
-  cat("\nPrediction Interval for Random-Effects Meta-Analysis\n\n")
+  nuc <- x$nuc
+  nup <- x$nup
   
+  cat("\nPrediction Interval for Random-Effects Meta-Analysis\n\n")
+
   if (x$method == "boot") {
-    cat(paste0("A parametric bootstrap prediction interval\n",
+    cat(paste0("A parametric bootstrap prediction and confidence intervals\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
                " SE for average treatment effect: Hartung\n\n"))
   } else if (x$method == "HTS") {
     cat(paste0("Higgins-Thompson-Spiegelhalter prediction interval\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
-               " SE for average treatment effect: standard\n\n"))
+               " SE for average treatment effect: approximate\n\n"))
   } else if (x$method == "HK") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
@@ -262,10 +278,16 @@ print.pima <- function(x, digits = 4, ...) {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
                " SE for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
-  } else if (x$method == "CL") {
+  } else if (x$method == "KR") {
+    cat(paste0("Partlett-Riley prediction interval\n",
+               " Heterogeneity variance: REML\n",
+               " SE for average treatment effect: Kenward-Roger\n\n"))
+    nup <- format(round(nup, digits))
+    nuc <- format(round(nuc, digits))
+  } else if (x$method == "CL" | x$method == "APX") {
     cat(paste0("A prediction interval with REML and standard SE\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: standard\n\n"))
+               " SE for average treatment effect: approximate\n\n"))
   }
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))
@@ -273,12 +295,14 @@ print.pima <- function(x, digits = 4, ...) {
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%PI]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lpi, digits), nsmall = digits), ", ",
-             format(round(x$upi, digits), nsmall = digits), "]\n\n"))
+             format(round(x$upi, digits), nsmall = digits), "]\n"))
+  cat(paste0(" d.f.: ", nup, "\n\n"))
   
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%CI]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lci, digits), nsmall = digits), ", ",
-             format(round(x$uci, digits), nsmall = digits), "]\n\n"))
+             format(round(x$uci, digits), nsmall = digits), "]\n"))
+  cat(paste0(" d.f.: ", nuc, "\n\n"))
   
   cat(paste0("Heterogeneity measure\n"))
   cat(paste0(" tau2: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
@@ -298,11 +322,13 @@ print.pima <- function(x, digits = 4, ...) {
 #' @param title graph title
 #' @param base_size base font size
 #' @param base_family base font family
+#' @param digits a value for digits specifies the minimum number
+#'               of significant digits to be printed in values.
 #' @param ... further arguments passed to or from other methods.
 #' @export
 #' @method plot pima
 plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
-                      base_family = "", ...) {
+                      base_family = "", digits = 4, ...) {
   
   idodr <- lcl <- limits <- lx <- shape <- size <- ucl <- ymax <- ymin <- NULL
   
@@ -366,6 +392,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   element_blank <- ggplot2::element_blank
   element_blank <- ggplot2::element_blank
   rel <- ggplot2::rel
+  labs <- ggplot2::labs
   
   suppressWarnings(print(
     p <- ggplot(df1, aes(x = y, y = stats::reorder(id, idodr))) +
@@ -377,12 +404,13 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
                   colour = "black", fill = "black") +
       geom_vline(xintercept = x$muhat, lty = 2) +
       geom_vline(xintercept = 0, lty = 1) +
-      geom_text(aes(label = limits, x = lx), size = base_size*0.282, hjust = 1) +
+      geom_text(aes(label = limits, x = lx), size = base_size*0.282, hjust = 0) +
       scale_y_discrete() +
-      scale_x_continuous() +
+      scale_x_continuous(expand = c(.1, .1)) +
       scale_shape_identity() +
       ylab(NULL) +
       xlab("  ") +
+      labs(caption = parse(text=sprintf('hat(tau)^{2}=="%s"', format(round(x$tau2h, digits))))) +
       ggtitle(title) +
       theme_classic(base_size = base_size, base_family = "") +
       theme(axis.text.y = element_text(hjust = 0), axis.ticks.y = element_blank()) +

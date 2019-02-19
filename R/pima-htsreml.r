@@ -1,6 +1,6 @@
 #' Partlett--Riley prediction interval
 #'
-#' A subroutine for the Partlett--Riley PI
+#' A function for the Partlett--Riley PIs
 #' based on the REML estimator (Partlett & Riley, 2017)
 #' 
 #' @name pima_htsreml
@@ -13,7 +13,8 @@
 #' \itemize{
 #' \item \code{HK}: the Hartung and Knapp (2001)'s estimator.
 #' \item \code{SJBC}: the Sidik and Jonkman (2006)'s bias coreccted estimator.
-#' \item \code{CL}: a standard estimator, \eqn{(1/\sum{\hat{w}_i})^{-1}}.
+#' \item \code{KR}: the Kenward and Roger (1997)'s approach.
+#' \item \code{APX}: an approximate estimator (DerSimonian & Laird, 1986), \eqn{(1/\sum{\hat{w}_i})^{-1}}.
 #' }
 #' @param maxiter the maximum number of iterations
 #' @return
@@ -22,6 +23,9 @@
 #' \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 #' \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+#' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+#' \item \code{nup}: degrees of freedom for the prediction interval.
+#' \item \code{nuc}: degrees of freedom for the confidence interval.
 #' }
 #' @references
 #' Partlett, C, and Riley, R. D. (2017).
@@ -43,6 +47,18 @@
 #' \emph{Comput Stat Data Anal.}
 #' \strong{50}(12): 3681-3701.
 #' \url{https://doi.org/10.1016/j.csda.2005.07.019}
+#' 
+#' Kenward, M. G., and Roger, J. H. (1997).
+#' Small sample inference for fixed effects from restricted
+#' maximum likelihood.
+#' \emph{Biometrics.}
+#' \strong{53}(3): 983-997.
+#' \url{https://doi.org/10.2307/2533558}
+#' 
+#' DerSimonian, R., and Laird, N. (1986).
+#' Meta-analysis in clinical trials.
+#' \emph{Control Clin Trials.}
+#' \strong{7}(3): 177-188.
 #' @seealso
 #' \code{\link[=pima]{pima}}.
 #' @examples
@@ -50,10 +66,10 @@
 #' pimeta::pima_htsreml(sbp$y, sbp$sigmak)
 #' @export
 pima_htsreml <- function(y, sigma, alpha = 0.05,
-                         vartype = c("HK", "SJBC", "CL"), maxiter = 100) {
+                         vartype = c("HK", "SJBC", "KR", "CL", "APX"), maxiter = 100) {
 
   # initial check
-  lstm <- c("HK", "SJBC", "CL")
+  lstm <- c("HK", "SJBC", "KR", "CL", "APX")
   vartype <- match.arg(vartype)
   
   util_check_num(y)
@@ -74,30 +90,43 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
   
   w <- (sigma^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)
-
+  w1p <- sum(w)
+  w2p <- sum(w^2)
+  w3p <- sum(w^3)
+  nup <- k - 2
+  nuc <- k - 1
+  
   if (vartype == "HK") {
-    vmuhat <- sum(w*(y - muhat)^2)/(k - 1)/sum(w)
+    q <- sum(w*(y - muhat)^2)/(k - 1.0)
+    vmuhat <- max(1.0, q)/w1p
     method <- "HK"
   } else if (vartype == "SJBC") {
     lambda <- sigma^2 + tau2h
-    h <- 2.0*w/sum(w) - sum(w^2*lambda)/lambda/sum(w)^2
-    vmuhat <- sum(w^2*(y - muhat)^2/(1.0 - h))/sum(w)^2
+    h <- 2.0*w/w1p - sum(w^2*lambda)/(lambda*w1p^2)
+    vmuhat <- sum(w^2*(y - muhat)^2/(1.0 - h))/w1p^2
     method <- "SJ"
-  } else if (vartype == "CL") {
-    vmuhat <- 1/sum(w)
-    method <- "CL"
+  } else if (vartype == "KR") {
+    IE <- w2p*0.5 - w3p/w1p + 0.5*(w2p/w1p)^2
+    vmuhat <- (1.0 + 2.0*(w3p/w1p - (w2p/w1p)^2)/IE)/w1p
+    nup <- 2*IE/(vmuhat*w2p)^2 - 1
+    nuc <- 2*IE/(vmuhat*w2p)^2
+    method <- "KR"
+  } else if (vartype == "CL" | vartype == "APX") {
+    vmuhat <- 1.0/w1p
+    method <- "APX"
   } else {
-    vmuhat <- sum(w*(y - muhat)^2)/(k - 1)/sum(w)
+    vmuhat <- sum(w*(y - muhat)^2)/(k - 1)/w1p
     method <- "HK"
   }
 
-  lpi <- muhat - stats::qt(1.0 - alpha*0.5, k - 2)*sqrt(tau2h + vmuhat)
-  upi <- muhat + stats::qt(1.0 - alpha*0.5, k - 2)*sqrt(tau2h + vmuhat)
-  lci <- muhat - stats::qt(1.0 - alpha*0.5, k - 1)*sqrt(vmuhat)
-  uci <- muhat + stats::qt(1.0 - alpha*0.5, k - 1)*sqrt(vmuhat)
+  lpi <- muhat - stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
+  upi <- muhat + stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
+  lci <- muhat - stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
+  uci <- muhat + stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
   
-  res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci,
-              tau2h = tau2h, method = method, y = y, se = sigma, alpha = alpha)
+  res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci, 
+              tau2h = tau2h, vmuhat = vmuhat, nup = nup, nuc = nuc,
+              method = method, y = y, se = sigma, alpha = alpha)
 
   return(res)
 

@@ -1,6 +1,6 @@
 #' A parametric bootstrap prediction interval
 #' 
-#' A subroutine for the parametric bootstrap PI
+#' A function for the parametric bootstrap PI
 #' based on confidence distribution (Nagashima et al., 2018).
 #' A parametric bootstrap confidence interval is also calculated
 #' based on the same sampling method for bootstrap PI.
@@ -81,6 +81,8 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
     warning("'B' > 1000 is recommended.")
   }
   
+  k <- length(y)
+  
   # random numbers generation
   if (is.null(rnd)) {
     rndtau2 <- rtau2CppWrap(
@@ -110,7 +112,8 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   )
   
   res <- append(append(muhat, res),
-                list(tau2h = tau2h, method = "boot", y = y, se = sigma,
+                list(tau2h = tau2h, nup = k - 1, nuc = k - 1,
+                     method = "boot", y = y, se = sigma,
                      alpha = alpha, rnd = rndtau2))
 
   return(res)

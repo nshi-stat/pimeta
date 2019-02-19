@@ -41,7 +41,7 @@ pima_boot(y, sigma, alpha = 0.05, B = 25000, maxit1 = 1e+05,
 }
 }
 \description{
-A subroutine for the parametric bootstrap PI
+A function for the parametric bootstrap PI
 based on confidence distribution (Nagashima et al., 2018).
 A parametric bootstrap confidence interval is also calculated
 based on the same sampling method for bootstrap PI.

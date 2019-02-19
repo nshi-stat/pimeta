@@ -4,10 +4,10 @@
 \alias{pima}
 \title{Calculating Prediction Intervals}
 \usage{
-pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
-  B = 25000, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
-  upper = 1000, maxit2 = 1000, tol = .Machine$double.eps^0.25,
-  rnd = NULL, maxiter = 100)
+pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "KR",
+  "CL", "APX"), B = 25000, maxit1 = 1e+05, eps = 10^(-10),
+  lower = 0, upper = 1000, maxit2 = 1000,
+  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -22,7 +22,7 @@ pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
            (Nagashima et al., 2018).
 \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
-           a standard SE estimator for the average effect,
+           an approximate SE estimator for the average effect,
            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
 \item \code{HK}: Partlett--Riley (2017) prediction interval
            (the REML estimator for \eqn{\tau^2} with
@@ -31,9 +31,13 @@ pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
            (the REML estimator for \eqn{\tau^2} with
            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
            for the average effect).
-\item \code{CL}: a prediction interval with REML and standard SE /
+\item \code{KR}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
-           a standard SE estimator for the average effect).
+           the Kenward and Roger (1997)'s approach
+           for the average effect).
+\item \code{APX}: Partlett--Riley (2017) prediction interval /
+           (the REML estimator for \eqn{\tau^2} with
+           an approximate SE estimator for the average effect).
 }}
 
 \item{B}{the number of bootstrap samples}
@@ -60,6 +64,9 @@ pima(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "CL"),
 \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+\item \code{nup}: degrees of freedom for the prediction interval.
+\item \code{nuc}: degrees of freedom for the confidence interval.
 }
 }
 \description{
@@ -95,7 +102,7 @@ set.seed(20161102)
 # 
 # Higgins-Thompson-Spiegelhalter prediction interval
 #  Heterogeneity variance: DerSimonian-Laird
-#  SE for average treatment effect: standard
+#  SE for average treatment effect: approximate
 # 
 # No. of studies: 10
 # 
