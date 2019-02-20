@@ -6,7 +6,8 @@
 #' @name pima
 #' @rdname pima
 #' @param y the effect size estimates vector
-#' @param se the within studies standard errors vector
+#' @param se the within studies standard error estimates vector
+#' @param v the within studies variance estimates vector
 #' @param alpha the alpha level of the prediction interval
 #' @param method the calculation method for the pretiction interval (default = "boot").
 #' \itemize{
@@ -158,7 +159,8 @@
 #' #  I^2:  85.5%
 #'
 #' @export
-pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
+pima <- function(y, se, v = NULL, alpha = 0.05,
+                 method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
                  B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
                  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
                  maxiter = 100) {
@@ -166,6 +168,12 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "KR"
   # initial check
   lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
   method <- match.arg(method)
+  
+  if (missing(se) & missing(v)) {
+    stop("Either 'se' or 'v' must be specified.")
+  } else if (missing(se)) {
+    se <- sqrt(v)
+  }
   
   util_check_num(y)
   util_check_num(se)
@@ -196,7 +204,7 @@ pima <- function(y, se, alpha = 0.05, method = c("boot", "HTS", "HK", "SJ", "KR"
   } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
-
+  
   if (method == "boot") {
     res <- pima_boot(y      = y, 
                      sigma  = se, 
@@ -261,7 +269,7 @@ print.pima <- function(x, digits = 4, ...) {
   nup <- x$nup
   
   cat("\nPrediction Interval for Random-Effects Meta-Analysis\n\n")
-
+  
   if (x$method == "boot") {
     cat(paste0("A parametric bootstrap prediction and confidence intervals\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
@@ -328,14 +336,23 @@ print.pima <- function(x, digits = 4, ...) {
 #' @export
 #' @method plot pima
 plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
-                      base_family = "", digits = 4, ...) {
+                      base_family = "", digits = 3, studylabel = NULL, ...) {
   
   idodr <- lcl <- limits <- lx <- shape <- size <- ucl <- ymax <- ymin <- NULL
   
   k <- length(x$y)
+  
+  if (is.null(studylabel)) {
+    studylabel <- 1:k
+  } else {
+    if (k != length(studylabel)) {
+      stop("`studylabel` and the number of studies must have the same length.")
+    }
+  }
+  
   id <- c(
-    paste0("  ", 1:k),
-    paste0("  95%CI (I^2 = ", sprintf("%4.1f", x$i2h), "%)"),
+    paste0("  ", studylabel),
+    paste0("  95%CI (I^2 = ", format(round(x$i2h, 1), nsmall = 1), "%)"),
     paste0("  95%PI")
   )
   df1 <- data.frame(
@@ -350,22 +367,21 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   df1 <- data.frame(
     df1,
     size = c(1/x$se, 1, 1),
-    limits = c(paste0(sprintf("%3.2 f", df1$y[1:k]), " (",
-                      sprintf("%3.2 f", df1$lcl[1:k]), ", ",
-                      sprintf("%3.2 f", df1$ucl[1:k]), ")"),
-               paste0(sprintf("%3.2 f", x$muhat), " (",
-                      sprintf("%3.2 f", x$lci), ", ",
-                      sprintf("%3.2 f", x$uci), ")"),
-               paste0(sprintf("%3.2 f", x$muhat), " (",
-                      sprintf("%3.2 f", x$lpi), ", ",
-                      sprintf("%3.2 f", x$upi), ")")
-    ),
-    lx = rep(max(df1$ucl, na.rm = TRUE) + 1.7, k + 2)
+    limits = c(paste0(format(round(df1$y[1:k], digits), nsmall = digits), " (",
+                      format(round(df1$lcl[1:k], digits), nsmall = digits), ", ",
+                      format(round(df1$ucl[1:k], digits), nsmall = digits), ")"),
+               paste0(format(round(x$muhat, digits), nsmall = digits), " (",
+                      format(round(x$lci, digits), nsmall = digits), ", ",
+                      format(round(x$uci, digits), nsmall = digits), ")"),
+               paste0(format(round(x$muhat, digits), nsmall = digits), " (",
+                      format(round(x$lpi, digits), nsmall = digits), ", ",
+                      format(round(x$upi, digits), nsmall = digits), ")")
+    )
   )
   df2 <- data.frame(id = "Study", idodr = k + 4, y = NA, lcl = NA, ucl = NA,
-                    shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
+                    shape = NA, swidth = NA, size = NA, limits = NA)
   df3 <- data.frame(id = "Overall", idodr = 3, y = NA, lcl = NA, ucl = NA,
-                    shape = NA, swidth = NA, size = NA, limits = NA, lx = NA)
+                    shape = NA, swidth = NA, size = NA, limits = NA)
   df4 <- data.frame(x = c(x$lci, x$muhat, x$uci), ymax = c(2, 2 + 0.25, 2),
                     ymin = c(2, 2 - 0.25, 2), y = c(2, 2, 2))
   df5 <- data.frame(x = c(x$lpi, x$muhat, x$upi), ymax = c(1, 1 + 0.25, 1),
@@ -378,8 +394,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   geom_point <- ggplot2::geom_point
   geom_ribbon <- ggplot2::geom_ribbon
   geom_vline <- ggplot2::geom_vline
-  geom_text <- ggplot2::geom_text
-  scale_y_discrete <- ggplot2::scale_y_discrete
+  scale_y_continuous <- ggplot2::scale_y_continuous
   scale_x_continuous <- ggplot2::scale_x_continuous
   scale_shape_identity <- ggplot2::scale_shape_identity
   ylab <- ggplot2::ylab
@@ -393,29 +408,37 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   element_blank <- ggplot2::element_blank
   rel <- ggplot2::rel
   labs <- ggplot2::labs
+  sec_axis <- ggplot2::sec_axis
   
-  suppressWarnings(print(
-    p <- ggplot(df1, aes(x = y, y = stats::reorder(id, idodr))) +
-      geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
-      geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
-      geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
-                  colour = "black", fill = "black") +
-      geom_ribbon(data = df5, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
-                  colour = "black", fill = "black") +
-      geom_vline(xintercept = x$muhat, lty = 2) +
-      geom_vline(xintercept = 0, lty = 1) +
-      geom_text(aes(label = limits, x = lx), size = base_size*0.282, hjust = 0) +
-      scale_y_discrete() +
-      scale_x_continuous(expand = c(.1, .1)) +
-      scale_shape_identity() +
-      ylab(NULL) +
-      xlab("  ") +
-      labs(caption = parse(text=sprintf('hat(tau)^{2}=="%s"', format(round(x$tau2h, digits))))) +
-      ggtitle(title) +
-      theme_classic(base_size = base_size, base_family = "") +
-      theme(axis.text.y = element_text(hjust = 0), axis.ticks.y = element_blank()) +
-      theme(axis.line.x = element_line(), axis.line.y = element_blank(),
-            plot.title = element_text(hjust = 0.5, size = rel(0.8)))
-  ))
+  y1labels <- df1[order(df1$idodr),]$id
+  y2labels <- df1[order(df1$idodr),]$limits
+  y2labels[is.na(y2labels)] <- ""
+  
+  suppressWarnings(
+    print(
+      p <- ggplot(df1, aes(x = y, y = idodr)) +
+        geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
+        geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
+        geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
+                    colour = "black", fill = "black") +
+        geom_ribbon(data = df5, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
+                    colour = "black", fill = "black") +
+        geom_vline(xintercept = x$muhat, lty = 2) +
+        geom_vline(xintercept = 0, lty = 1) +
+        scale_y_continuous(breaks = 1:length(y1labels), labels = y1labels,
+                           sec.axis = sec_axis( ~ ., breaks = 1:length(y2labels), labels = y2labels)) +
+        scale_x_continuous() +
+        scale_shape_identity() +
+        ylab(NULL) +
+        xlab("  ") +
+        labs(caption = parse(text = sprintf('hat(tau)^{2}=="%s"', format(round(x$tau2h, digits), 
+                                                                         nsmall = digits)))) +
+        ggtitle(title) +
+        theme_classic(base_size = base_size, base_family = base_family) +
+        theme(axis.text.y = element_text(hjust = 0), axis.ticks.y = element_blank()) +
+        theme(axis.line.x = element_line(), axis.line.y = element_blank(),
+              plot.title = element_text(hjust = 0.5, size = rel(0.8)))
+    )
+  )
   
 }

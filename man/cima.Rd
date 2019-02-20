@@ -4,15 +4,17 @@
 \alias{cima}
 \title{Calculating Confidence Intervals}
 \usage{
-cima(y, se, alpha = 0.05, method = c("boot", "DL", "HK", "SJ", "PL",
-  "BC"), B = 25000, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
-  upper = 1000, maxit2 = 1000, tol = .Machine$double.eps^0.25,
-  rnd = NULL, maxiter = 100)
+cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
+  "SJ", "PL", "BC"), B = 25000, maxit1 = 1e+05, eps = 10^(-10),
+  lower = 0, upper = 1000, maxit2 = 1000,
+  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
 
 \item{se}{the within studies standard errors vector}
+
+\item{v}{the within studies variance estimates vector}
 
 \item{alpha}{the alpha level of the prediction interval}
 
