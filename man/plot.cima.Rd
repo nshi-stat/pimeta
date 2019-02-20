@@ -5,7 +5,8 @@
 \title{Plot Results}
 \usage{
 \method{plot}{cima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", ...)
+  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
+  ...)
 }
 \arguments{
 \item{x}{`cima` object to plot}

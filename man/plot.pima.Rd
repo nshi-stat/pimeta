@@ -5,7 +5,8 @@
 \title{Plot Results}
 \usage{
 \method{plot}{pima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", ...)
+  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
+  ...)
 }
 \arguments{
 \item{x}{`pima` object to plot}
@@ -17,6 +18,9 @@
 \item{base_size}{base font size}
 
 \item{base_family}{base font family}
+
+\item{digits}{a value for digits specifies the minimum number
+of significant digits to be printed in values.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
