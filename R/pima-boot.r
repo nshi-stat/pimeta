@@ -48,7 +48,8 @@
 #' @export
 pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
                    eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-                   tol = .Machine$double.eps^0.25, rnd = NULL) {
+                   tol = .Machine$double.eps^0.25, rnd = NULL, parallel = FALSE,
+                   seed = NULL) {
 
   # initial check
   util_check_num(y)
@@ -85,18 +86,44 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   
   # random numbers generation
   if (is.null(rnd)) {
-    rndtau2 <- rtau2CppWrap(
-      n      = as.integer(B),
-      y      = as.vector(y),
-      sigma  = as.vector(sigma),
-      mode   = as.double(1),
-      maxit1 = as.integer(maxit1),
-      eps    = as.double(eps),
-      lower  = as.double(lower),
-      upper  = as.double(upper),
-      maxit2 = as.integer(maxit2),
-      tol    = as.double(tol)
-    )
+    if (parallel == TRUE) {
+      ncore <- parallel::detectCores()
+      cl <- parallel::makeCluster(ncore, type = "PSOCK")
+      parallel::clusterSetRNGStream(cl, seed)
+      doSNOW::registerDoSNOW(cl)
+      Bp <- c(rep(floor(B/ncore), ncore - 1), B - floor(B/ncore)*(ncore - 1))
+      `%dopar%` <- foreach::`%dopar%`
+      rndtau2 <- foreach::foreach(Bpi = Bp, .combine = "c") %dopar% {
+        rtau2CppWrap(
+          n      = as.integer(Bpi),
+          y      = as.vector(y),
+          sigma  = as.vector(sigma),
+          mode   = as.double(1),
+          maxit1 = as.integer(maxit1),
+          eps    = as.double(eps),
+          lower  = as.double(lower),
+          upper  = as.double(upper),
+          maxit2 = as.integer(maxit2),
+          tol    = as.double(tol)
+        )
+      }
+      parallel::stopCluster(cl)
+      set.seed(seed)
+    } else {
+      set.seed(seed)
+      rndtau2 <- rtau2CppWrap(
+        n      = as.integer(B),
+        y      = as.vector(y),
+        sigma  = as.vector(sigma),
+        mode   = as.double(1),
+        maxit1 = as.integer(maxit1),
+        eps    = as.double(eps),
+        lower  = as.double(lower),
+        upper  = as.double(upper),
+        maxit2 = as.integer(maxit2),
+        tol    = as.double(tol)
+      )
+    }
   } else {
     rndtau2 <- rnd
   }

@@ -6,6 +6,24 @@
 
 using namespace Rcpp;
 
+// dwchisqCpp
+List dwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult, const Eigen::VectorXd& delta, const int n, const double mode, const int maxit, const double eps);
+RcppExport SEXP _pimeta_dwchisqCpp(SEXP qSEXP, SEXP lambdaSEXP, SEXP multSEXP, SEXP deltaSEXP, SEXP nSEXP, SEXP modeSEXP, SEXP maxitSEXP, SEXP epsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXi& >::type mult(multSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const double >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxit(maxitSEXP);
+    Rcpp::traits::input_parameter< const double >::type eps(epsSEXP);
+    rcpp_result_gen = Rcpp::wrap(dwchisqCpp(q, lambda, mult, delta, n, mode, maxit, eps));
+    return rcpp_result_gen;
+END_RCPP
+}
 // bootPICppWrap
 List bootPICppWrap(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y, const Eigen::VectorXd& sigma, const double alpha);
 RcppExport SEXP _pimeta_bootPICppWrap(SEXP rndSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP alphaSEXP) {

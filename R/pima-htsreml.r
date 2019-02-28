@@ -11,7 +11,7 @@
 #' @param alpha the alpha level of the prediction interval
 #' @param vartype the type of the variance estimator for \eqn{\hat{\mu}} (default = "HK"):
 #' \itemize{
-#' \item \code{HK}: the Hartung and Knapp (2001)'s estimator.
+#' \item \code{HK}: the Hartung (1999)'s estimator (the Hartung and Knapp (2001)'s estimator).
 #' \item \code{SJBC}: the Sidik and Jonkman (2006)'s bias coreccted estimator.
 #' \item \code{KR}: the Kenward and Roger (1997)'s approach.
 #' \item \code{APX}: an approximate estimator (DerSimonian & Laird, 1986), \eqn{(1/\sum{\hat{w}_i})^{-1}}.
@@ -34,6 +34,12 @@
 #' \emph{Stat Med.}
 #' \strong{36}(2): 301-317.
 #' \url{https://doi.org/10.1002/sim.7140}
+#' 
+#' Hartung, J. (1999).
+#' An alternative method for meta-analysis.
+#' \emph{Biom J.}
+#' \strong{41}(8): 901-916.
+#' \url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 #' 
 #' Hartung, J., and Knapp, G. (2001).
 #' On tests of the overall treatment effect in meta-analysis with

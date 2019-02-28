@@ -7,7 +7,8 @@
 pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
   "SJ", "KR", "CL", "APX"), B = 25000, maxit1 = 1e+05,
   eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
+  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100,
+  parallel = FALSE, seed = NULL)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -24,14 +25,14 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
            (Nagashima et al., 2018).
 \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
-           an approximate SE estimator for the average effect,
+           an approximate variance estimator for the average effect,
            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
 \item \code{HK}: Partlett--Riley (2017) prediction interval
            (the REML estimator for \eqn{\tau^2} with
-           the Hartung and Knapp (2001)'s SE estimator for the average effect).
+           the Hartung (1999)'s variance estimator for the average effect).
 \item \code{SJ}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
-           the Sidik and Jonkman (2006)'s bias coreccted SE estimator
+           the Sidik and Jonkman (2006)'s bias coreccted variance estimator
            for the average effect).
 \item \code{KR}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
@@ -39,7 +40,7 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
            for the average effect).
 \item \code{APX}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
-           an approximate SE estimator for the average effect).
+           an approximate variance estimator for the average effect).
 }}
 
 \item{B}{the number of bootstrap samples}

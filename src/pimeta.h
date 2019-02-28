@@ -3,6 +3,9 @@
 
 using namespace Rcpp;
 
+extern List dwchisqCpp(const double, const Eigen::VectorXd&, const Eigen::VectorXi&,
+                       const Eigen::VectorXd&, const int, const double, const int, const double);
+
 extern List bootPICppWrap(const Eigen::VectorXd&, const Eigen::VectorXd&,
                           const Eigen::VectorXd&, const double);
 
@@ -30,3 +33,7 @@ extern double fx(const double, const double, const int, const double,
 
 extern void pQCpp(const double, const Eigen::VectorXd&, const int,
                   const double, const int, const double, double*, int*);
+
+extern void pQCpp2(const double, const Eigen::VectorXd&, const Eigen::VectorXi&,
+                   const Eigen::VectorXd&, const int, const double, const int,
+                   const double, double*, int*);

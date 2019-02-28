@@ -7,7 +7,8 @@
 \usage{
 pima_boot(y, sigma, alpha = 0.05, B = 25000, maxit1 = 1e+05,
   eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-  tol = .Machine$double.eps^0.25, rnd = NULL)
+  tol = .Machine$double.eps^0.25, rnd = NULL, parallel = FALSE,
+  seed = NULL)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
