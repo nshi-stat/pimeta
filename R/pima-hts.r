@@ -35,8 +35,6 @@ pima_hts <- function(y, sigma, alpha = 0.05) {
 
   # initial check
   util_check_num(y)
-  util_check_num(sigma)
-  util_check_num(alpha)
   util_check_nonneg(sigma)
   util_check_inrange(alpha, 0.0, 1.0)
 

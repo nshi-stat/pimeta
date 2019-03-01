@@ -1,33 +1,33 @@
-#' Confidence interval based on Bartlett type corrections
-#'
-#' Returns a confidence interval for \eqn{\hat{\mu}} based on
-#' Bartlett type corrections (Noma, 2011).
-#' 
-#' @name cima_bc
-#' @rdname cima_bc
-#' @param y the effect size estimates vector
-#' @param sigma the within studies standard errors vector
-#' @param alpha the alpha level of the prediction interval
-#' @return
-#' \itemize{
-#' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
-#' \item \code{lci}, \code{lci}: the lower and upper confidence limits
-#'                               \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
-#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
-#' }
-#' @references
-#' Noma H. (2011)
-#' Confidence intervals for a random-effects meta-analysis
-#' based on Bartlett-type corrections.
-#' \emph{Stat Med.}
-#' \strong{30}(28): 3304-3312.
-#' \url{https://doi.org/10.1002/sim.4350}
-#' @seealso
-#' \code{\link[=cima]{cima}}.
-#' @examples
-#' data(sbp, package = "pimeta")
-#' pimeta::cima_bc(sbp$y, sbp$sigmak)
-#' @export
+# Confidence interval based on Bartlett type corrections
+#
+# Returns a confidence interval for \eqn{\hat{\mu}} based on
+# Bartlett type corrections (Noma, 2011).
+# 
+# @name cima_bc
+# @rdname cima_bc
+# @param y the effect size estimates vector
+# @param sigma the within studies standard errors vector
+# @param alpha the alpha level of the prediction interval
+# @return
+# \itemize{
+# \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
+# \item \code{lci}, \code{lci}: the lower and upper confidence limits
+#                               \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
+# \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+# }
+# @references
+# Noma H. (2011)
+# Confidence intervals for a random-effects meta-analysis
+# based on Bartlett-type corrections.
+# \emph{Stat Med.}
+# \strong{30}(28): 3304-3312.
+# \url{https://doi.org/10.1002/sim.4350}
+# @seealso
+# \code{\link[=cima]{cima}}.
+# @examples
+# data(sbp, package = "pimeta")
+# pimeta::cima_bc(sbp$y, sbp$sigmak)
+# @export
 cima_bc <- function(y, se, alpha = 0.05) {
 
   k <- length(y)

@@ -26,21 +26,24 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
            an approximate variance estimator for the average effect,
-           \eqn{(1/\sum{\hat{w}_i})^{-1}}).
+           \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
 \item \code{HK}: Partlett--Riley (2017) prediction interval
            (the REML estimator for \eqn{\tau^2} with
-           the Hartung (1999)'s variance estimator for the average effect).
+           the Hartung (1999)'s variance estimator [the Hartung and
+           Knapp (2001)'s estimator] for the average effect,
+           \eqn{df=K-2}).
 \item \code{SJ}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
-           the Sidik and Jonkman (2006)'s bias coreccted variance estimator
-           for the average effect).
+           the Sidik and Jonkman (2006)'s bias coreccted variance
+           estimator for the average effect, \eqn{df=K-2}).
 \item \code{KR}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
            the Kenward and Roger (1997)'s approach
-           for the average effect).
+           for the average effect, \eqn{df=\nu-1}).
 \item \code{APX}: Partlett--Riley (2017) prediction interval /
            (the REML estimator for \eqn{\tau^2} with
-           an approximate variance estimator for the average effect).
+           an approximate variance estimator for the average
+           effect, \eqn{df=K-2}).
 }}
 
 \item{B}{the number of bootstrap samples}

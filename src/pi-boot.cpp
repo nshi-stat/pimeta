@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List dwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult,
+List pwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult,
                 const Eigen::VectorXd& delta, const int n, const double mode,
                 const int maxit, const double eps) {
   

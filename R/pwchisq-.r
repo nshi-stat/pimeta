@@ -19,13 +19,15 @@
 #' \item \code{prob}: the distribution function.
 #' }
 #' @references
-#' Higgins, J. P. T., and Thompson, S. G. (2002).
-#' Quantifying heterogeneity in a meta-analysis.
-#' \emph{Stat Med.}
-#' \strong{21}(11): 1539-1558.
-#' \url{https://doi.org/10.1002/sim.1186}
+#' Farebrother, R. W. (1984).
+#' Algorithm AS 204: the distribution of a positive linear combination of
+#' \eqn{\chi^2} random variables.
+#' \emph{J R Stat Soc Ser C Appl Stat.}
+#' \strong{33}(3): 332--339.
+#' \url{https://doi.org/10.2307/2347721}.
 #' @examples
-#' # Farabrother (1984)'s Table 1, Q1 (The values were 0.0542, 0.4936, 0.8760)
+#' # Table 1 of Farabrother (1984)
+#' # Q1 (The values were 0.0542, 0.4936, 0.8760)
 #' pimeta::pwchisq( 1, lambda = c(6,3,1), mult = c(1,1,1), delta = c(0,0,0))
 #' pimeta::pwchisq( 7, lambda = c(6,3,1), mult = c(1,1,1), delta = c(0,0,0))
 #' pimeta::pwchisq(20, lambda = c(6,3,1), mult = c(1,1,1), delta = c(0,0,0))

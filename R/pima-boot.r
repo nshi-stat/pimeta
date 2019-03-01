@@ -53,15 +53,6 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
 
   # initial check
   util_check_num(y)
-  util_check_num(sigma)
-  util_check_num(alpha)
-  util_check_num(B)
-  util_check_num(maxit1)
-  util_check_num(eps)
-  util_check_num(lower)
-  util_check_num(upper)
-  util_check_num(maxit2)
-  util_check_num(tol)
   util_check_nonneg(sigma)
   util_check_inrange(alpha, 0.0, 1.0)
   util_check_gt(B, 1)

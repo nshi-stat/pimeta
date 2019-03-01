@@ -16,27 +16,32 @@
 #' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            an approximate variance estimator for the average effect,
-#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}).
+#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
 #' \item \code{HK}: Partlett--Riley (2017) prediction interval
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            the Hartung (1999)'s variance estimator for the average effect).
+#'            the Hartung (1999)'s variance estimator [the Hartung and
+#'            Knapp (2001)'s estimator] for the average effect,
+#'            \eqn{df=K-2}).
 #' \item \code{SJ}: Partlett--Riley (2017) prediction interval /
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            the Sidik and Jonkman (2006)'s bias coreccted variance estimator
-#'            for the average effect).
+#'            the Sidik and Jonkman (2006)'s bias coreccted variance
+#'            estimator for the average effect, \eqn{df=K-2}).
 #' \item \code{KR}: Partlett--Riley (2017) prediction interval /
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Kenward and Roger (1997)'s approach
-#'            for the average effect).
+#'            for the average effect, \eqn{df=\nu-1}).
 #' \item \code{APX}: Partlett--Riley (2017) prediction interval /
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            an approximate variance estimator for the average effect).
+#'            an approximate variance estimator for the average
+#'            effect, \eqn{df=K-2}).
 #' }
 #' @param B the number of bootstrap samples
+#' @param parallel logical, indicates whether this function uses parallel computing
+#' @param seed set the value of random seed
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
 #' @param eps the desired level of accuracy for the exact distribution function of \eqn{Q}
 #' @param lower the lower limit of random numbers of \eqn{\tau^2}
-#' @param upper the lower upper of random numbers of \eqn{\tau^2}
+#' @param upper the upper limit of random numbers of \eqn{\tau^2}
 #' @param maxit2 the maximum number of iteration for numerical inversions
 #' @param tol the desired level of accuracy for numerical inversions
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
@@ -161,9 +166,9 @@
 #' @export
 pima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
-                 B = 25000, maxit1 = 100000, eps = 10^(-10), lower = 0, upper = 1000,
-                 maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
-                 maxiter = 100, parallel = FALSE, seed = NULL) {
+                 B = 25000, parallel = FALSE, seed = NULL, maxit1 = 100000, 
+                 eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
+                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100, ) {
   
   # initial check
   lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
@@ -176,16 +181,6 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
   }
   
   util_check_num(y)
-  util_check_num(se)
-  util_check_num(alpha)
-  util_check_num(B)
-  util_check_num(maxit1)
-  util_check_num(eps)
-  util_check_num(lower)
-  util_check_num(upper)
-  util_check_num(maxit2)
-  util_check_num(tol)
-  util_check_num(maxiter)
   util_check_nonneg(se)
   util_check_inrange(alpha, 0.0, 1.0)
   util_check_gt(B, 1)
@@ -275,29 +270,29 @@ print.pima <- function(x, digits = 4, ...) {
   if (x$method == "boot") {
     cat(paste0("A parametric bootstrap prediction and confidence intervals\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
-               " SE for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
+               " Variance for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
   } else if (x$method == "HTS") {
     cat(paste0("Higgins-Thompson-Spiegelhalter prediction interval\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
-               " SE for average treatment effect: approximate\n\n"))
+               " Variance for average treatment effect: approximate\n\n"))
   } else if (x$method == "HK") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
+               " Variance for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
   } else if (x$method == "SJ") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
+               " Variance for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
   } else if (x$method == "KR") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: Kenward-Roger\n\n"))
+               " Variance for average treatment effect: Kenward-Roger\n\n"))
     nup <- format(round(nup, digits))
     nuc <- format(round(nuc, digits))
   } else if (x$method == "CL" | x$method == "APX") {
     cat(paste0("Partlett-Riley prediction interval\n",
                " Heterogeneity variance: REML\n",
-               " SE for average treatment effect: approximate\n\n"))
+               " Variance for average treatment effect: approximate\n\n"))
   }
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))

@@ -5,8 +5,8 @@
 \title{Calculating Confidence Intervals}
 \usage{
 cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
-  "SJ", "PL", "BC"), B = 25000, maxit1 = 1e+05, eps = 10^(-10),
-  lower = 0, upper = 1000, maxit2 = 1000,
+  "SJ", "KR", "APX", "PL", "BC"), B = 25000, maxit1 = 1e+05,
+  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
   tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
 }
 \arguments{
@@ -24,15 +24,25 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
            (Nagashima et al., 2018).
 \item \code{DL}: A Wald-type t-distribution confidence interval
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
-           a standard SE estimator for the average effect,
+           an approximate variance estimator for the average effect,
            \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
 \item \code{HK}: A Wald-type t-distribution confidence interval
            (the REML estimator for \eqn{\tau^2} with
-           the Hartung and Knapp (2001)'s SE estimator for the average effect, \eqn{df=K-1}).
+           the Hartung (1999)'s varance estimator [the Hartung and
+           Knapp (2001)'s estimator] for the average effect,
+           \eqn{df=K-1}).
 \item \code{SJ}: A Wald-type t-distribution confidence interval
            (the REML estimator for \eqn{\tau^2} with
            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
            for the average effect, \eqn{df=K-1}).
+\item \code{KR}: Partlett--Riley (2017) confidence interval /
+           (the REML estimator for \eqn{\tau^2} with
+           the Kenward and Roger (1997)'s approach
+           for the average effect, \eqn{df=\nu}).
+\item \code{APX}: A Wald-type t-distribution confidence interval /
+           (the REML estimator for \eqn{\tau^2} with
+           an approximate variance estimator for the average
+           effect, \eqn{df=K-1}).
 \item \code{PL}: Profile likelihood confidence interval
            (Hardy & Thompson, 1996).
 \item \code{BC}: Bartlett-type correction (Noma, 2011).            
@@ -73,7 +83,7 @@ have been published (e.g., Veroniki, et al., 2018).
 \examples{
 data(sbp, package = "pimeta")
 set.seed(20161102)
-\donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 25000)}
+\donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 50000)}
 }
 \references{
 Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,

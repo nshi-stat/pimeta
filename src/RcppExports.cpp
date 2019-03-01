@@ -6,9 +6,9 @@
 
 using namespace Rcpp;
 
-// dwchisqCpp
-List dwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult, const Eigen::VectorXd& delta, const int n, const double mode, const int maxit, const double eps);
-RcppExport SEXP _pimeta_dwchisqCpp(SEXP qSEXP, SEXP lambdaSEXP, SEXP multSEXP, SEXP deltaSEXP, SEXP nSEXP, SEXP modeSEXP, SEXP maxitSEXP, SEXP epsSEXP) {
+// pwchisqCpp
+List pwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult, const Eigen::VectorXd& delta, const int n, const double mode, const int maxit, const double eps);
+RcppExport SEXP _pimeta_pwchisqCpp(SEXP qSEXP, SEXP lambdaSEXP, SEXP multSEXP, SEXP deltaSEXP, SEXP nSEXP, SEXP modeSEXP, SEXP maxitSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double >::type mode(modeSEXP);
     Rcpp::traits::input_parameter< const int >::type maxit(maxitSEXP);
     Rcpp::traits::input_parameter< const double >::type eps(epsSEXP);
-    rcpp_result_gen = Rcpp::wrap(dwchisqCpp(q, lambda, mult, delta, n, mode, maxit, eps));
+    rcpp_result_gen = Rcpp::wrap(pwchisqCpp(q, lambda, mult, delta, n, mode, maxit, eps));
     return rcpp_result_gen;
 END_RCPP
 }
