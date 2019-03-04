@@ -52,6 +52,7 @@
 #' \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 #' \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+#' \item \code{i2h}: the estimate for \eqn{I^2}.
 #' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 #' \item \code{nup}: degrees of freedom for the prediction interval.
 #' \item \code{nuc}: degrees of freedom for the confidence interval.
@@ -168,7 +169,7 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
                  B = 25000, parallel = FALSE, seed = NULL, maxit1 = 100000, 
                  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100, ) {
+                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100) {
   
   # initial check
   lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
@@ -272,25 +273,25 @@ print.pima <- function(x, digits = 4, ...) {
                " Heterogeneity variance: DerSimonian-Laird\n",
                " Variance for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
   } else if (x$method == "HTS") {
-    cat(paste0("Higgins-Thompson-Spiegelhalter prediction interval\n",
+    cat(paste0("Higgins-Thompson-Spiegelhalter prediction and confidence intervals\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
                " Variance for average treatment effect: approximate\n\n"))
   } else if (x$method == "HK") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("Partlett-Riley prediction and confidence intervals\n",
                " Heterogeneity variance: REML\n",
                " Variance for average treatment effect: Hartung (Hartung-Knapp)\n\n"))
   } else if (x$method == "SJ") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("Partlett-Riley prediction and confidence intervals\n",
                " Heterogeneity variance: REML\n",
                " Variance for average treatment effect: bias corrected Sidik-Jonkman\n\n"))
   } else if (x$method == "KR") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("Partlett-Riley prediction and confidence intervals\n",
                " Heterogeneity variance: REML\n",
                " Variance for average treatment effect: Kenward-Roger\n\n"))
     nup <- format(round(nup, digits))
     nuc <- format(round(nuc, digits))
   } else if (x$method == "CL" | x$method == "APX") {
-    cat(paste0("Partlett-Riley prediction interval\n",
+    cat(paste0("Partlett-Riley prediction and confidence intervals\n",
                " Heterogeneity variance: REML\n",
                " Variance for average treatment effect: approximate\n\n"))
   }
@@ -310,8 +311,8 @@ print.pima <- function(x, digits = 4, ...) {
   cat(paste0(" d.f.: ", nuc, "\n\n"))
   
   cat(paste0("Heterogeneity measure\n"))
-  cat(paste0(" tau2: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
-  cat(paste0(" I^2:  ", format(round(x$i2h, 1), nsmall = 1), "%\n\n"))
+  cat(paste0(" tau-squared: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
+  cat(paste0(" I-squared:  ", format(round(x$i2h, 1), nsmall = 1), "%\n\n"))
   
   invisible(x)
   
@@ -349,7 +350,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   
   id <- c(
     paste0("  ", studylabel),
-    paste0("  95%CI (I^2 = ", format(round(x$i2h, 1), nsmall = 1), "%)"),
+    paste0("  95%CI"),
     paste0("  95%PI")
   )
   df1 <- data.frame(
@@ -428,8 +429,11 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
         scale_shape_identity() +
         ylab(NULL) +
         xlab("  ") +
-        labs(caption = parse(text = sprintf('hat(tau)^{2}=="%s"', format(round(x$tau2h, digits), 
-                                                                         nsmall = digits)))) +
+        labs(caption = parse(
+          text = sprintf('list(hat(tau)^{2}=="%s", I^{2}=="%s"*"%%")',
+                           format(round(x$tau2h, digits), nsmall = digits),
+                           format(round(x$i2h, 1), nsmall = 1)))
+          ) +
         ggtitle(title) +
         theme_classic(base_size = base_size, base_family = base_family) +
         theme(axis.text.y = element_text(hjust = 0), axis.ticks.y = element_blank()) +

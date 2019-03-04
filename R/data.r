@@ -99,9 +99,9 @@ NULL
 NULL
 
 
-#' Hypertention data
+#' Hypertension data
 #'
-#' The hypertention data (Wang et al., 2005) included
+#' The hypertension data (Wang et al., 2005) included
 #' 7 studies comparing the treatment effect of
 #' anti-hypertensive treatment versus control on reducing
 #' diastolic blood pressure (DBP) in patients with hypertension.
@@ -111,6 +111,7 @@ NULL
 #' \itemize{
 #'   \item \code{y}: Standardized mean difference
 #'   \item \code{se}: Standard error
+#'   \item \code{label}: Labels for each study
 #' }
 #'
 #' @docType data

@@ -13,7 +13,7 @@ Description: An implementation of prediction intervals for random-effects meta-a
   <arXiv:1804.01054>.
 Depends: R (>= 3.0.0)
 Imports: stats, Rcpp (>= 0.12.18), ggplot2 (>= 3.0.0), utils, foreach (>= 1.2.0),
-  doSNOW (>= 1.0.16), parallel
+  doParallel (>= 1.0.14), parallel
 Suggests: knitr, rmarkdown
 LinkingTo: Rcpp, RcppEigen
 License: GPL-3

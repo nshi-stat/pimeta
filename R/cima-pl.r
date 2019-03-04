@@ -62,7 +62,7 @@ cima_pl <- function(y, se, alpha = 0.05) {
   }
   lci <- res$root
   
-  res <- list(muhat = muhat, lci = lci, uci = uci, tau2h = tau2h,
+  res <- list(muhat = muhat, lci = lci, uci = uci, tau2h = tau2h, vmuhat = NULL,
               method = "PL", y = y, se = se, alpha = alpha)
   
   return(res)

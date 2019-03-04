@@ -3,13 +3,13 @@
 \docType{data}
 \name{hyp}
 \alias{hyp}
-\title{Hypertention data}
+\title{Hypertension data}
 \format{A data frame with 10 rows and 2 variables}
 \usage{
 data(hyp)
 }
 \description{
-The hypertention data (Wang et al., 2005) included
+The hypertension data (Wang et al., 2005) included
 7 studies comparing the treatment effect of
 anti-hypertensive treatment versus control on reducing
 diastolic blood pressure (DBP) in patients with hypertension.
@@ -20,6 +20,7 @@ anti-hypertensive treatment group.
 \itemize{
   \item \code{y}: Standardized mean difference
   \item \code{se}: Standard error
+  \item \code{label}: Labels for each study
 }
 }
 \references{

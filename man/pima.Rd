@@ -5,10 +5,10 @@
 \title{Calculating Prediction Intervals}
 \usage{
 pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
-  "SJ", "KR", "CL", "APX"), B = 25000, maxit1 = 1e+05,
-  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100,
-  parallel = FALSE, seed = NULL)
+  "SJ", "KR", "CL", "APX"), B = 25000, parallel = FALSE, seed = NULL,
+  maxit1 = 1e+05, eps = 10^(-10), lower = 0, upper = 1000,
+  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
+  maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -48,13 +48,17 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 
 \item{B}{the number of bootstrap samples}
 
+\item{parallel}{logical, indicates whether this function uses parallel computing}
+
+\item{seed}{set the value of random seed}
+
 \item{maxit1}{the maximum number of iteration for the exact distribution function of \eqn{Q}}
 
 \item{eps}{the desired level of accuracy for the exact distribution function of \eqn{Q}}
 
 \item{lower}{the lower limit of random numbers of \eqn{\tau^2}}
 
-\item{upper}{the lower upper of random numbers of \eqn{\tau^2}}
+\item{upper}{the upper limit of random numbers of \eqn{\tau^2}}
 
 \item{maxit2}{the maximum number of iteration for numerical inversions}
 
@@ -70,6 +74,7 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+\item \code{i2h}: the estimate for \eqn{I^2}.
 \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 \item \code{nup}: degrees of freedom for the prediction interval.
 \item \code{nuc}: degrees of freedom for the confidence interval.

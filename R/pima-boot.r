@@ -47,10 +47,10 @@
 #' \donttest{pimeta::pima_boot(sbp$y, sbp$sigmak, B = 50000)}
 #' @export
 pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
-                   eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-                   tol = .Machine$double.eps^0.25, rnd = NULL, parallel = FALSE,
-                   seed = NULL) {
-
+                      eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
+                      tol = .Machine$double.eps^0.25, rnd = NULL, parallel = FALSE,
+                      seed = NULL) {
+  
   # initial check
   util_check_num(y)
   util_check_nonneg(sigma)
@@ -62,15 +62,15 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   util_check_gt(upper, 0)
   util_check_gt(maxit2, 1)
   util_check_gt(tol, 0)
-
+  
   if (length(sigma) != length(y)) {
     stop("'y' and 'sigma' should have the same length.")
   } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
   
-  if (B < 1000) {
-    warning("'B' > 1000 is recommended.")
+  if (B < 5000) {
+    warning("'B' > 5000 is recommended.")
   }
   
   k <- length(y)
@@ -79,12 +79,18 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   if (is.null(rnd)) {
     if (parallel == TRUE) {
       ncore <- parallel::detectCores()
-      cl <- parallel::makeCluster(ncore, type = "PSOCK")
+      type <- if (Sys.info()['sysname'] != "Windows") {
+        "FORK"
+      } else {
+        "PSOCK"
+      }
+      cl <- parallel::makeCluster(ncore, type)
       parallel::clusterSetRNGStream(cl, seed)
-      doSNOW::registerDoSNOW(cl)
+      doParallel::registerDoParallel(cl)
       Bp <- c(rep(floor(B/ncore), ncore - 1), B - floor(B/ncore)*(ncore - 1))
       `%dopar%` <- foreach::`%dopar%`
-      rndtau2 <- foreach::foreach(Bpi = Bp, .combine = "c") %dopar% {
+      rndtau2 <- foreach::foreach(Bpi = Bp, .combine = "c", .inorder = FALSE,
+                                  .options.multicore = list(preschedule = TRUE)) %dopar% {
         rtau2CppWrap(
           n      = as.integer(Bpi),
           y      = as.vector(y),
@@ -118,7 +124,7 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   } else {
     rndtau2 <- rnd
   }
-
+  
   tau2h <- tau2h_dl(y = y, se = sigma)$tau2h
   w <- (sigma^2 + tau2h)^-1
   muhat <- list(muhat = sum(y*w) / sum(w))
@@ -130,12 +136,12 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   )
   
   res <- append(append(muhat, res),
-                list(tau2h = tau2h, nup = k - 1, nuc = k - 1,
+                list(tau2h = tau2h, vmuhat = NULL, nup = k - 1, nuc = k - 1,
                      method = "boot", y = y, se = sigma,
                      alpha = alpha, rnd = rndtau2))
-
+  
   return(res)
-
+  
 }
 
 

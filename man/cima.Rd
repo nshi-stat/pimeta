@@ -5,9 +5,10 @@
 \title{Calculating Confidence Intervals}
 \usage{
 cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
-  "SJ", "KR", "APX", "PL", "BC"), B = 25000, maxit1 = 1e+05,
-  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
+  "SJ", "KR", "APX", "PL", "BC"), B = 25000, parallel = FALSE,
+  seed = NULL, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
+  upper = 1000, maxit2 = 1000, tol = .Machine$double.eps^0.25,
+  rnd = NULL, maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -50,6 +51,10 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 
 \item{B}{the number of bootstrap samples}
 
+\item{parallel}{logical, indicates whether this function uses parallel computing}
+
+\item{seed}{set the value of random seed}
+
 \item{maxit1}{the maximum number of iteration for the exact distribution function of \eqn{Q}}
 
 \item{eps}{the desired level of accuracy for the exact distribution function of \eqn{Q}}
@@ -71,6 +76,9 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
 \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
+\item \code{i2h}: the estimate for \eqn{I^2}.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+\item \code{nuc}: degrees of freedom for the confidence interval.
 }
 }
 \description{
