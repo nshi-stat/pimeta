@@ -29,9 +29,11 @@
 #' \item \code{BM}: Bayes modal estimator (Chung, et al., 2013).
 #' }
 #' @param methodci the calculation method for a confidence interval of
-#'                 heterogeneity variance (default = "ML").
+#'                 heterogeneity variance (default = NA).
 #' \itemize{
+#' \item \code{NA}: a confidence interval will not be calculated.
 #' \item \code{ML}: Wald confidence interval with a ML estimator (Biggerstaff & Tweedie, 1997).
+#' \item \code{REML}: Wald confidence interval with a REML estimator (Biggerstaff & Tweedie, 1997).
 #' }
 #' @param alpha the alpha level of the confidence interval
 #' @return
@@ -135,29 +137,22 @@
 #' \url{https://doi.org/10.1002/(SICI)1097-0258(19970415)16:7<753::AID-SIM494>3.0.CO;2-G}
 #' @examples
 #' data(sbp, package = "pimeta")
-#' pimeta::tau2h(sbp$y, sbp$sigmak, method = "DL", methodci = "ML")
+#' pimeta::tau2h(sbp$y, sbp$sigmak)
 #' @export
 tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS", "ML", "REML",
-                  "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c("ML", "REML"), alpha = 0.05) {
+                  "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c(NA, "ML", "REML"), alpha = 0.05) {
   
   # initial check
   lstm <- c("DL", "VC", "PM", "HM", "HS", "ML", "REML", "AREML", "SJ", "SJ2", "EB", "BM")
-  lstc <- c("ML", "REML")
+  lstc <- c(NA, "ML", "REML")
   method <- match.arg(method)
   methodci <- match.arg(methodci)
   
   util_check_num(y)
   util_check_nonneg(se)
-  util_check_inrange(alpha, 0.0, 1.0)
-  util_check_gt(B, 1)
-  util_check_gt(maxit1, 1)
-  util_check_gt(eps, 0)
-  util_check_ge(lower, 0)
-  util_check_gt(upper, 0)
-  util_check_gt(maxit2, 1)
-  util_check_gt(tol, 0)
   util_check_gt(maxiter, 1)
-  
+  util_check_inrange(alpha, 0.0, 1.0)
+
   if (length(se) != length(y)) {
     stop("'y' and 'se' should have the same length.")
   } else if (!is.element(method, lstm)) {
@@ -165,7 +160,7 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   } else if (!is.element(methodci, lstc)) {
     stop("Unknown 'methodci' specified.")
   }
-  
+
   # point estiamte
   if (method == "DL") {
     res <- tau2h_dl(y = y, se = se)
@@ -194,7 +189,8 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   }
 
   # confidence interval
-  if (methodci == "ML") {
+  if (!exists(methodci)) {
+  } else if (methodci == "ML") {
     tau2hml <- tau2h_ml(y = y, se = se, maxiter = maxiter)
     resci <- tau2h_wald_ml(se = se, tau2h = tau2hml$tau2h, alpha = alpha)
     res <- append(res, resci)

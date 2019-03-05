@@ -22,8 +22,8 @@ Returns the estimator for
 }
 \examples{
 data(sbp, package = "pimeta")
-tau2h <- pimeta::tau2h_dl(sbp$y, sbp$sigmak)
-pimeta::i2h(sbp$sigmak, tau2h)
+tau2h <- pimeta::tau2h(sbp$y, sbp$sigmak)
+pimeta::i2h(sbp$sigmak, tau2h$tau2h)
 }
 \references{
 Higgins, J. P. T., and Thompson, S. G. (2002).

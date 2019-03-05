@@ -24,9 +24,10 @@ tau2h_dl <- function(y, se) {
 
   k <- length(y)
   vi <- se^-2
-  tau2h <- max(0.0, (sum(vi*(y - sum(vi*y)/sum(vi))^2) - (k - 1.0)) /
+  Q <- sum(vi*(y - sum(vi*y)/sum(vi))^2)
+  tau2h <- max(0.0, (Q - (k - 1.0)) /
                  (sum(vi) - sum(vi^2)/sum(vi)))
   
-  return(list(tau2h = tau2h))
+  return(list(tau2h = tau2h, Q = Q))
   
 }

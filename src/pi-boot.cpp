@@ -104,37 +104,6 @@ void bootPICpp(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y,
   
 }
 
-//void exactCItau2(const Eigen::VectorXd& y, const Eigen::VectorXd& sigma,
-//                  const double mode, const int maxit1, const double eps,
-//                  const double lower, const double upper, const int maxit2,
-//                  const double tol, const double alpha) {
-//   
-//   int i = 0, status;
-//   double tau2;
-//   
-//   Eigen::MatrixXd A = getA(sigma);
-//   int k = sigma.size();
-//   double qa = getqa(y, A);
-//   double mupper = std::max(upper, qa);
-//   double zeroval = fx(0.0, 0.0, 0, qa, sigma, A, k, mode, maxit1, eps);
-//   
-//   if (zeroval >= pvec(i)) {
-//     rnd(i) = 0.0;
-//   } else {
-//     findRootTau2(pvec(i), 0, qa, sigma, A, k, mode, maxit1, eps, lower, mupper, maxit2, tol, &tau2, &status);
-//     if (status != 2) {
-//       if (status == 1) {
-//         rnd(i) = R_PosInf;
-//       } else {
-//         rnd(i) = tau2;
-//       }
-//     } else {
-//       rnd = R_NaN;
-//     }
-//   }
-//   
-// }
-
 // [[Rcpp::export]]
 NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::VectorXd& sigma,
                            const double mode, const int maxit1, const double eps,

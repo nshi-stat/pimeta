@@ -38,7 +38,8 @@
 #'            effect, \eqn{df=K-1}).
 #' \item \code{PL}: Profile likelihood confidence interval
 #'            (Hardy & Thompson, 1996).
-#' \item \code{BC}: Bartlett-type correction (Noma, 2011).            
+#' \item \code{BC}: Profile likelihood confidence interval with
+#'            Bartlett-type correction (Noma, 2011).            
 #' }
 #' @param B the number of bootstrap samples
 #' @param parallel logical, indicates whether this function uses parallel computing
@@ -53,12 +54,13 @@
 #' @param maxiter the maximum number of iteration for REML estimation
 #' @return
 #' \itemize{
+#' \item \code{K}: the number of studies.
 #' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
 #' \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 #' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 #' \item \code{i2h}: the estimate for \eqn{I^2}.
-#' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 #' \item \code{nuc}: degrees of freedom for the confidence interval.
+#' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 #' }
 #' @references
 #' Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
@@ -113,7 +115,37 @@
 #' @examples
 #' data(sbp, package = "pimeta")
 #' set.seed(20161102)
-#' \donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 50000)}
+#' 
+#' # Nagashima-Noma-Furukawa confidence interval
+#' \donttest{pimeta::cima(sbp$y, sbp$sigmak, seed = 3141592)}
+#' 
+#' # A Wald-type t-distribution confidence interval
+#' # An approximate variance estimator & DerSimonian-Laird estimator for tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
+#' 
+#' # A Wald-type t-distribution confidence interval
+#' # The Hartung variance estimator & REML estimator for tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "HK")
+#' 
+#' # A Wald-type t-distribution confidence interval
+#' # The Sidik-Jonkman variance estimator & REML estimator for tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "SJ")
+#' 
+#' # A Wald-type t-distribution confidence interval
+#' # The Kenward-Roger approach & REML estimator for tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "KR")
+#' 
+#' # A Wald-type t-distribution confidence interval
+#' # An approximate variance estimator & REML estimator for tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "APX")
+#' 
+#' # Profile likelihood confidence interval
+#' # Maximum likelihood estimators of variance for the average effect & tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "PL")
+#' 
+#' # Profile likelihood confidence interval with a Bartlett-type correction
+#' # Maximum likelihood estimators of variance for the average effect & tau^2
+#' pimeta::cima(sbp$y, sbp$sigmak, method = "BC")
 #' @export
 cima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "DL", "HK", "SJ", "KR", "APX", "PL", "BC"),
@@ -187,7 +219,7 @@ cima <- function(y, se, v = NULL, alpha = 0.05,
                         alpha   = alpha,
                         vartype = "KR",
                         maxiter = maxiter)
-  } else if (method == "SJ") {
+  } else if (method == "APX") {
     res <- pima_htsreml(y       = y, 
                         sigma   = se, 
                         alpha   = alpha,
@@ -202,6 +234,7 @@ cima <- function(y, se, v = NULL, alpha = 0.05,
                    se    = se, 
                    alpha = alpha)
   }
+  res <- append(list(K = length(y)), res)
   res <- append(res, list(i2h = i2h(se, res$tau2h)))
   class(res) <- "cima"
   
@@ -250,11 +283,11 @@ print.cima <- function(x, digits = 4, ...) {
   } else if (x$method == "PL") {
     cat(paste0("A profile likelihood confidence interval\n",
                " Heterogeneity variance: ML\n",
-               " Variance for average treatment effect: profile likelihood\n\n"))
+               " Variance for average treatment effect: ML\n\n"))
   } else if (x$method == "BC") {
-    cat(paste0("A profile likelihood confidence interval\n",
+    cat(paste0("A profile likelihood confidence interval with a Bartlett-type correction\n",
                " Heterogeneity variance: ML\n",
-               " Variance for average treatment effect: profile likelihood with a Bartlett-type correction\n\n"))
+               " Variance for average treatment effect: ML\n\n"))
   }
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))

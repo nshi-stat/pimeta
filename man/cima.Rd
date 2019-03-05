@@ -46,7 +46,8 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
            effect, \eqn{df=K-1}).
 \item \code{PL}: Profile likelihood confidence interval
            (Hardy & Thompson, 1996).
-\item \code{BC}: Bartlett-type correction (Noma, 2011).            
+\item \code{BC}: Profile likelihood confidence interval with
+           Bartlett-type correction (Noma, 2011).            
 }}
 
 \item{B}{the number of bootstrap samples}
@@ -73,12 +74,13 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 }
 \value{
 \itemize{
+\item \code{K}: the number of studies.
 \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
 \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 \item \code{i2h}: the estimate for \eqn{I^2}.
-\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 \item \code{nuc}: degrees of freedom for the confidence interval.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 }
 }
 \description{
@@ -91,7 +93,37 @@ have been published (e.g., Veroniki, et al., 2018).
 \examples{
 data(sbp, package = "pimeta")
 set.seed(20161102)
-\donttest{pimeta::cima(sbp$y, sbp$sigmak, B = 50000)}
+
+# Nagashima-Noma-Furukawa confidence interval
+\donttest{pimeta::cima(sbp$y, sbp$sigmak, seed = 3141592)}
+
+# A Wald-type t-distribution confidence interval
+# An approximate variance estimator & DerSimonian-Laird estimator for tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
+
+# A Wald-type t-distribution confidence interval
+# The Hartung variance estimator & REML estimator for tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "HK")
+
+# A Wald-type t-distribution confidence interval
+# The Sidik-Jonkman variance estimator & REML estimator for tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "SJ")
+
+# A Wald-type t-distribution confidence interval
+# The Kenward-Roger approach & REML estimator for tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "KR")
+
+# A Wald-type t-distribution confidence interval
+# An approximate variance estimator & REML estimator for tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "APX")
+
+# Profile likelihood confidence interval
+# Maximum likelihood estimators of variance for the average effect & tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "PL")
+
+# Profile likelihood confidence interval with a Bartlett-type correction
+# Maximum likelihood estimators of variance for the average effect & tau^2
+pimeta::cima(sbp$y, sbp$sigmak, method = "BC")
 }
 \references{
 Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,

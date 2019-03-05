@@ -14,6 +14,12 @@
 #       \eqn{\hat{\tau}^2_l} and \eqn{\hat{\tau}^2_u}.
 # }
 # @references
+# Biggerstaff, B. J., and Tweedie, R. L. (1997).
+# Incorporating variability in estimates of heterogeneity
+# in the random effects model in meta-analysis.
+# \emph{Stat Med.}
+# \strong{16}(7): 753-768.
+# 
 # Veroniki, A. A., Jackson, D., Viechtbauer, W.,
 # Bender, R., Bowden, J., Knapp, G., Kuss, O.,
 # Higgins, J. P. T., Langan, D., and Salanti, J. (2016).

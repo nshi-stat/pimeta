@@ -19,6 +19,7 @@ treatment group.
 \itemize{
   \item \code{y}: Standardized mean difference
   \item \code{sigmak}: Standard error
+  \item \code{label}: Labels for each generated study
 }
 }
 \references{

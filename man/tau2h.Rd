@@ -5,7 +5,7 @@
 \title{Calculating Heterogeneity Variance}
 \usage{
 tau2h(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
-  "ML", "REML", "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c("ML",
+  "ML", "REML", "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c(NA, "ML",
   "REML"), alpha = 0.05)
 }
 \arguments{
@@ -33,9 +33,11 @@ tau2h(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
 }}
 
 \item{methodci}{the calculation method for a confidence interval of
-                heterogeneity variance (default = "ML").
+                heterogeneity variance (default = NA).
 \itemize{
+\item \code{NA}: a confidence interval will not be calculated.
 \item \code{ML}: Wald confidence interval with a ML estimator (Biggerstaff & Tweedie, 1997).
+\item \code{REML}: Wald confidence interval with a REML estimator (Biggerstaff & Tweedie, 1997).
 }}
 
 \item{alpha}{the alpha level of the confidence interval}
@@ -58,7 +60,7 @@ Langan, et al., 2018).
 }
 \examples{
 data(sbp, package = "pimeta")
-pimeta::tau2h(sbp$y, sbp$sigmak, method = "DL", methodci = "ML")
+pimeta::tau2h(sbp$y, sbp$sigmak)
 }
 \references{
 Sidik, K., and Jonkman, J. N. (2007).

@@ -19,8 +19,8 @@
 #' \url{https://doi.org/10.1002/sim.1186}
 #' @examples
 #' data(sbp, package = "pimeta")
-#' tau2h <- pimeta::tau2h_dl(sbp$y, sbp$sigmak)
-#' pimeta::i2h(sbp$sigmak, tau2h)
+#' tau2h <- pimeta::tau2h(sbp$y, sbp$sigmak)
+#' pimeta::i2h(sbp$sigmak, tau2h$tau2h)
 #' @export
 i2h <- function(se, tau2h) {
   

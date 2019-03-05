@@ -70,14 +70,15 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 }
 \value{
 \itemize{
+\item \code{K}: the number of studies.
 \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
 \item \code{lci}, \code{uci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
 \item \code{lpi}, \code{upi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
 \item \code{tau2h}: the estimate for \eqn{\tau^2}.
 \item \code{i2h}: the estimate for \eqn{I^2}.
-\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 \item \code{nup}: degrees of freedom for the prediction interval.
 \item \code{nuc}: degrees of freedom for the confidence interval.
+\item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
 }
 }
 \description{
@@ -87,86 +88,18 @@ This function calculates prediction intervals using \code{pima_boot},
 \examples{
 data(sbp, package = "pimeta")
 set.seed(20161102)
-\donttest{pimeta::pima(sbp$y, sbp$sigmak, B = 50000)}
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
-# A parametric bootstrap prediction interval
-#  Heterogeneity variance: DerSimonian-Laird
-#  SE for average treatment effect: Hartung
-#
-# No. of studies: 10
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3341 [-0.8715, 0.2144]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3341 [-0.5655, -0.0988]
-# 
-# Heterogeneity measure
-#  tau2: 0.0282
-#  I^2:  70.5\%
- 
-\donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")}
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
+
+# Nagashima-Noma-Furukawa prediction interval
+# is sufficiently accurate when I^2 >= 10\% and K >= 3
+\donttest{pimeta::pima(sbp$y, sbp$sigmak, seed = 3141592)}
+
 # Higgins-Thompson-Spiegelhalter prediction interval
-#  Heterogeneity variance: DerSimonian-Laird
-#  SE for average treatment effect: approximate
-# 
-# No. of studies: 10
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3341 [-0.7598, 0.0917]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3341 [-0.5068, -0.1613]
-# 
-# Heterogeneity measure
-#  tau2: 0.0282
-#  I^2:  70.5\%
-
-\donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "HK")}
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
 # Partlett-Riley prediction interval
-#  Heterogeneity variance: REML
-#  SE for average treatment effect: Hartung-Knapp
-# 
-# No. of studies: 10
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3287 [-0.9887, 0.3312]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3287 [-0.5761, -0.0814]
-# 
-# Heterogeneity measure
-#  tau2: 0.0700
-#  I^2:  85.5\%
-
-\donttest{pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")}
-# 
-# Prediction Interval for Random-Effects Meta-Analysis
-# 
-# Partlett-Riley prediction interval
-# Heterogeneity variance: REML
-# SE for average treatment effect: Sidik-Jonkman
-# 
-# No. of studies: 10
-# 
-# Average treatment effect [95\%PI]:
-#  -0.3287 [-0.9835, 0.3261]
-# 
-# Average treatment effect [95\%CI]:
-#  -0.3287 [-0.5625, -0.0950]
-# 
-# Heterogeneity measure
-#  tau2: 0.0700
-#  I^2:  85.5\%
-
+# are accurate when I^2 > 50\% and K > 25
+pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
+pimeta::pima(sbp$y, sbp$sigmak, method = "HK")
+pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")
+pimeta::pima(sbp$y, sbp$sigmak, method = "KR")
 }
 \references{
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
