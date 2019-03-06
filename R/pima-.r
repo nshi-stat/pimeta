@@ -236,13 +236,19 @@ print.pima <- function(x, digits = 4, ...) {
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lpi, digits), nsmall = digits), ", ",
              format(round(x$upi, digits), nsmall = digits), "]\n"))
-  cat(paste0(" d.f.: ", nup, "\n\n"))
+  if (!is.na(nup)) {
+    cat(paste0(" d.f.: ", nup, "\n"))
+  }
+  cat("\n")
   
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "% confidence interval]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lci, digits), nsmall = digits), ", ",
              format(round(x$uci, digits), nsmall = digits), "]\n"))
-  cat(paste0(" d.f.: ", nuc, "\n\n"))
+  if (!is.na(nuc)) {
+    cat(paste0(" d.f.: ", nuc, "\n"))
+  }
+  cat("\n")
   
   cat(paste0("Heterogeneity measure\n"))
   cat(paste0(" tau-squared: ", format(round(x$tau2, digits), nsmall = digits), "\n"))

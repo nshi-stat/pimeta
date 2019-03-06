@@ -20,7 +20,7 @@ tau2h(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
 \item \code{DL}: DerSimonian--Laird estimator (DerSimonian & Laird, 1986).
 \item \code{VC}: Variance component type estimator (Hedges, 1983).
 \item \code{PM}: Paule--Mandel estimator (Paule & Mandel, 1982).
-\item \code{HM}: Hartung--Makambi estimator (Hartung & Makambi, 1983).
+\item \code{HM}: Hartung--Makambi estimator (Hartung & Makambi, 2003).
 \item \code{HS}: Hunter--Schmidt estimator (Hunter & Schmidt, 2004).
                  This estimator has negative bias (Viechtbauer, 2005).
 \item \code{ML}: Maximum likelihood (ML) estimator (e.g., DerSimonian & Laird, 1986).
@@ -119,7 +119,7 @@ Sage Publications, Inc.
 
 Viechtbauer, W. (2005).
 Bias and efficiency of meta-analytic variance
-estimators in the random-effects Model.
+estimators in the random-effects model.
 \emph{J Educ Behav Stat.}
 \strong{30}(3): 261-293.
 \url{https://doi.org/10.3102/10769986030003261}

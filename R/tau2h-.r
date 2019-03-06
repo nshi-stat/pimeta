@@ -17,7 +17,7 @@
 #' \item \code{DL}: DerSimonian--Laird estimator (DerSimonian & Laird, 1986).
 #' \item \code{VC}: Variance component type estimator (Hedges, 1983).
 #' \item \code{PM}: Paule--Mandel estimator (Paule & Mandel, 1982).
-#' \item \code{HM}: Hartung--Makambi estimator (Hartung & Makambi, 1983).
+#' \item \code{HM}: Hartung--Makambi estimator (Hartung & Makambi, 2003).
 #' \item \code{HS}: Hunter--Schmidt estimator (Hunter & Schmidt, 2004).
 #'                  This estimator has negative bias (Viechtbauer, 2005).
 #' \item \code{ML}: Maximum likelihood (ML) estimator (e.g., DerSimonian & Laird, 1986).
@@ -99,7 +99,7 @@
 #' 
 #' Viechtbauer, W. (2005).
 #' Bias and efficiency of meta-analytic variance
-#' estimators in the random-effects Model.
+#' estimators in the random-effects model.
 #' \emph{J Educ Behav Stat.}
 #' \strong{30}(3): 261-293.
 #' \url{https://doi.org/10.3102/10769986030003261}
@@ -189,7 +189,7 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   }
 
   # confidence interval
-  if (!exists(methodci)) {
+  if (is.na(methodci)) {
   } else if (methodci == "ML") {
     tau2hml <- tau2h_ml(y = y, se = se, maxiter = maxiter)
     resci <- tau2h_wald_ml(se = se, tau2h = tau2hml$tau2h, alpha = alpha)
@@ -204,5 +204,71 @@ tau2h <- function(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
   class(res) <- "pima_tau2h"
   
   return(res)
+  
+}
+
+
+#' Print Results
+#' 
+#' \code{print} prints its argument and returns it invisibly (via \code{invisible(x)}).
+#'
+#' @param x print to display
+#' @param digits a value for digits specifies the minimum number
+#'               of significant digits to be printed in values.
+#' @param ... further arguments passed to or from other methods.
+#' @export
+#' @method print pima_tau2h
+print.pima_tau2h <- function(x, digits = 3, ...) {
+  
+  cat("\nHeterogeneity Variance for Random-Effects Meta-Analysis\n\n")
+  
+  cat("Estimation method(s)\n")
+  if (x$method == "DL") {
+    cat(" Point estimation: Dersimonian-Laird estimator\n")
+  } else if (x$method == "VC") {
+    cat(" Point estimation: Variance component type estimator\n")
+  } else if (x$method == "PM") {
+    cat(" Point estimation: Paule--Mandel estimator\n")
+  } else if (x$method == "HM") {
+    cat(" Point estimation: Hartung--Makambi estimator\n")
+  } else if (x$method == "HS") {
+    cat(" Point estimation: Hunter--Schmidt estimator\n")
+    cat(" # Note: this estimator has negative bias.\n")
+  } else if (x$method == "ML") {
+    cat(" Point estimation: Maximum likelihood estimator\n")
+  } else if (x$method == "REML") {
+    cat(" Point estimation: Restricted maximum likelihood estimator\n")
+  } else if (x$method == "AREML") {
+    cat(" Point estimation: Approximate restricted maximum likelihood estimator\n")
+  } else if (x$method == "SJ") {
+    cat(" Point estimation: Sidik--Jonkman estimator\n")
+  } else if (x$method == "SJ2") {
+    cat(" Point estimation: Sidik--Jonkman improved estimator\n")
+  } else if (x$method == "EB") {
+    cat(" Point estimation: Empirical Bayes estimator\n")
+  } else if (x$method == "BM") {
+    cat(" Point estimation: Bayes modal estimator\n")
+  }
+  if (is.na(x$methodci)) {
+  } else if (x$methodci == "ML") {
+    cat(" Confidence interval: Maximum likelihood estimator\n")
+  } else if (x$methodci == "REML") {
+    cat(" Confidence interval: Restricted maximum likelihood estimator\n")
+  }
+  cat("\n")
+  
+  cat(paste0("No. of studies: ", length(x$y), "\n\n"))
+  
+  if (is.na(x$methodci)) {
+    cat(paste0("tau-squared: ", format(round(x$tau2h, digits), nsmall = digits), "\n"))
+  } else {
+    cat(paste0("tau-squared [", (1 - x$alpha)*100, "% confidence interval]: "))
+    cat(paste0(format(round(x$tau2h, digits), nsmall = digits), " [",
+               format(round(x$lci, digits), nsmall = digits), ", ",
+               format(round(x$uci, digits), nsmall = digits), "]\n"))
+  }
+  cat("\n")
+
+  invisible(x)
   
 }

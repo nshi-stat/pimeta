@@ -13,7 +13,7 @@
 #' @param alpha the alpha level of the prediction interval
 #' @param method the calculation method for the pretiction interval (default = "boot").
 #' \itemize{
-#' \item \code{boot}: A parametric bootstrap confidenceS interval
+#' \item \code{boot}: A parametric bootstrap confidence interval
 #'            (Nagashima et al., 2018).
 #' \item \code{DL}: A Wald-type t-distribution confidence interval
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
@@ -292,12 +292,15 @@ print.cima <- function(x, digits = 4, ...) {
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))
   
-  cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "%CI]:\n"))
+  cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "% confidence interval]:\n"))
   cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
              format(round(x$lci, digits), nsmall = digits), ", ",
              format(round(x$uci, digits), nsmall = digits), "]\n"))
-  cat(paste0(" d.f.: ", nuc, "\n\n"))
-  
+  if (!is.na(nuc)) {
+    cat(paste0(" d.f.: ", nuc, "\n"))
+  }
+  cat("\n")
+
   cat(paste0("Heterogeneity measure\n"))
   cat(paste0(" tau-squared: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
   cat(paste0(" I-squared: ", format(round(x$i2h, 1), nsmall = 1), "%\n\n"))

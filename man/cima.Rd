@@ -21,7 +21,7 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 
 \item{method}{the calculation method for the pretiction interval (default = "boot").
 \itemize{
-\item \code{boot}: A parametric bootstrap confidenceS interval
+\item \code{boot}: A parametric bootstrap confidence interval
            (Nagashima et al., 2018).
 \item \code{DL}: A Wald-type t-distribution confidence interval
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
