@@ -15,7 +15,8 @@ extern void bootPICpp(const Eigen::VectorXd&, const Eigen::VectorXd&,
 
 extern NumericVector rtau2CppWrap(const int, const Eigen::VectorXd&, const Eigen::VectorXd&,
                                   const double, const int, const double,
-                                  const double, const double, const int, const double);
+                                  const double, const double, const int, const double,
+                                  const int);
 
 extern double getqa(const Eigen::VectorXd&, const Eigen::MatrixXd&);
 

@@ -13,6 +13,10 @@ util_check_num <- function(var, varname = NULL) {
     stop(paste0("'", varname, "' has missing value(s)."))
   } else if (any(is.infinite(var))) {
     stop(paste0("'", varname, "' has infinite value(s)."))
+  } else if (any(is.complex(var))) {
+    stop(paste0("'", varname, "' has complex value(s)."))
+  } else if (any(is.character(var))) {
+    stop(paste0("'", varname, "' has character value(s)."))
   }
 
 }

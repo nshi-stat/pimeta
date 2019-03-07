@@ -3,6 +3,11 @@
 #include "pimeta.h"
 // [[Rcpp::depends("RcppEigen")]]
 
+#ifdef _OPENMP
+#include <omp.h>
+// [[Rcpp::plugins("openmp")]]
+#endif
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -12,7 +17,7 @@ List pwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::Vect
   
   double prob;
   int ifault;
-
+  
   pQCpp2(q, lambda, mult, delta, n, mode, maxit, eps, &prob, &ifault);
   
   return List::create(
@@ -107,9 +112,10 @@ void bootPICpp(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y,
 // [[Rcpp::export]]
 NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::VectorXd& sigma,
                            const double mode, const int maxit1, const double eps,
-                           const double lower, const double upper, const int maxit2, const double tol) {
+                           const double lower, const double upper, const int maxit2, const double tol,
+                           const int nthread) {
   
-  int i = 0, status;
+  int i, status;
   double tau2;
   NumericVector rnd(n), pvec(n);
   pvec = runif(n);
@@ -120,24 +126,36 @@ NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::V
   double mupper = std::max(upper, qa);
   double zeroval = fx(0.0, 0.0, 0, qa, sigma, A, k, mode, maxit1, eps);
   
-  while (i < n) {
+#ifdef _OPENMP
+  omp_set_num_threads(nthread);
+#endif
+#pragma omp parallel default(shared), private(i, tau2, status)
+{
+//#pragma omp barrier
+//  if (omp_get_thread_num() == 0) {
+//    Rprintf("There are %d threads\n", omp_get_num_threads());
+//  }
+#pragma omp for
+  for (i = 0; i < n; i++) {
     if (zeroval >= pvec(i)) {
       rnd(i) = 0.0;
-      i++;
     } else {
-      findRootTau2(pvec(i), 0, qa, sigma, A, k, mode, maxit1, eps, lower, mupper, maxit2, tol, &tau2, &status);
-      if (status != 2) {
-        if (status == 1) {
-          rnd(i) = R_PosInf;
+      while (1) {
+        findRootTau2(pvec(i), 0, qa, sigma, A, k, mode, maxit1, eps, lower, mupper, maxit2, tol, &tau2, &status);
+        if (status != 2) {
+          if (status == 1) {
+            rnd(i) = R_PosInf;
+          } else {
+            rnd(i) = tau2;
+          }
+          break;
         } else {
-          rnd(i) = tau2;
+          pvec(i) = R::runif(0.0, 1.0);
         }
-        i++;
-      } else {
-        pvec(i) = R::runif(0.0, 1.0);
       }
     }
   }
+}
   
   return rnd;
   
@@ -466,14 +484,14 @@ void pQCpp2(const double qa, const Eigen::VectorXd& lambda, const Eigen::VectorX
             const double eps, double *prob, int *ifault) {
   
   // Ruben (1962), Farebrother (1984, AS 204)
-
+  
   if (n < 1 || qa < 0.0 || maxit < 1 || eps < 0.0) {
     *prob = -2.0;
     *ifault = 2;
   } else {
     int i, k, m, flg = 0;
     double ao, aoinv, z, beta, eps2, sum, sum1, hold, hold2, dans,
-      lans, pans, tol = -200.0;
+    lans, pans, tol = -200.0;
     double *gamma, *theta, *a, *b;
     gamma = new double[n];
     theta = new double[n];

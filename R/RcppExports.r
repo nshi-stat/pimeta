@@ -9,7 +9,7 @@ bootPICppWrap <- function(rnd, y, sigma, alpha) {
     .Call(`_pimeta_bootPICppWrap`, rnd, y, sigma, alpha)
 }
 
-rtau2CppWrap <- function(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol) {
-    .Call(`_pimeta_rtau2CppWrap`, n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol)
+rtau2CppWrap <- function(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread) {
+    .Call(`_pimeta_rtau2CppWrap`, n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread)
 }
 
