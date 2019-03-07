@@ -77,50 +77,23 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   
   # random numbers generation
   if (is.null(rnd)) {
-    if (parallel == TRUE) {
-      ncore <- parallel::detectCores()
-      type <- if (Sys.info()['sysname'] != "Windows") {
-        "FORK"
-      } else {
-        "PSOCK"
-      }
-      cl <- parallel::makeCluster(ncore, type)
-      parallel::clusterSetRNGStream(cl, seed)
-      doParallel::registerDoParallel(cl)
-      Bp <- c(rep(floor(B/ncore), ncore - 1), B - floor(B/ncore)*(ncore - 1))
-      `%dopar%` <- foreach::`%dopar%`
-      rndtau2 <- foreach::foreach(Bpi = Bp, .combine = "c", .inorder = FALSE,
-                                  .options.multicore = list(preschedule = TRUE)) %dopar% {
-        rtau2CppWrap(
-          n      = as.integer(Bpi),
-          y      = as.vector(y),
-          sigma  = as.vector(sigma),
-          mode   = as.double(1),
-          maxit1 = as.integer(maxit1),
-          eps    = as.double(eps),
-          lower  = as.double(lower),
-          upper  = as.double(upper),
-          maxit2 = as.integer(maxit2),
-          tol    = as.double(tol)
-        )
-      }
-      parallel::stopCluster(cl)
-      set.seed(seed)
-    } else {
-      set.seed(seed)
-      rndtau2 <- rtau2CppWrap(
-        n      = as.integer(B),
-        y      = as.vector(y),
-        sigma  = as.vector(sigma),
-        mode   = as.double(1),
-        maxit1 = as.integer(maxit1),
-        eps    = as.double(eps),
-        lower  = as.double(lower),
-        upper  = as.double(upper),
-        maxit2 = as.integer(maxit2),
-        tol    = as.double(tol)
-      )
+    if (parallel == FALSE) {
+      parallel = 1
     }
+    set.seed(seed)
+    rndtau2 <- rtau2CppWrap(
+      n       = as.integer(B),
+      y       = as.vector(y),
+      sigma   = as.vector(sigma),
+      mode    = as.double(1),
+      maxit1  = as.integer(maxit1),
+      eps     = as.double(eps),
+      lower   = as.double(lower),
+      upper   = as.double(upper),
+      maxit2  = as.integer(maxit2),
+      tol     = as.double(tol),
+      nthread = as.integer(parallel)
+    )
   } else {
     rndtau2 <- rnd
   }
