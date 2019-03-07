@@ -80,7 +80,11 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   # random numbers generation
   if (is.null(rnd)) {
     if (parallel == FALSE) {
+<<<<<<< HEAD
       parallel <- 1
+=======
+      parallel = 1
+>>>>>>> 0a112d94f05a3b66b0a66c33d0e72212def7faf4
     }
     set.seed(seed)
     rndtau2 <- rtau2CppWrap(
