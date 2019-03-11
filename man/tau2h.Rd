@@ -68,7 +68,7 @@ A comparison of heterogeneity variance estimators
 in combining results of studies.
 \emph{Stat Med.}
 \strong{26}(9): 1964-1981.
-\url{https://doi.org/10.1002/sim.2688}
+\url{https://doi.org/10.1002/sim.2688}.
 
 Veroniki, A. A., Jackson, D., Viechtbauer, W.,
 Bender, R., Bowden, J., Knapp, G., Kuss, O.,
@@ -77,41 +77,41 @@ Methods to estimate the between-study variance
 and its uncertainty in meta-analysis.
 \emph{Res Syn Meth.}
 \strong{7}(1): 55-79.
-\url{https://doi.org/10.1002/jrsm.1164}
+\url{https://doi.org/10.1002/jrsm.1164}.
 
 Langan, D., Higgins, J. P. T., Jackson, D.,
 Bowden, J., Veroniki, A. A., Kontopantelis, E.,
 Viechtbauer, W., and Simmonds, M. (2018).
 A comparison of heterogeneity variance estimators in
-simulated random‐effects meta‐analyses.
+simulated random-effects meta-analyses.
 \emph{Res Syn Meth.}
 \emph{In press.}
-\url{https://doi.org/10.1002/jrsm.1316}
+\url{https://doi.org/10.1002/jrsm.1316}.
 
 DerSimonian, R., and Laird, N. (1986).
 Meta-analysis in clinical trials.
 \emph{Control Clin Trials.}
 \strong{7}(3): 177-188.
-\url{https://doi.org/10.1016/0197-2456(86)90046-2}
+\url{https://doi.org/10.1016/0197-2456(86)90046-2}.
 
 Hedges, L. V. (1983).
 A random effects model for effect sizes.
 \emph{Psychol Bull.}
 \strong{93}(2): 388-395.
-\url{https://doi.org/10.1037/0033-2909.93.2.388}
+\url{https://doi.org/10.1037/0033-2909.93.2.388}.
 
 Paule, R. C., and Mandel, K. H. (1982).
 Consensus values and weighting factors.
 \emph{J Res Natl Inst Stand Techno.}
 \strong{87}(5): 377-385.
-\url{https://doi.org/10.6028/jres.087.022}
+\url{https://doi.org/10.6028/jres.087.022}.
 
 Hartung, J., and Makambi, K. H. (2003).
 Reducing the number of unjustified significant results
 in meta-analysis.
 \emph{Commun Stat Simul Comput.}
 \strong{32}(4): 1179-1190.
-\url{https://doi.org/10.1081/SAC-120023884}
+\url{https://doi.org/10.1081/SAC-120023884}.
 
 Hunter, J. E., and Schmidt, F. L. (2004).
 \emph{Methods of Meta-Analysis: Correcting Error and Bias in Research Findings. 2nd edition.}
@@ -122,37 +122,35 @@ Bias and efficiency of meta-analytic variance
 estimators in the random-effects model.
 \emph{J Educ Behav Stat.}
 \strong{30}(3): 261-293.
-\url{https://doi.org/10.3102/10769986030003261}
+\url{https://doi.org/10.3102/10769986030003261}.
 
 Thompson, S. G., and Sharp, S. J. (1999).
 Explaining heterogeneity in meta-analysis: a comparison of methods.
 \emph{Stat Med.}
 \strong{18}(20): 2693-2708.
-\url{https://doi.org/10.1002/(SICI)1097-0258(19991030)18:20<2693::AID-SIM235>3.0.CO;2-V}
 
 Sidik, K., and Jonkman, J. N. (2005).
 Simple heterogeneity variance estimation for meta-analysis.
 \emph{J R Stat Soc Ser C Appl Stat.}
 \strong{54}(2): 367-384.
-\url{https://doi.org/10.1111/j.1467-9876.2005.00489.x}
+\url{https://doi.org/10.1111/j.1467-9876.2005.00489.x}.
 
 Morris, C. N. (1983).
 Parametric empirical Bayes inference: theory and applications.
 \emph{J Am Stat Assoc.}
 \strong{78}(381): 47-55.
-\url{https://doi.org/10.1080/01621459.1983.10477920}
+\url{https://doi.org/10.1080/01621459.1983.10477920}.
 
 Chung, Y. L., Rabe-Hesketh, S., and Choi, I-H. (2013).
 Avoiding zero between-study variance estimates
 in random-effects meta-analysis.
 \emph{Stat Med.}
 \strong{32}(23): 4071-4089.
-\url{https://doi.org/10.1002/sim.5821}
+\url{https://doi.org/10.1002/sim.5821}.
 
 Biggerstaff, B. J., and Tweedie, R. L. (1997).
 Incorporating variability in estimates of heterogeneity
 in the random effects model in meta-analysis.
 \emph{Stat Med.}
 \strong{16}(7): 753-768.
-\url{https://doi.org/10.1002/(SICI)1097-0258(19970415)16:7<753::AID-SIM494>3.0.CO;2-G}
 }

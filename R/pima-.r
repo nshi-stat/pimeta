@@ -93,27 +93,27 @@
 #' An alternative method for meta-analysis.
 #' \emph{Biom J.}
 #' \strong{41}(8): 901-916.
-#' \url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
+# \url{https://doi.org/10.1002/%28SICI%291521-4036%28199912%2941%3A8%3C901%3A%3AAID-BIMJ901%3E3.0.CO%3B2-W}.
 #' 
 #' Hartung, J., and Knapp, G. (2001).
 #' On tests of the overall treatment effect in meta-analysis with
 #' normally distributed responses.
 #' \emph{Stat Med.}
 #' \strong{20}(12): 1771-1782.
-#' \url{https://doi.org/10.1002/sim.791}
+#' \url{https://doi.org/10.1002/sim.791}.
 #' 
 #' Sidik, K., and Jonkman, J. N. (2006).
 #' Robust variance estimation for random effects meta-analysis.
 #' \emph{Comput Stat Data Anal.}
 #' \strong{50}(12): 3681-3701.
-#' \url{https://doi.org/10.1016/j.csda.2005.07.019}
+#' \url{https://doi.org/10.1016/j.csda.2005.07.019}.
 #' 
 #' Kenward, M. G., and Roger, J. H. (1997).
 #' Small sample inference for fixed effects from restricted
 #' maximum likelihood.
 #' \emph{Biometrics.}
 #' \strong{53}(3): 983-997.
-#' \url{https://doi.org/10.2307/2533558}
+#' \url{https://www.jstor.org/stable/2533558}.
 #' 
 #' DerSimonian, R., and Laird, N. (1986).
 #' Meta-analysis in clinical trials.

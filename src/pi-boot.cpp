@@ -115,8 +115,8 @@ NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::V
                            const double lower, const double upper, const int maxit2, const double tol,
                            const int nthread) {
   
-  int i, status[n];
-  double tau2[n];
+  int i, *status = new int[n];
+  double *tau2 = new double[n];
   NumericVector rnd(n), pvec(n);
   pvec = runif(n);
   
@@ -157,6 +157,9 @@ omp_set_num_threads(nthread);
     }
   }
 }
+
+delete [] status;
+delete [] tau2;
 
 return rnd;
 

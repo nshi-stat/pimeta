@@ -66,7 +66,7 @@
 #' Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
 #' Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2016).
 #' Methods to calculate uncertainty in the estimated overall effect
-#' size from a random‐effects meta‐analysis
+#' size from a random-effects meta-analysis
 #' \emph{Res Syn Meth.}
 #' \emph{In press}.
 #' \url{https://doi.org/10.1002/jrsm.1319}.
