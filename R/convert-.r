@@ -1,4 +1,4 @@
-#' Converting binary data 
+#' Converting binary data
 #' 
 #' Converting binary outcome data to the effect size estimates
 #' and the within studies standard errors vector

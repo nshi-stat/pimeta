@@ -266,7 +266,7 @@ print.cima <- function(x, digits = 4, ...) {
   } else if (x$method == "DL") {
     cat(paste0("A Wald-type confidence interval\n",
                " Heterogeneity variance: DerSimonian-Laird\n",
-               " Variance for average treatment effect: standard\n\n"))
+               " Variance for average treatment effect: approximate\n\n"))
   } else if (x$method == "HK") {
     cat(paste0("A Wald-type t-distribution confidence interval\n",
                " Heterogeneity variance: REML\n",
