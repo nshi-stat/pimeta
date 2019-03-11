@@ -115,8 +115,8 @@ NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::V
                            const double lower, const double upper, const int maxit2, const double tol,
                            const int nthread) {
   
-  int i, status;
-  double tau2;
+  int i, status[n];
+  double tau2[n];
   NumericVector rnd(n), pvec(n);
   pvec = runif(n);
   
@@ -127,26 +127,27 @@ NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::V
   double zeroval = fx(0.0, 0.0, 0, qa, sigma, A, k, mode, maxit1, eps);
   
 #ifdef _OPENMP
-  omp_set_num_threads(nthread);
+//  int maxnthread = omp_get_max_threads();
+//  Rprintf("maximum threads are %d\n", maxnthread);
+//  omp_set_num_threads(std::min(nthread, maxnthread));
+omp_set_num_threads(nthread);
 #endif
-#pragma omp parallel default(shared), private(i, tau2, status)
+#pragma omp parallel default(shared), private(i)
 {
-//#pragma omp barrier
-//  if (omp_get_thread_num() == 0) {
-//    Rprintf("There are %d threads\n", omp_get_num_threads());
-//  }
-#pragma omp for
+#pragma omp for nowait
   for (i = 0; i < n; i++) {
-    if (zeroval >= pvec(i)) {
-      rnd(i) = 0.0;
-    } else {
-      while (1) {
-        findRootTau2(pvec(i), 0, qa, sigma, A, k, mode, maxit1, eps, lower, mupper, maxit2, tol, &tau2, &status);
-        if (status != 2) {
-          if (status == 1) {
+    while (1) {
+      if (zeroval >= pvec(i)) {
+        rnd(i) = 0.0;
+        break;
+      } else {
+        findRootTau2(pvec(i), 0, qa, sigma, A, k, mode, maxit1, eps,
+                     lower, mupper, maxit2, tol, &tau2[i], &status[i]);
+        if (status[i] != 2) {
+          if (status[i] == 1) {
             rnd(i) = R_PosInf;
           } else {
-            rnd(i) = tau2;
+            rnd(i) = tau2[i];
           }
           break;
         } else {
@@ -156,9 +157,9 @@ NumericVector rtau2CppWrap(const int n, const Eigen::VectorXd& y, const Eigen::V
     }
   }
 }
-  
-  return rnd;
-  
+
+return rnd;
+
 }
 
 double getqa(const Eigen::VectorXd& y, const Eigen::MatrixXd& A) {

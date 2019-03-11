@@ -57,7 +57,6 @@ pima_boot <- function(y, sigma, alpha = 0.05, B = 25000, maxit1 = 100000,
   util_check_inrange(alpha, 0.0, 1.0)
   util_check_gt(B, 1)
   util_check_nonneg(parallel)
-  util_check_num(seed)
   util_check_gt(maxit1, 1)
   util_check_gt(eps, 0)
   util_check_ge(lower, 0)
