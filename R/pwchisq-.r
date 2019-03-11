@@ -25,7 +25,7 @@
 #' \eqn{\chi^2} random variables.
 #' \emph{J R Stat Soc Ser C Appl Stat.}
 #' \strong{33}(3): 332--339.
-#' \url{https://www.jstor.org/stable/2347721}.
+#' \url{https://doi.org/10.2307/2347721}.
 #' @examples
 #' # Table 1 of Farabrother (1984)
 #' # Q6 (The taget values are 0.0061, 0.5913, and 0.9779)

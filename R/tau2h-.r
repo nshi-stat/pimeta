@@ -108,7 +108,7 @@
 #' Explaining heterogeneity in meta-analysis: a comparison of methods.
 #' \emph{Stat Med.}
 #' \strong{18}(20): 2693-2708.
-# \url{https://doi.org/10.1002/%28SICI%291097-0258%2819991030%2918%3A20%3C2693%3A%3AAID-SIM235%3E3.0.CO%3B2-V}.
+#' \url{https://doi.org/10.1002/(SICI)1097-0258(19991030)18:20<2693::AID-SIM235>3.0.CO;2-V}.
 #' 
 #' Sidik, K., and Jonkman, J. N. (2005).
 #' Simple heterogeneity variance estimation for meta-analysis.
@@ -134,7 +134,7 @@
 #' in the random effects model in meta-analysis.
 #' \emph{Stat Med.}
 #' \strong{16}(7): 753-768.
-# \url{https://doi.org/10.1002/%28SICI%291097-0258%2819970415%2916%3A7%3C753%3A%3AAID-SIM494%3E3.0.CO%3B2-G}.
+#' \url{https://doi.org/10.1002/(SICI)1097-0258(19970415)16:7<753::AID-SIM494>3.0.CO;2-G}.
 #' @examples
 #' data(sbp, package = "pimeta")
 #' pimeta::tau2h(sbp$y, sbp$sigmak)
