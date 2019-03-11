@@ -29,19 +29,19 @@
 # pimeta::cima_bc(sbp$y, sbp$sigmak)
 # @export
 cima_bc <- function(y, se, alpha = 0.05) {
-
+  
   k <- length(y)
   tau2h <- tau2h_ml(y = y, se = se)$tau2h
   w <- (se^2 + tau2h)^-1
   muhat <- sum(y*w) / sum(w)
-
+  
   upper <- muhat + 10*sqrt(sum(w)^-1)
   while(peqnbc(upper, muhat, tau2h, alpha, y, se) > 0) {
     upper <- upper + 10*sqrt(sum(w)^-1)
   }
   res <- try(
-    uniroot(peqnbc, interval = c(muhat, upper), muhat = muhat,
-            tau2h = tau2h, alpha = alpha, y = y, se = se),
+    stats::uniroot(peqnbc, interval = c(muhat, upper), muhat = muhat,
+                   tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {
@@ -54,8 +54,8 @@ cima_bc <- function(y, se, alpha = 0.05) {
     lower <- lower - 10*sqrt(sum(w)^-1)
   }
   res <- try(
-    uniroot(peqnbc, interval = c(lower, muhat), muhat = muhat,
-            tau2h = tau2h, alpha = alpha, y = y, se = se),
+    stats::uniroot(peqnbc, interval = c(lower, muhat), muhat = muhat,
+                   tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {

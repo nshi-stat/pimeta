@@ -19,6 +19,11 @@
 
 \item{base_family}{base font family}
 
+\item{digits}{a value for digits specifies the minimum number
+of significant digits to be printed in values.}
+
+\item{studylabel}{labels for each study}
+
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
@@ -26,8 +31,8 @@ A function for plotting of `cima` objects.
 }
 \examples{
 data(sbp, package = "pimeta")
-ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "HTS")
+ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
 cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
-plot(ciex, digits = 2, base_size = 10)
+plot(ciex, digits = 2, base_size = 10, studylabel = sbp$label)
 dev.off()
 }

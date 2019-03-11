@@ -28,7 +28,7 @@
 # pimeta::cima_pl(sbp$y, sbp$sigmak)
 # @export
 cima_pl <- function(y, se, alpha = 0.05) {
-
+  
   k <- length(y)
   tau2h <- tau2h_ml(y = y, se = se)$tau2h
   w <- (se^2 + tau2h)^-1
@@ -39,8 +39,8 @@ cima_pl <- function(y, se, alpha = 0.05) {
     upper <- upper + 10*sqrt(sum(w)^-1)
   }
   res <- try(
-    uniroot(peqn, interval = c(muhat, upper), muhat = muhat,
-            tau2h = tau2h, alpha = alpha, y = y, se = se),
+    stats::uniroot(peqn, interval = c(muhat, upper), muhat = muhat,
+                   tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {
@@ -53,8 +53,8 @@ cima_pl <- function(y, se, alpha = 0.05) {
     lower <- lower - 10*sqrt(sum(w)^-1)
   }
   res <- try(
-    uniroot(peqn, interval = c(lower, muhat), muhat = muhat,
-            tau2h = tau2h, alpha = alpha, y = y, se = se),
+    stats::uniroot(peqn, interval = c(lower, muhat), muhat = muhat,
+                   tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
   if (class(res) == "try-error") {
@@ -117,6 +117,6 @@ tau2h_pl <- function(mu, y, se, maxiter = 100) {
   }
   
   return(tau2h)
-
+  
 }
 

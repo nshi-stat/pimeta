@@ -63,10 +63,10 @@ convert_bin <- function(m1, n1, m2, n2, type = c("logOR", "logRR", "RD")) {
   if (type == "logOR") {
     res$y <- log((m1 + 0.5)*(n2 - m2 + 0.5)/(n1 - m1 + 0.5)/(m2 + 0.5))
     res$se <- sqrt(1.0/(m1 + 0.5) + 1.0/(n1 - m1 + 0.5) + 1.0/(m2 + 0.5) + 1.0/(n2 - m2 + 0.5))
-  } else if (method == "logRR") {
+  } else if (type == "logRR") {
     res$y <- log((m1 + 0.5)*(n2 + 0.5)/(n1 + 0.5)/(m2 + 0.5))
     res$se <- sqrt(1.0/(m1 + 0.5) - 1.0/(n1 + 0.5) + 1.0/(m2 + 0.5) - 1.0/(n2 + 0.5))
-  } else if (method == "RD") {
+  } else if (type == "RD") {
     res$y <- m1/n1 - m2/n2
     res$se <- sqrt(
       ((m1 + 0.0625)/(n1 + 0.125))*((n1 - m1 + 0.0625)/(n1 + 0.125))/n1 +

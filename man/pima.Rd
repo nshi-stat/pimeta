@@ -106,7 +106,7 @@ data(sbp, package = "pimeta")
 
 # Nagashima-Noma-Furukawa prediction interval
 # is sufficiently accurate when I^2 >= 10\% and K >= 3
-\donttest{pimeta::pima(sbp$y, sbp$sigmak, seed = 3141592)}
+\donttest{pimeta::pima(sbp$y, sbp$sigmak, seed = 3141592, parallel = 4)}
 
 # Higgins-Thompson-Spiegelhalter prediction interval and
 # Partlett-Riley prediction intervals

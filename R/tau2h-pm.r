@@ -21,7 +21,7 @@
 # pimeta::tau2h_pm(sbp$y, sbp$sigmak)
 # @export
 tau2h_pm <- function(y, se) {
-
+  
   qgen <- function(x, y, se) {
     k <- length(y)
     wi <- (se^2 + x)^-1
@@ -37,7 +37,7 @@ tau2h_pm <- function(y, se) {
       upper <- upper*2
     }
     res <- try(
-      uniroot(qgen, interval = c(0, upper), y = y, se = se),
+      stats::uniroot(qgen, interval = c(0, upper), y = y, se = se),
       silent = FALSE
     )
     if (class(res) == "try-error") {
@@ -45,7 +45,7 @@ tau2h_pm <- function(y, se) {
     }
     tau2h <- res$root
   }
-
+  
   return(list(tau2h = tau2h))
   
 }
