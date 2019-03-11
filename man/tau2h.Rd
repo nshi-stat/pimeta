@@ -128,6 +128,7 @@ Thompson, S. G., and Sharp, S. J. (1999).
 Explaining heterogeneity in meta-analysis: a comparison of methods.
 \emph{Stat Med.}
 \strong{18}(20): 2693-2708.
+\url{https://doi.org/10.1002/(SICI)1097-0258(19991030)18:20<2693::AID-SIM235>3.0.CO;2-V}.
 
 Sidik, K., and Jonkman, J. N. (2005).
 Simple heterogeneity variance estimation for meta-analysis.
@@ -153,4 +154,5 @@ Incorporating variability in estimates of heterogeneity
 in the random effects model in meta-analysis.
 \emph{Stat Med.}
 \strong{16}(7): 753-768.
+\url{https://doi.org/10.1002/(SICI)1097-0258(19970415)16:7<753::AID-SIM494>3.0.CO;2-G}.
 }
