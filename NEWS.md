@@ -32,7 +32,7 @@
     - Empirical Bayes estimator.
     - Bayes modal estimator.
     - ML and REML confidence intervals.
-* Converting binary data: : the `convert_bin` function
+* Converting binary data: the `convert_bin` function
     - Converting binary data to logarithmic odds ratio (see a Vignette file).
     - Converting binary data to logarithmic relative risk.
     - Converting binary data to risk difference.
