@@ -11,7 +11,7 @@
 * Confidence interval: the `cima` function
     - A Wald-type t-distribution confidence interval.
       Variance estimator of the average effect: an approximate estimator.
-      Heterogeneity variance: Dearsimonian-Laird estimator.
+      Heterogeneity variance: Dersimonian-Laird estimator.
     - A Wald-type t-distribution confidence interval.
       Variance estimator of the average effect: an approximate, Hartung-Knapp, Sidik-Jonkman, Kenward-Roger estimators.
       Heterogeneity variance: REML estimator.
