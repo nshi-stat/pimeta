@@ -52,7 +52,7 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 
 \item{B}{the number of bootstrap samples}
 
-\item{parallel}{logical, indicates whether this function uses parallel computing}
+\item{parallel}{the number of threads used in parallel computing, or FALSE that means single threading}
 
 \item{seed}{set the value of random seed}
 

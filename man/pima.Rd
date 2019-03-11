@@ -2,6 +2,12 @@
 % Please edit documentation in R/pima-.r
 \name{pima}
 \alias{pima}
+\alias{pima_boot}
+\alias{bootPI}
+\alias{pima_hts}
+\alias{htsdl}
+\alias{pima_htsreml}
+\alias{htsreml}
 \title{Calculating Prediction Intervals}
 \usage{
 pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
@@ -48,7 +54,7 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 
 \item{B}{the number of bootstrap samples}
 
-\item{parallel}{logical, indicates whether this function uses parallel computing}
+\item{parallel}{the number of threads used in parallel computing, or FALSE that means single threading}
 
 \item{seed}{set the value of random seed}
 
@@ -82,24 +88,34 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 }
 }
 \description{
-This function calculates prediction intervals using \code{pima_boot},
-\code{pima_hts}, or \code{pima_htsreml} functions.
+This function can estimate prediction intervals (PIs) as follows: 
+A parametric bootstrap PI based on confidence distribution
+(Nagashima et al., 2018). A parametric bootstrap confidence
+interval is also calculated based on the same sampling method
+for bootstrap PI.
+The Higgins--Thompson--Spiegelhalter (2009) prediction interval.
+The Partlett--Riley (2017) prediction intervals.
+}
+\details{
+The functions \code{bootPI}, \code{pima_boot},
+\code{pima_hts}, \code{htsdl}, \code{pima_htsreml}, \code{htsreml}
+are deprecated, and integrated to the \code{pima} function.
 }
 \examples{
 data(sbp, package = "pimeta")
-set.seed(20161102)
 
 # Nagashima-Noma-Furukawa prediction interval
 # is sufficiently accurate when I^2 >= 10\% and K >= 3
 \donttest{pimeta::pima(sbp$y, sbp$sigmak, seed = 3141592)}
 
-# Higgins-Thompson-Spiegelhalter prediction interval
-# Partlett-Riley prediction interval
-# are accurate when I^2 > 50\% and K > 25
+# Higgins-Thompson-Spiegelhalter prediction interval and
+# Partlett-Riley prediction intervals
+# are accurate when I^2 > 30\% and K > 25
 pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
 pimeta::pima(sbp$y, sbp$sigmak, method = "HK")
 pimeta::pima(sbp$y, sbp$sigmak, method = "SJ")
 pimeta::pima(sbp$y, sbp$sigmak, method = "KR")
+pimeta::pima(sbp$y, sbp$sigmak, method = "APX")
 }
 \references{
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
@@ -121,9 +137,40 @@ a confidence distribution approach.
 \emph{Stat Methods Med Res}.
 \emph{In press}.
 \url{https://doi.org/10.1177/0962280218773520}.
+
+Hartung, J. (1999).
+An alternative method for meta-analysis.
+\emph{Biom J.}
+\strong{41}(8): 901-916.
+\url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
+
+Hartung, J., and Knapp, G. (2001).
+On tests of the overall treatment effect in meta-analysis with
+normally distributed responses.
+\emph{Stat Med.}
+\strong{20}(12): 1771-1782.
+\url{https://doi.org/10.1002/sim.791}
+
+Sidik, K., and Jonkman, J. N. (2006).
+Robust variance estimation for random effects meta-analysis.
+\emph{Comput Stat Data Anal.}
+\strong{50}(12): 3681-3701.
+\url{https://doi.org/10.1016/j.csda.2005.07.019}
+
+Kenward, M. G., and Roger, J. H. (1997).
+Small sample inference for fixed effects from restricted
+maximum likelihood.
+\emph{Biometrics.}
+\strong{53}(3): 983-997.
+\url{https://doi.org/10.2307/2533558}
+
+DerSimonian, R., and Laird, N. (1986).
+Meta-analysis in clinical trials.
+\emph{Control Clin Trials.}
+\strong{7}(3): 177-188.
 }
 \seealso{
-\code{\link[=pima_boot]{pima_boot}},
-\code{\link[=pima_hts]{pima_hts}},
-\code{\link[=pima_htsreml]{pima_htsreml}}.
+\code{\link[=print.pima]{print.pima}},
+\code{\link[=plot.pima]{plot.pima}},
+\code{\link[=cima]{cima}}.
 }

@@ -24,3 +24,10 @@
 \description{
 A function for plotting of `cima` objects.
 }
+\examples{
+data(sbp, package = "pimeta")
+ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "HTS")
+cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
+plot(ciex, digits = 2, base_size = 10)
+dev.off()
+}

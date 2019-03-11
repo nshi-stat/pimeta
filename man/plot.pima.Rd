@@ -27,3 +27,10 @@ of significant digits to be printed in values.}
 \description{
 A function for plotting of `pima` objects.
 }
+\examples{
+data(sbp, package = "pimeta")
+piex <- pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
+cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
+plot(piex, digits = 2, base_size = 10)
+dev.off()
+}

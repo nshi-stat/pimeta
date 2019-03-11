@@ -1,35 +1,3 @@
-#' Higgins--Thompson--Spiegelhalter prediction interval
-#'
-#' A function for the Higgins--Thompson--Spiegelhalter PI
-#' based on the DerSimonian-Laird estimator (Higgins et al., 2009)
-#' 
-#' @name pima_hts
-#' @rdname pima_hts
-#' @aliases htsdl
-#' @param y the effect size estimates vector
-#' @param sigma the within studies standard errors vector
-#' @param alpha the alpha level of the prediction interval
-#' @return
-#' \itemize{
-#' \item \code{muhat}: the average treatment effect estimate \eqn{\hat{\mu}}.
-#' \item \code{lci}, \code{lci}: the lower and upper confidence limits \eqn{\hat{\mu}_l} and \eqn{\hat{\mu}_u}.
-#' \item \code{lpi}, \code{lpi}: the lower and upper prediction limits \eqn{\hat{c}_l} and \eqn{\hat{c}_u}.
-#' \item \code{tau2h}: the estimate for \eqn{\tau^2}.
-#' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
-#' \item \code{nup}: degrees of freedom for the prediction interval.
-#' \item \code{nuc}: degrees of freedom for the confidence interval.
-#' }
-#' @references
-#' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
-#' A re-evaluation of random-effects meta-analysis.
-#' \emph{J R Stat Soc Ser A Stat Soc.}
-#' \strong{172}(1): 137-159.
-#' \url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
-#' @seealso
-#' \code{\link[=pima]{pima}}.
-#' @examples
-#' data(sbp, package = "pimeta")
-#' pimeta::pima_hts(sbp$y, sbp$sigmak)
 #' @export
 pima_hts <- function(y, sigma, alpha = 0.05) {
 

@@ -42,7 +42,7 @@
 #'            Bartlett-type correction (Noma, 2011).            
 #' }
 #' @param B the number of bootstrap samples
-#' @param parallel logical, indicates whether this function uses parallel computing
+#' @param parallel the number of threads used in parallel computing, or FALSE that means single threading
 #' @param seed set the value of random seed
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
 #' @param eps the desired level of accuracy for the exact distribution function of \eqn{Q}
@@ -320,6 +320,12 @@ print.cima <- function(x, digits = 4, ...) {
 #' @param base_size base font size
 #' @param base_family base font family
 #' @param ... further arguments passed to or from other methods.
+#' @examples 
+#' data(sbp, package = "pimeta")
+#' ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "HTS")
+#' cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
+#' plot(ciex, digits = 2, base_size = 10)
+#' dev.off()
 #' @export
 #' @method plot cima
 plot.cima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
