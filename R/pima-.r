@@ -113,7 +113,7 @@
 #' maximum likelihood.
 #' \emph{Biometrics.}
 #' \strong{53}(3): 983-997.
-#' \url{https://doi.org/10.2307/2533558}.
+#' \url{https://www.ncbi.nlm.nih.gov/pubmed/9333350}.
 #' 
 #' DerSimonian, R., and Laird, N. (1986).
 #' Meta-analysis in clinical trials.
@@ -340,11 +340,13 @@ print.pima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
 #'              (\code{"identity"} [default] or \code{"exp"}).
 #' @param ... further arguments passed to or from other methods.
 #' @examples
+#' \donttest{
 #' data(sbp, package = "pimeta")
 #' piex <- pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
 #' cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 #' plot(piex, digits = 2, base_size = 10, studylabel = sbp$label)
 #' dev.off()
+#' }
 #' @export
 #' @method plot pima
 plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,

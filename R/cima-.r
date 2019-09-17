@@ -346,11 +346,13 @@ print.cima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
 #'              (\code{"identity"} [default] or \code{"exp"}).
 #' @param ... further arguments passed to or from other methods.
 #' @examples 
+#' \donttest{
 #' data(sbp, package = "pimeta")
 #' ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
 #' cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 #' plot(ciex, digits = 2, base_size = 10, studylabel = sbp$label)
 #' dev.off()
+#' }
 #' @export
 #' @method plot cima
 plot.cima <- function(x, y = NULL, title = "Forest plot", base_size = 16,

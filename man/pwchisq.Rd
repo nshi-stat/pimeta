@@ -51,5 +51,5 @@ Algorithm AS 204: the distribution of a positive linear combination of
 \eqn{\chi^2} random variables.
 \emph{J R Stat Soc Ser C Appl Stat.}
 \strong{33}(3): 332--339.
-\url{https://doi.org/10.2307/2347721}.
+\url{https://rss.onlinelibrary.wiley.com/doi/10.2307/2347721}.
 }

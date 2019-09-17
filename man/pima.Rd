@@ -162,7 +162,7 @@ Small sample inference for fixed effects from restricted
 maximum likelihood.
 \emph{Biometrics.}
 \strong{53}(3): 983-997.
-\url{https://doi.org/10.2307/2533558}.
+\url{https://www.ncbi.nlm.nih.gov/pubmed/9333350}.
 
 DerSimonian, R., and Laird, N. (1986).
 Meta-analysis in clinical trials.
