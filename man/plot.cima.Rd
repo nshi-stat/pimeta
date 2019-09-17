@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{cima}(x, y = NULL, title = "Forest plot",
   base_size = 16, base_family = "", digits = 3, studylabel = NULL,
-  ...)
+  ntick = NULL, trans = c("identity", "exp"), ...)
 }
 \arguments{
 \item{x}{`cima` object to plot}
@@ -23,6 +23,11 @@
 of significant digits to be printed in values.}
 
 \item{studylabel}{labels for each study}
+
+\item{ntick}{the number of x-axis ticks}
+
+\item{trans}{transformation for logarithmic scale outcomes
+(\code{"identity"} [default] or \code{"exp"}).}
 
 \item{...}{further arguments passed to or from other methods.}
 }
