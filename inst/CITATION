@@ -8,17 +8,15 @@ author = personList(
   as.person("Hisashi Noma"),
   as.person("Toshi A. Furukawa")),
 journal = "Statistical Methods in Medical Research",
-year = "2018",
-volume = "",
-number = "",
-page = "In press",
-url = "",
+year = "2019",
+volume = "28",
+number = "6",
+page = "1689-1702",
 doi = "10.1177/0962280218773520",
-note = "Post-print available at (http://nshi.jp/en/)",
+note = "Post-print available at (https://arxiv.org/abs/1804.01054)",
 textVersion = paste(
   "Nagashima K, Noma H, Furukawa TA.",
   "Prediction interval for random-effects meta-analysis: a confidence distribution approach.",
-  "Statistical Methods in Medical Research 2018.",
-  "In press.",
+  "Statistical Methods in Medical Research 2019; 28(6): 1689-1702.",
   "DOI:10.1177/0962280218773520."
 ))

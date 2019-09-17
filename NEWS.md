@@ -2,6 +2,14 @@
 # The 'pimeta' package
 
 
+## Version 1.1.3 (2019-09-17)
+
+* Prediction & Confidence interval: the `pima` and `cima` functions
+    - Back-transformartion for logarithmic scale outcomes (print & plot function).
+* CITATION was updated.
+* Vignette was updated.
+
+
 ## Version 1.1.2 (2019-03-11)
 
 * Prediction interval: the `pima` function

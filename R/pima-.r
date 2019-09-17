@@ -234,10 +234,18 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
 #' @param x print to display
 #' @param digits a value for digits specifies the minimum number
 #'               of significant digits to be printed in values.
+#' @param trans transformation for logarithmic scale outcomes
+#'              (\code{"identity"} [default] or \code{"exp"}).
 #' @param ... further arguments passed to or from other methods.
 #' @export
 #' @method print pima
-print.pima <- function(x, digits = 4, ...) {
+print.pima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
+  
+  lstt <- c("identity", "exp")
+  trans <- match.arg(trans)
+  if (!is.element(trans, lstt)) {
+    stop("Unknown 'trans' specified.")
+  }
   
   nuc <- x$nuc
   nup <- x$nup
@@ -274,21 +282,35 @@ print.pima <- function(x, digits = 4, ...) {
   
   cat(paste0("No. of studies: ", length(x$y), "\n\n"))
   
+  ftrans <- function(x) {
+    if (trans == "identity") {
+      return(x)
+    } else if (trans == "exp") {
+      return(exp(x))
+    }
+  }
+
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "% prediction interval]:\n"))
-  cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
-             format(round(x$lpi, digits), nsmall = digits), ", ",
-             format(round(x$upi, digits), nsmall = digits), "]\n"))
+  cat(paste0(" ", format(round(ftrans(x$muhat), digits), nsmall = digits), " [",
+             format(round(ftrans(x$lpi), digits), nsmall = digits), ", ",
+             format(round(ftrans(x$upi), digits), nsmall = digits), "]\n"))
   if (!is.na(nup)) {
     cat(paste0(" d.f.: ", nup, "\n"))
+  }
+  if (trans == "exp") {
+    cat(paste0(" Scale: exponential transformed\n"))
   }
   cat("\n")
   
   cat(paste0("Average treatment effect [", (1 - x$alpha)*100, "% confidence interval]:\n"))
-  cat(paste0(" ", format(round(x$muhat, digits), nsmall = digits), " [",
-             format(round(x$lci, digits), nsmall = digits), ", ",
-             format(round(x$uci, digits), nsmall = digits), "]\n"))
+  cat(paste0(" ", format(round(ftrans(x$muhat), digits), nsmall = digits), " [",
+             format(round(ftrans(x$lci), digits), nsmall = digits), ", ",
+             format(round(ftrans(x$uci), digits), nsmall = digits), "]\n"))
   if (!is.na(nuc)) {
     cat(paste0(" d.f.: ", nuc, "\n"))
+  }
+  if (trans == "exp") {
+    cat(paste0(" Scale: exponential transformed\n"))
   }
   cat("\n")
   
@@ -313,6 +335,9 @@ print.pima <- function(x, digits = 4, ...) {
 #' @param digits a value for digits specifies the minimum number
 #'               of significant digits to be printed in values.
 #' @param studylabel labels for each study
+#' @param ntick the number of x-axis ticks
+#' @param trans transformation for logarithmic scale outcomes
+#'              (\code{"identity"} [default] or \code{"exp"}).
 #' @param ... further arguments passed to or from other methods.
 #' @examples
 #' data(sbp, package = "pimeta")
@@ -323,7 +348,22 @@ print.pima <- function(x, digits = 4, ...) {
 #' @export
 #' @method plot pima
 plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
-                      base_family = "", digits = 3, studylabel = NULL, ...) {
+                      base_family = "", digits = 3, studylabel = NULL, 
+                      ntick = NULL, trans = c("identity", "exp"), ...) {
+  
+  lstt <- c("identity", "exp")
+  trans <- match.arg(trans)
+  if (!is.element(trans, lstt)) {
+    stop("Unknown 'trans' specified.")
+  }
+  
+  ftrans <- function(x) {
+    if (trans == "identity") {
+      return(x)
+    } else if (trans == "exp") {
+      return(exp(x))
+    }
+  }
   
   idodr <- lcl <- limits <- lx <- shape <- size <- ucl <- ymax <- ymin <- NULL
   
@@ -346,23 +386,25 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
     id = id,
     idodr = c((k + 3):4, 2:1),
     y = c(x$y, NA, NA),
-    lcl = c(x$y + stats::qnorm(0.025)*x$se, NA, NA),
-    ucl = c(x$y + stats::qnorm(0.975)*x$se, NA, NA),
+    lcl = c(x$y + stats::qnorm(x$alpha*0.5)*x$se, NA, NA),
+    ucl = c(x$y + stats::qnorm(1 - x$alpha*0.5)*x$se, NA, NA),
     shape = c(rep(15, k), 18, 18),
     swidth = c(rep(1, k), 3, 3)
   )
+  xmin <- min(ftrans(df1$lcl[1:k]))
+  xmax <- max(ftrans(df1$ucl[1:k]))
   df1 <- data.frame(
     df1,
     size = c(1/x$se, 1, 1),
-    limits = c(paste0(format(round(df1$y[1:k], digits), nsmall = digits), " (",
-                      format(round(df1$lcl[1:k], digits), nsmall = digits), ", ",
-                      format(round(df1$ucl[1:k], digits), nsmall = digits), ")"),
-               paste0(format(round(x$muhat, digits), nsmall = digits), " (",
-                      format(round(x$lci, digits), nsmall = digits), ", ",
-                      format(round(x$uci, digits), nsmall = digits), ")"),
-               paste0(format(round(x$muhat, digits), nsmall = digits), " (",
-                      format(round(x$lpi, digits), nsmall = digits), ", ",
-                      format(round(x$upi, digits), nsmall = digits), ")")
+    limits = c(paste0(format(round(ftrans(df1$y[1:k]), digits), nsmall = digits), " (",
+                      format(round(ftrans(df1$lcl[1:k]), digits), nsmall = digits), ", ",
+                      format(round(ftrans(df1$ucl[1:k]), digits), nsmall = digits), ")"),
+               paste0(format(round(ftrans(x$muhat), digits), nsmall = digits), " (",
+                      format(round(ftrans(x$lci), digits), nsmall = digits), ", ",
+                      format(round(ftrans(x$uci), digits), nsmall = digits), ")"),
+               paste0(format(round(ftrans(x$muhat), digits), nsmall = digits), " (",
+                      format(round(ftrans(x$lpi), digits), nsmall = digits), ", ",
+                      format(round(ftrans(x$upi), digits), nsmall = digits), ")")
     )
   )
   df2 <- data.frame(id = "Study", idodr = k + 4, y = NA, lcl = NA, ucl = NA,
@@ -401,6 +443,22 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   y2labels <- df1[order(df1$idodr),]$limits
   y2labels[is.na(y2labels)] <- ""
   
+  if (trans == "exp") {
+    if (is.null(ntick)) {
+      ntick <- 6
+    }
+    breaks <- log(2^seq.int(ceiling(log2(xmin)), ceiling(log2(xmax)), length.out = ntick))
+    scalex <- scale_x_continuous(
+      labels = scales::trans_format("exp", format = scales::number_format(big.mark = "", accuracy = 10^(-digits))),
+      breaks = breaks)
+  } else if (trans == "identity") {
+    if (is.null(ntick)) {
+      scalex <- scale_x_continuous()
+    } else {
+      scalex <- scale_x_continuous(breaks = scales::pretty_breaks(n = ntick))
+    }
+  }
+  
   suppressWarnings(
     print(
       p <- ggplot(df1, aes(x = y, y = idodr)) +
@@ -414,7 +472,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
         geom_vline(xintercept = 0, lty = 1) +
         scale_y_continuous(breaks = 1:length(y1labels), labels = y1labels,
                            sec.axis = sec_axis( ~ ., breaks = 1:length(y2labels), labels = y2labels)) +
-        scale_x_continuous() +
+        scalex +
         scale_shape_identity() +
         ylab(NULL) +
         xlab("  ") +

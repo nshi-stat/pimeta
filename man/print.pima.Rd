@@ -4,13 +4,16 @@
 \alias{print.pima}
 \title{Print Results}
 \usage{
-\method{print}{pima}(x, digits = 4, ...)
+\method{print}{pima}(x, digits = 4, trans = c("identity", "exp"), ...)
 }
 \arguments{
 \item{x}{print to display}
 
 \item{digits}{a value for digits specifies the minimum number
 of significant digits to be printed in values.}
+
+\item{trans}{transformation for logarithmic scale outcomes
+(\code{"identity"} [default] or \code{"exp"}).}
 
 \item{...}{further arguments passed to or from other methods.}
 }
