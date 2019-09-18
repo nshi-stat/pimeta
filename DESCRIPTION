@@ -1,7 +1,7 @@
 Package: pimeta
 Type: Package
 Title: Prediction Intervals for Random-Effects Meta-Analysis
-Version: 1.1.3
+Version: 1.1.4
 Authors@R: c(
   person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
          role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
