@@ -453,14 +453,12 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
     scalex <- scale_x_continuous(
       labels = scales::trans_format("exp", format = scales::number_format(big.mark = "", accuracy = 10^(-digits))),
       breaks = breaks)
-    refline <- geom_vline(xintercept = 1, lty = 1)
   } else if (trans == "identity") {
     if (is.null(ntick)) {
       scalex <- scale_x_continuous()
     } else {
       scalex <- scale_x_continuous(breaks = scales::pretty_breaks(n = ntick))
     }
-    refline <- geom_vline(xintercept = 0, lty = 1)
   }
   
   suppressWarnings(
@@ -473,7 +471,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
         geom_ribbon(data = df5, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
                     colour = "black", fill = "black") +
         geom_vline(xintercept = x$muhat, lty = 2) +
-        refline +
+        geom_vline(xintercept = 0, lty = 1) +
         scale_y_continuous(breaks = 1:length(y1labels), labels = y1labels,
                            sec.axis = sec_axis( ~ ., breaks = 1:length(y2labels), labels = y2labels)) +
         scalex +
