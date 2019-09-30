@@ -11,7 +11,8 @@ extern List bootPICppWrap(const Eigen::VectorXd&, const Eigen::VectorXd&,
 
 extern void bootPICpp(const Eigen::VectorXd&, const Eigen::VectorXd&,
                       const Eigen::VectorXd&, const double,
-                      double*, double*, double*, double*);
+                      double*, double*, double*, double*,
+                      Eigen::VectorXd&, Eigen::VectorXd&);
 
 extern NumericVector rtau2CppWrap(const int, const Eigen::VectorXd&, const Eigen::VectorXd&,
                                   const double, const int, const double,

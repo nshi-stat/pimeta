@@ -32,21 +32,25 @@ List bootPICppWrap(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y,
                    const Eigen::VectorXd& sigma, const double alpha) {
   
   double lbpi, ubpi, lbci, ubci;
+  Eigen::VectorXd dpt, dpn;
   
-  bootPICpp(rnd, y, sigma, alpha, &lbpi, &ubpi, &lbci, &ubci);
+  bootPICpp(rnd, y, sigma, alpha, &lbpi, &ubpi, &lbci, &ubci, dpt, dpn);
   
   return List::create(
     Named("lpi") = lbpi,
     Named("upi") = ubpi,
     Named("lci") = lbci,
-    Named("uci") = ubci
+    Named("uci") = ubci,
+    Named("bspi") = dpt,
+    Named("bsci") = dpn
   );
   
 }
 
 void bootPICpp(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y,
                const Eigen::VectorXd& sigma, const double alpha,
-               double* lbpi, double* ubpi, double* lbci, double* ubci) {
+               double* lbpi, double* ubpi, double* lbci, double* ubci,
+               Eigen::VectorXd& dpt, Eigen::VectorXd& dpn) {
   
   double index, h;
   int lo, hi, n = rnd.size(), k = sigma.size();
@@ -58,10 +62,11 @@ void bootPICpp(const Eigen::VectorXd& rnd, const Eigen::VectorXd& y,
   w = sigma.array().pow(-2.0);
   s1 = w.sum();
   s2 = sigma.array().pow(-4.0).sum();
-  tauh2 = std::max(0.0, ((w.array()*(y.array() - (w.array()*y.array()).sum()/s1).pow(2)).sum() - (k - 1))/(s1 - s2/s1));
+  tauh2 = std::max(0.0, ((w.array()*(y.array() - (w.array()*y.array()).sum()/s1).pow(2)).sum() -
+    (k - 1))/(s1 - s2/s1));
   w = (sigma.array().pow(2) + tauh2).inverse();
   
-  Eigen::VectorXd wBrs, dpt, dpn, on = Eigen::VectorXd::Ones(n), ok = Eigen::VectorXd::Ones(k);
+  Eigen::VectorXd wBrs, on = Eigen::VectorXd::Ones(n), ok = Eigen::VectorXd::Ones(k);
   Eigen::MatrixXd wB, mB, vB, yB = on*y.transpose();
   
   wBrs = sigma.array().pow(2);  // The variable wBrs is temporarily used. We need VectorXd sigma^2.
