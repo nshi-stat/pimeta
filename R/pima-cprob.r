@@ -8,8 +8,7 @@ pima_cprob <- function(x, theta0, side) {
     }
   } else {
     if (x$nup <= 0) {
-      cprob <- NaN
-      break
+      return(NaN)
     }
     f <- function(x, nup, muhat, vmuhat, tau2h) {
       theta0 + muhat + qt(x, nup)*sqrt(vmuhat + tau2h)
