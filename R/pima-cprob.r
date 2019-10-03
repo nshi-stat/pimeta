@@ -2,9 +2,9 @@ pima_cprob <- function(x, theta0, side) {
   
   if (x$method == "boot") {
     if (side == "lt") {
-      cprob <- length(x$bspi[x$bspi < theta0]) / length(x$bspi)
+      cprob <- mean(x$bspi < theta0)
     } else {
-      cprob <- length(x$bspi[x$bspi > theta0]) / length(x$bspi)
+      cprob <- mean(x$bspi > theta0)
     }
   } else {
     f <- function(x, nup, muhat, vmuhat, tau2h) {
