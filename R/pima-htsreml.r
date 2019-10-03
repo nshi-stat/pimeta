@@ -50,11 +50,15 @@ pima_htsreml <- function(y, sigma, alpha = 0.05,
     vmuhat <- sum(w*(y - muhat)^2)/(k - 1)/w1p
     method <- "HK"
   }
-
-  lpi <- muhat - stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
-  upi <- muhat + stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
-  lci <- muhat - stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
-  uci <- muhat + stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
+  
+  if (nup <= 0) {
+    lpi <- upi <- lci <- uci <- NaN
+  } else {
+    lpi <- muhat - stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
+    upi <- muhat + stats::qt(1.0 - alpha*0.5, nup)*sqrt(tau2h + vmuhat)
+    lci <- muhat - stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
+    uci <- muhat + stats::qt(1.0 - alpha*0.5, nuc)*sqrt(vmuhat)
+  }
   
   res <- list(muhat = muhat, lpi = lpi, upi = upi, lci = lci, uci = uci, 
               tau2h = tau2h, vmuhat = vmuhat, nup = nup, nuc = nuc,

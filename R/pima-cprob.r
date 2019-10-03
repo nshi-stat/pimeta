@@ -8,11 +8,7 @@ pima_cprob <- function(x, theta0, side) {
     }
   } else {
     if (x$nup <= 0) {
-      if (side == "lt") {
-        cprob <- 0
-      } else {
-        cprob <- 1
-      }
+      cprob <- NaN
       break
     }
     f <- function(x, nup, muhat, vmuhat, tau2h) {
