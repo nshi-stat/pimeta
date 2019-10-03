@@ -45,6 +45,11 @@
 #'            an approximate variance estimator for the average
 #'            effect, \eqn{df=K-2}).
 #' }
+#' @param theta0 threshold \eqn{\theta_0}, for the cumulative probability of effect
+#'   \eqn{\theta_{new}} less or greater than \eqn{\theta_0}; \eqn{\Pr(\theta_{new} < \theta_0)} or
+#'   \eqn{\Pr(\theta_{new} > \theta_0)}.
+#' @param side either the cumulative probability of effect less (default = "lt") or greater ("gt")
+#'   then \eqn{\theta_0}
 #' @param B the number of bootstrap samples
 #' @param parallel the number of threads used in parallel computing, or FALSE that means single threading
 #' @param seed set the value of random seed
@@ -141,6 +146,7 @@
 #' @export
 pima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
+                 theta0 = 0, side = c("lt", "gt"),
                  B = 25000, parallel = FALSE, seed = NULL, maxit1 = 100000, 
                  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
                  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100) {
@@ -148,6 +154,8 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
   # initial check
   lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
   method <- match.arg(method)
+  lsts <- c("lt", "gt")
+  side <- match.arg(side)
   
   if (missing(se) & missing(v)) {
     stop("Either 'se' or 'v' must be specified.")
@@ -172,6 +180,8 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
     stop("'y' and 'se' should have the same length.")
   } else if (!is.element(method, lstm)) {
     stop("Unknown 'method' specified.")
+  } else if (!is.element(side, lsts)) {
+    stop("Unknown 'side' specified.")
   } else if (lower >= upper) {
     stop("'upper' should be greater than 'lower'.")
   }
@@ -220,6 +230,9 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
   }
   res <- append(list(K = length(y)), res)
   res <- append(res, list(K = length(y), i2h = i2h(se, res$tau2h)))
+  res <- append(res, list(cprob = pima_cprob(res, theta0, side),
+                          theta0 = theta0, side = side))
+  
   class(res) <- "pima"
   
   return(res)
@@ -316,7 +329,18 @@ print.pima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
   
   cat(paste0("Heterogeneity measure\n"))
   cat(paste0(" tau-squared: ", format(round(x$tau2, digits), nsmall = digits), "\n"))
-  cat(paste0(" I-squared:  ", format(round(x$i2h, 1), nsmall = 1), "%\n\n"))
+  cat(paste0(" I-squared:  ", format(round(x$i2h, 1), nsmall = 1), "%\n"))
+  cat("\n")
+  
+  cat(paste0("Estimated cumulative probability of effect `theta_new`\n"))
+  if (x$side == "lt") {
+    cat(paste0(" Pr(theta_new < ", x$theta0, "): ",
+               format(round(x$cprob, digits), nsmall = digits), "\n"))
+  } else {
+    cat(paste0(" Pr(theta_new > ", x$theta0, "): ",
+               format(round(x$cprob, digits), nsmall = digits), "\n"))
+  }
+  cat("\n")
   
   invisible(x)
   

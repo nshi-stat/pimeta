@@ -11,10 +11,10 @@
 \title{Calculating Prediction Intervals}
 \usage{
 pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
-  "SJ", "KR", "CL", "APX"), B = 25000, parallel = FALSE, seed = NULL,
-  maxit1 = 1e+05, eps = 10^(-10), lower = 0, upper = 1000,
-  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
-  maxiter = 100)
+  "SJ", "KR", "CL", "APX"), theta0 = 0, side = c("lt", "gt"),
+  B = 25000, parallel = FALSE, seed = NULL, maxit1 = 1e+05,
+  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
+  tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -51,6 +51,13 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
            an approximate variance estimator for the average
            effect, \eqn{df=K-2}).
 }}
+
+\item{theta0}{threshold \eqn{\theta_0}, for the cumulative probability of effect
+\eqn{\theta_{new}} less or greater than \eqn{\theta_0}; \eqn{\Pr(\theta_{new} < \theta_0)} or
+\eqn{\Pr(\theta_{new} > \theta_0)}.}
+
+\item{side}{either the cumulative probability of effect less (default = "lt") or greater ("gt")
+then \eqn{\theta_0}}
 
 \item{B}{the number of bootstrap samples}
 
