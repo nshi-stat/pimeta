@@ -7,6 +7,14 @@ pima_cprob <- function(x, theta0, side) {
       cprob <- mean(x$bspi > theta0)
     }
   } else {
+    if (x$nup <= 0) {
+      if (side == "lt") {
+        cprob <- 0
+      } else {
+        cprob <- 1
+      }
+      break
+    }
     f <- function(x, nup, muhat, vmuhat, tau2h) {
       theta0 + muhat + qt(x, nup)*sqrt(vmuhat + tau2h)
     }
@@ -14,7 +22,7 @@ pima_cprob <- function(x, theta0, side) {
     if (x$muhat >= theta0) {
       cprob <- uniroot(f, c(0, 0.5), nup = x$nup, muhat = x$muhat,
                        vmuhat = x$vmuhat, tau2h = x$tau2h)
-    } else if (x$muhat < 0) {
+    } else if (x$muhat < theta0) {
       cprob <- uniroot(f, c(0.5, 1), nup = x$nup, muhat = x$muhat,
                        vmuhat = x$vmuhat, tau2h = x$tau2h)
     }
