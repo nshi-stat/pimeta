@@ -29,7 +29,7 @@ Hauser, W., Bernardy, K, Uceyler, N., and Sommer, C. (2009).
 Treatment of fibromyalgia syndrome with antidepressants: a meta-analysis.
 \emph{JAMA.}
 \strong{301}(2): 198-209.
-\url{https://doi.org/10.1001/jama.2008.944}
+\url{https://jamanetwork.com/journals/jama/fullarticle/183189}
 
 Riley, R. D., Higgins, J. P. T, and Deeks, J. J. (2011).
 Interpretation of random effects meta-analyses.
