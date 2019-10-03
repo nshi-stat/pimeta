@@ -27,7 +27,7 @@
 #' \emph{Psychol Med.}
 #' \strong{37}(8): 1075-1084.
 #' \url{https://doi.org/10.1017/S0033291707009877}
-#' 
+#'
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 #' A re-evaluation of random-effects meta-analysis.
 #' \emph{J R Stat Soc Ser A Stat Soc.}
@@ -62,8 +62,8 @@ NULL
 #' Treatment of fibromyalgia syndrome with antidepressants: a meta-analysis.
 #' \emph{JAMA.}
 #' \strong{301}(2): 198-209.
-#' \url{https://doi.org/10.1001/jama.2008.944}
-#' 
+#' \url{https://jamanetwork.com/journals/jama/fullarticle/183189}
+#'
 #' Riley, R. D., Higgins, J. P. T, and Deeks, J. J. (2011).
 #' Interpretation of random effects meta-analyses.
 #' \emph{BMJ.}
@@ -108,7 +108,7 @@ NULL
 #' diastolic blood pressure (DBP) in patients with hypertension.
 #' Negative estimates indicate the reduction of DBP in the
 #' anti-hypertensive treatment group.
-#' 
+#'
 #' \itemize{
 #'   \item \code{y}: Standardized mean difference
 #'   \item \code{se}: Standard error
@@ -128,4 +128,63 @@ NULL
 #' \emph{Hypertension.}
 #' \strong{45}(5): 907-913.
 #' \url{https://doi.org/10.1161/01.HYP.0000165020.14745.79}
+NULL
+
+#' Rubinstein et al. (2019)'s chronic low back pain data
+#'
+#' \itemize{
+#'   \item \code{ID}: Study ID
+#'   \item \code{Souce}: First author name and year of publication
+#'   \item \code{m1}: Estimated mean in experimental group
+#'   \item \code{s1}: Standard deviation in experimental group
+#'   \item \code{n1}: Number of observations in experimental group
+#'   \item \code{m2}: Estimated mean in control group
+#'   \item \code{s2}: Standard deviation in control group
+#'   \item \code{n2}: Number of observations in control group
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name clbp
+#' @usage data(clbp)
+#' @format A data frame with 23 rows and 8 variables
+#' @references
+#' Rubinstein, S. M,, de Zoete, A., van Middelkoop, M.,
+#' Assendelft, W. J. J., de Boer, M. R., van Tulder, M. W. (2019).
+#' Benefits and harms of spinal manipulative therapy for
+#' the treatment of chronic low back pain: systematic review
+#' and meta-analysis of randomised controlled trials.
+#' \emph{BMJ.}
+#' \strong{364}: l689.
+#' \url{https://doi.org/10.1136/bmj.l689}
+NULL
+
+#' Koutoukidis et al. (2019)'s nonalcoholic fatty liver disease data
+#'
+#' \itemize{
+#'   \item \code{ID}: Study ID
+#'   \item \code{Souce}: First author name and year of publication
+#'   \item \code{m1}: Estimated mean in experimental group
+#'   \item \code{s1}: Standard deviation in experimental group
+#'   \item \code{n1}: Number of observations in experimental group
+#'   \item \code{m2}: Estimated mean in control group
+#'   \item \code{s2}: Standard deviation in control group
+#'   \item \code{n2}: Number of observations in control group
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name nfld
+#' @usage data(nfld)
+#' @format A data frame with 25 rows and 8 variables
+#' @references
+#' Koutoukidis, D. A,, Astbury, N. M., Tudor, K. E.,
+#' Morris, E., Henry, J. A., Noreik, M., Jebb, S. A.,
+#' Aveyard, P. (2019).
+#' Association of Weight Loss Interventions With Changes
+#' in Biomarkers of Nonalcoholic Fatty Liver Disease:
+#' A Systematic Review and Meta-analysis.
+#' \emph{JAMA Intern Med.}
+#' \strong{179}(9): 1262-1271.
+#' \url{https://doi.org/10.1001/jamainternmed.2019.2248}
 NULL
