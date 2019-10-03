@@ -7,7 +7,7 @@ pima_cprob <- function(x, theta0, side) {
       cprob <- mean(x$bspi > theta0)
     }
   } else {
-    if (x$nup <= 0) {
+    if (x$nup <= 0 || is.nan(x$tau2h)) {
       return(NaN)
     }
     f <- function(x, nup, muhat, vmuhat, tau2h) {

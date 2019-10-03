@@ -41,7 +41,8 @@ tau2h_ml <- function(y, se, maxiter = 100) {
         break
       } else if (r == maxiter && autoadj == 1) {
         # not converged
-        stop("The heterogeneity variance (tau^2) could not be calculated.")
+        warning("The heterogeneity variance (tau^2) could not be calculated.")
+        tau2h <- NaN
         break
       } else if (r == maxiter && autoadj == 0) {
         # not converged but retry with an adjusted step length
