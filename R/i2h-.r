@@ -26,8 +26,10 @@ i2h <- function(se, tau2h) {
   
   # initial check
   util_check_num(se)
-  util_check_num(tau2h)
   util_check_nonneg(se)
+  if (is.nan(tau2h)) {
+    return(NaN)
+  }
   
   # estimation
   k <- length(se)
