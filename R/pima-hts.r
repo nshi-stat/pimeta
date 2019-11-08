@@ -10,7 +10,7 @@ pima_hts <- function(y, sigma, alpha = 0.05) {
     stop("'y' and 'sigma' should have the same length.")
   }
 
-  # estimation  
+  # estimation
   k <- length(y)
   tau2h <- tau2h_dl(y = y, se = sigma)$tau2h
   w <- (sigma^2 + tau2h)^-1

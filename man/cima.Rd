@@ -127,18 +127,18 @@ pimeta::cima(sbp$y, sbp$sigmak, method = "BC")
 }
 \references{
 Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
-Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2016).
+Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2019).
 Methods to calculate uncertainty in the estimated overall effect
 size from a random-effects meta-analysis
 \emph{Res Syn Meth.}
-\emph{In press}.
+\strong{10}(1): 23-43.
 \url{https://doi.org/10.1002/jrsm.1319}.
 
-Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
-\emph{In press}.
+\strong{28}(6): 1689-1702.
 \url{https://doi.org/10.1177/0962280218773520}.
 
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).

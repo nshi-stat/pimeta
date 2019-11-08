@@ -11,7 +11,7 @@
 \title{Calculating Prediction Intervals}
 \usage{
 pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
-  "SJ", "KR", "CL", "APX"), theta0 = 0, side = c("lt", "gt"),
+  "SJ", "KR", "CL", "APX", "WL"), theta0 = 0, side = c("lt", "gt"),
   B = 25000, parallel = FALSE, seed = NULL, maxit1 = 1e+05,
   eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
   tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100)
@@ -50,6 +50,9 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
            (the REML estimator for \eqn{\tau^2} with
            an approximate variance estimator for the average
            effect, \eqn{df=K-2}).
+           for the average effect, \eqn{df=\nu-1}).
+\item \code{WL}: Wang--Lee (2019) prediction interval /
+           (a method of sample quantiles of ensemble estimates).
 }}
 
 \item{theta0}{threshold \eqn{\theta_0}, for the cumulative probability of effect
@@ -138,12 +141,19 @@ confidence and prediction intervals following REML estimation.
 \strong{36}(2): 301-317.
 \url{https://doi.org/10.1002/sim.7140}
 
-Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
-\emph{In press}.
+\strong{28}(6): 1689-1702.
 \url{https://doi.org/10.1177/0962280218773520}.
+
+Wang, C-C and Lee, W-C. (2019).
+A simple method to estimate prediction intervals and predictive
+distributions.
+\emph{Res Syn Meth.}
+\strong{30}(28): 3304-3312.
+\url{https://doi.org/10.1002/sim.4350}.
 
 Hartung, J. (1999).
 An alternative method for meta-analysis.
