@@ -102,7 +102,7 @@
 #' distributions.
 #' \emph{Res Syn Meth.}
 #' \strong{30}(28): 3304-3312.
-#' \url{https://doi.org/10.1002/sim.4350}.
+#' \url{https://doi.org/10.1002/jrsm.1345}.
 #' 
 #' Hartung, J. (1999).
 #' An alternative method for meta-analysis.

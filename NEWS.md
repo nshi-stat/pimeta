@@ -2,6 +2,11 @@
 # The 'pimeta' package
 
 
+## Version 1.1.4 (2019-12-01)
+
+* Prediction interval: Wang and Lee (2019)
+
+
 ## Version 1.1.3 (2019-09-17)
 
 * Prediction & Confidence interval: the `pima` and `cima` functions
