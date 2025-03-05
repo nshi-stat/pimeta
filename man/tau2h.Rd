@@ -4,9 +4,15 @@
 \alias{tau2h}
 \title{Calculating Heterogeneity Variance}
 \usage{
-tau2h(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
-  "ML", "REML", "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c(NA, "ML",
-  "REML"), alpha = 0.05)
+tau2h(
+  y,
+  se,
+  maxiter = 100,
+  method = c("DL", "VC", "PM", "HM", "HS", "ML", "REML", "AREML", "SJ", "SJ2", "EB",
+    "BM"),
+  methodci = c(NA, "ML", "REML"),
+  alpha = 0.05
+)
 }
 \arguments{
 \item{y}{the effect size estimates vector}

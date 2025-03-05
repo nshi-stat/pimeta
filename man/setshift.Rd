@@ -4,7 +4,9 @@
 \name{setshift}
 \alias{setshift}
 \title{Set-shifting data}
-\format{A data frame with 14 rows and 2 variables}
+\format{
+A data frame with 14 rows and 2 variables
+}
 \usage{
 data(setshift)
 }

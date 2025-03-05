@@ -4,9 +4,18 @@
 \alias{plot.pima}
 \title{Plot Results}
 \usage{
-\method{plot}{pima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
-  ntick = NULL, trans = c("identity", "exp"), ...)
+\method{plot}{pima}(
+  x,
+  y = NULL,
+  title = "Forest plot",
+  base_size = 16,
+  base_family = "",
+  digits = 3,
+  studylabel = NULL,
+  ntick = NULL,
+  trans = c("identity", "exp"),
+  ...
+)
 }
 \arguments{
 \item{x}{`pima` object to plot}

@@ -4,7 +4,9 @@
 \name{nfld}
 \alias{nfld}
 \title{Koutoukidis et al. (2019)'s nonalcoholic fatty liver disease data}
-\format{A data frame with 25 rows and 8 variables}
+\format{
+A data frame with 25 rows and 8 variables
+}
 \usage{
 data(nfld)
 }

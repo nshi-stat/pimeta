@@ -4,8 +4,14 @@
 \alias{funnel}
 \title{Funnel Plot}
 \usage{
-\method{plot}{pima}(x, title = "Funnel plot", base_size = 16,
-  base_family = "", digits = 3, trans = c("identity", "exp"))
+\method{plot}{pima}(
+  x,
+  title = "Funnel plot",
+  base_size = 16,
+  base_family = "",
+  digits = 3,
+  trans = c("identity", "exp")
+)
 }
 \arguments{
 \item{x}{`pima` or `cima` object to plot}

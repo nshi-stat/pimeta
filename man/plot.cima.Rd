@@ -4,9 +4,18 @@
 \alias{plot.cima}
 \title{Plot Results}
 \usage{
-\method{plot}{cima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
-  ntick = NULL, trans = c("identity", "exp"), ...)
+\method{plot}{cima}(
+  x,
+  y = NULL,
+  title = "Forest plot",
+  base_size = 16,
+  base_family = "",
+  digits = 3,
+  studylabel = NULL,
+  ntick = NULL,
+  trans = c("identity", "exp"),
+  ...
+)
 }
 \arguments{
 \item{x}{`cima` object to plot}

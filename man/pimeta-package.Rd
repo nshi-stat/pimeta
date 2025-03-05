@@ -4,9 +4,6 @@
 \name{pimeta-package}
 \alias{pimeta-package}
 \title{Prediction Intervals for Random-Effects Meta-Analysis}
-\description{
-Prediction Intervals for Random-Effects Meta-Analysis
-}
 \author{
 Kengo Nagashima, Hisashi Noma, and Toshi A. Furukawa
 }

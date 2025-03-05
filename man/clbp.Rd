@@ -4,7 +4,9 @@
 \name{clbp}
 \alias{clbp}
 \title{Rubinstein et al. (2019)'s chronic low back pain data}
-\format{A data frame with 23 rows and 8 variables}
+\format{
+A data frame with 23 rows and 8 variables
+}
 \usage{
 data(clbp)
 }
