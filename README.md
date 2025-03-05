@@ -14,6 +14,8 @@ and prediction intervals following REML estimation. *Statistics in Medicine* 201
 
 [CRAN task view: Meta Analysis](https://cran.r-project.org/view=MetaAnalysis)
 
+[https://nshi-stat.github.io/pimeta/](https://nshi-stat.github.io/pimeta/)
+
 
 ## Installation
 
