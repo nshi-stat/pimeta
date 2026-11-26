@@ -137,7 +137,7 @@
 #' maximum likelihood.
 #' \emph{Biometrics.}
 #' \strong{53}(3): 983-997.
-#' \url{https://pubmed.ncbi.nlm.nih.gov/9333350/}.
+#' \doi{10.2307/2533558}.
 #' 
 #' DerSimonian, R., and Laird, N. (1986).
 #' Meta-analysis in clinical trials.
