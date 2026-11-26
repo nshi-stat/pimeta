@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // pwchisqCpp
 List pwchisqCpp(const double q, const Eigen::VectorXd& lambda, const Eigen::VectorXi& mult, const Eigen::VectorXd& delta, const int n, const double mode, const int maxit, const double eps);
 RcppExport SEXP _pimeta_pwchisqCpp(SEXP qSEXP, SEXP lambdaSEXP, SEXP multSEXP, SEXP deltaSEXP, SEXP nSEXP, SEXP modeSEXP, SEXP maxitSEXP, SEXP epsSEXP) {
@@ -56,6 +61,29 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< const int >::type nthread(nthreadSEXP);
     rcpp_result_gen = Rcpp::wrap(rtau2CppWrap(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rtau2CDCppWrap
+NumericVector rtau2CDCppWrap(const int n, const Eigen::VectorXd& y, const Eigen::VectorXd& sigma, const double mode, const int maxit1, const double eps, const double lower, const double upper, const int maxit2, const double tol, const int nthread, const int table, const int nodes);
+RcppExport SEXP _pimeta_rtau2CDCppWrap(SEXP nSEXP, SEXP ySEXP, SEXP sigmaSEXP, SEXP modeSEXP, SEXP maxit1SEXP, SEXP epsSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP maxit2SEXP, SEXP tolSEXP, SEXP nthreadSEXP, SEXP tableSEXP, SEXP nodesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const double >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxit1(maxit1SEXP);
+    Rcpp::traits::input_parameter< const double >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< const double >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const double >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxit2(maxit2SEXP);
+    Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< const int >::type nthread(nthreadSEXP);
+    Rcpp::traits::input_parameter< const int >::type table(tableSEXP);
+    Rcpp::traits::input_parameter< const int >::type nodes(nodesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rtau2CDCppWrap(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread, table, nodes));
     return rcpp_result_gen;
 END_RCPP
 }

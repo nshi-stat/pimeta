@@ -40,7 +40,7 @@ tau2h_pm <- function(y, se) {
       stats::uniroot(qgen, interval = c(0, upper), y = y, se = se),
       silent = FALSE
     )
-    if (class(res) == "try-error") {
+    if (inherits(res, "try-error")) {
       stop("Could not find a solution. Try another estimator.")
     }
     tau2h <- res$root

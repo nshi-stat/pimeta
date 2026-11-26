@@ -11,11 +11,13 @@ Check these declarations against the C/Fortran source code.
 extern SEXP _pimeta_pwchisqCpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _pimeta_bootPICppWrap(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _pimeta_rtau2CppWrap(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _pimeta_rtau2CDCppWrap(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
   {"_pimeta_pwchisqCpp", (DL_FUNC) &_pimeta_pwchisqCpp,  8},
   {"_pimeta_bootPICppWrap", (DL_FUNC) &_pimeta_bootPICppWrap,  4},
   {"_pimeta_rtau2CppWrap",  (DL_FUNC) &_pimeta_rtau2CppWrap,  11},
+  {"_pimeta_rtau2CDCppWrap", (DL_FUNC) &_pimeta_rtau2CDCppWrap, 13},
   {NULL, NULL, 0}
 };
 

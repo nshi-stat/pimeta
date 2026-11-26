@@ -4,8 +4,15 @@
 \alias{pwchisq}
 \title{The Distribution of a Positive Linear Combination of Chiqaure Random Variables}
 \usage{
-pwchisq(x, lambda = 1, nu = 1, delta = 0, mode = 1,
-  maxit1 = 1e+05, eps = 10^(-10))
+pwchisq(
+  x,
+  lambda = 1,
+  nu = 1,
+  delta = 0,
+  mode = 1,
+  maxit1 = 1e+05,
+  eps = 10^(-10)
+)
 }
 \arguments{
 \item{x}{numeric; value of x > 0 (\eqn{P[X \le x]}).}

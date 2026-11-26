@@ -13,3 +13,7 @@ rtau2CppWrap <- function(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, t
     .Call(`_pimeta_rtau2CppWrap`, n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread)
 }
 
+rtau2CDCppWrap <- function(n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread, table, nodes) {
+    .Call(`_pimeta_rtau2CDCppWrap`, n, y, sigma, mode, maxit1, eps, lower, upper, maxit2, tol, nthread, table, nodes)
+}
+

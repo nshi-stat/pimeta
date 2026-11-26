@@ -129,3 +129,84 @@ NULL
 #' \strong{45}(5): 907-913.
 #' \url{https://doi.org/10.1161/01.HYP.0000165020.14745.79}
 NULL
+
+
+#' Chronic low back pain data
+#'
+#' Data from the systematic review of Rubinstein et al. (2019) of
+#' randomised controlled trials of spinal manipulative therapy for
+#' chronic low back pain. Each row is a comparison between spinal
+#' manipulative therapy (experimental group) and a recommended therapy
+#' (control group); some studies contribute more than one comparison.
+#' The outcome is pain intensity at one month on a 0-100 scale; lower
+#' values indicate less pain. The data can be converted to mean
+#' differences and their standard errors by \code{\link{convert_mean}}.
+#'
+#' \itemize{
+#'   \item \code{ID}: Comparison ID
+#'   \item \code{Source}: First author name and year of publication
+#'   \item \code{m1}: Estimated mean in the experimental group
+#'   \item \code{s1}: Standard deviation in the experimental group
+#'   \item \code{n1}: Number of observations in the experimental group
+#'   \item \code{m2}: Estimated mean in the control group
+#'   \item \code{s2}: Standard deviation in the control group
+#'   \item \code{n2}: Number of observations in the control group
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name clbp
+#' @usage data(clbp)
+#' @format A data frame with 23 rows and 8 variables
+#' @references
+#' Rubinstein, S. M., de Zoete, A., van Middelkoop, M.,
+#' Assendelft, W. J. J., de Boer, M. R., and van Tulder, M. W. (2019).
+#' Benefits and harms of spinal manipulative therapy for
+#' the treatment of chronic low back pain: systematic review
+#' and meta-analysis of randomised controlled trials.
+#' \emph{BMJ.}
+#' \strong{364}: l689.
+#' \url{https://doi.org/10.1136/bmj.l689}
+NULL
+
+
+#' Nonalcoholic fatty liver disease data
+#'
+#' Data from the systematic review of Koutoukidis et al. (2019) of
+#' randomised controlled trials of weight loss interventions in
+#' adults with nonalcoholic fatty liver disease. Each row is a
+#' comparison between a more-intensive weight loss intervention
+#' (experimental group) and no or a lower-intensity weight loss
+#' intervention (control group); some studies contribute more than one
+#' comparison. The outcome is the change in body weight (kg) from
+#' baseline; negative values indicate weight loss. The data can be
+#' converted to mean differences and their
+#' standard errors by \code{\link{convert_mean}}.
+#'
+#' \itemize{
+#'   \item \code{ID}: Comparison ID
+#'   \item \code{Source}: First author name and year of publication
+#'   \item \code{m1}: Estimated mean in the experimental group
+#'   \item \code{s1}: Standard deviation in the experimental group
+#'   \item \code{n1}: Number of observations in the experimental group
+#'   \item \code{m2}: Estimated mean in the control group
+#'   \item \code{s2}: Standard deviation in the control group
+#'   \item \code{n2}: Number of observations in the control group
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @name nfld
+#' @usage data(nfld)
+#' @format A data frame with 25 rows and 8 variables
+#' @references
+#' Koutoukidis, D. A., Astbury, N. M., Tudor, K. E.,
+#' Morris, E., Henry, J. A., Noreik, M., Jebb, S. A., and
+#' Aveyard, P. (2019).
+#' Association of weight loss interventions with changes
+#' in biomarkers of nonalcoholic fatty liver disease:
+#' a systematic review and meta-analysis.
+#' \emph{JAMA Intern Med.}
+#' \strong{179}(9): 1262-1271.
+#' \url{https://doi.org/10.1001/jamainternmed.2019.2248}
+NULL

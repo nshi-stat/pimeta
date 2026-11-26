@@ -5,7 +5,7 @@
 #' 
 #' @details Excellent reviews of heterogeneity variance estimation
 #' have been published (Sidik & Jonkman, 2007; Veroniki, et al., 2016;
-#' Langan, et al., 2018).
+#' Langan, et al., 2019).
 #' 
 #' @name tau2h
 #' @rdname tau2h
@@ -61,11 +61,11 @@
 #' 
 #' Langan, D., Higgins, J. P. T., Jackson, D.,
 #' Bowden, J., Veroniki, A. A., Kontopantelis, E.,
-#' Viechtbauer, W., and Simmonds, M. (2018).
+#' Viechtbauer, W., and Simmonds, M. (2019).
 #' A comparison of heterogeneity variance estimators in
 #' simulated random-effects meta-analyses.
-#' \emph{Res Syn Meth.}
-#' \emph{In press.}
+#' \emph{Res Synth Methods.}
+#' \strong{10}(1): 83-98.
 #' \url{https://doi.org/10.1002/jrsm.1316}.
 #' 
 #' DerSimonian, R., and Laird, N. (1986).

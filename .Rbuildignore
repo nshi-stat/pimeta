@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+.gitattributes
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^cran-comments\.md$
+^revdep$

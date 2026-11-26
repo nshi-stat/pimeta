@@ -5,8 +5,7 @@
 #' @name pimeta-package
 #' @rdname pimeta-package
 #' @aliases pimeta-package
-#' @docType package
-#' @keywords package
+#' @keywords internal
 #' @useDynLib pimeta, .registration = TRUE
 #' @importFrom Rcpp evalCpp
-NULL
+"_PACKAGE"

@@ -4,7 +4,9 @@
 \name{hyp}
 \alias{hyp}
 \title{Hypertension data}
-\format{A data frame with 10 rows and 2 variables}
+\format{
+A data frame with 10 rows and 2 variables
+}
 \usage{
 data(hyp)
 }

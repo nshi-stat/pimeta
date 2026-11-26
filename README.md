@@ -20,7 +20,7 @@ and prediction intervals following REML estimation. *Statistics in Medicine* 201
 # From CRAN:
 install.packages("pimeta")
 
-# Or the the development version from GitHub:
+# Or the development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("nshi-stat/pimeta")
 ```

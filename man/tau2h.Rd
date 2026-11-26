@@ -4,9 +4,15 @@
 \alias{tau2h}
 \title{Calculating Heterogeneity Variance}
 \usage{
-tau2h(y, se, maxiter = 100, method = c("DL", "VC", "PM", "HM", "HS",
-  "ML", "REML", "AREML", "SJ", "SJ2", "EB", "BM"), methodci = c(NA, "ML",
-  "REML"), alpha = 0.05)
+tau2h(
+  y,
+  se,
+  maxiter = 100,
+  method = c("DL", "VC", "PM", "HM", "HS", "ML", "REML", "AREML", "SJ", "SJ2", "EB",
+    "BM"),
+  methodci = c(NA, "ML", "REML"),
+  alpha = 0.05
+)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -56,7 +62,7 @@ its confidence interval.
 \details{
 Excellent reviews of heterogeneity variance estimation
 have been published (Sidik & Jonkman, 2007; Veroniki, et al., 2016;
-Langan, et al., 2018).
+Langan, et al., 2019).
 }
 \examples{
 data(sbp, package = "pimeta")
@@ -81,11 +87,11 @@ and its uncertainty in meta-analysis.
 
 Langan, D., Higgins, J. P. T., Jackson, D.,
 Bowden, J., Veroniki, A. A., Kontopantelis, E.,
-Viechtbauer, W., and Simmonds, M. (2018).
+Viechtbauer, W., and Simmonds, M. (2019).
 A comparison of heterogeneity variance estimators in
 simulated random-effects meta-analyses.
-\emph{Res Syn Meth.}
-\emph{In press.}
+\emph{Res Synth Methods.}
+\strong{10}(1): 83-98.
 \url{https://doi.org/10.1002/jrsm.1316}.
 
 DerSimonian, R., and Laird, N. (1986).

@@ -44,7 +44,7 @@ cima_bc <- function(y, se, alpha = 0.05) {
                    tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
-  if (class(res) == "try-error") {
+  if (inherits(res, "try-error")) {
     stop("Could not find a solution. Try another estimator.")
   }
   uci <- res$root
@@ -58,7 +58,7 @@ cima_bc <- function(y, se, alpha = 0.05) {
                    tau2h = tau2h, alpha = alpha, y = y, se = se),
     silent = FALSE
   )
-  if (class(res) == "try-error") {
+  if (inherits(res, "try-error")) {
     stop("Could not find a solution. Try another estimator.")
   }
   lci <- res$root

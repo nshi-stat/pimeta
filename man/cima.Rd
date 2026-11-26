@@ -4,11 +4,26 @@
 \alias{cima}
 \title{Calculating Confidence Intervals}
 \usage{
-cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
-  "SJ", "KR", "APX", "PL", "BC"), B = 25000, parallel = FALSE,
-  seed = NULL, maxit1 = 1e+05, eps = 10^(-10), lower = 0,
-  upper = 1000, maxit2 = 1000, tol = .Machine$double.eps^0.25,
-  rnd = NULL, maxiter = 100)
+cima(
+  y,
+  se,
+  v = NULL,
+  alpha = 0.05,
+  method = c("boot", "DL", "HK", "SJ", "KR", "APX", "PL", "BC"),
+  B = 25000,
+  parallel = FALSE,
+  seed = NULL,
+  maxit1 = 1e+05,
+  eps = 10^(-10),
+  lower = 0,
+  upper = 1000,
+  maxit2 = 1000,
+  tol = .Machine$double.eps^0.25,
+  rnd = NULL,
+  maxiter = 100,
+  sampling = c("table", "exact"),
+  nodes = 400
+)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -19,22 +34,22 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 
 \item{alpha}{the alpha level of the prediction interval}
 
-\item{method}{the calculation method for the pretiction interval (default = "boot").
+\item{method}{the calculation method for the confidence interval (default = "boot").
 \itemize{
 \item \code{boot}: A parametric bootstrap confidence interval
-           (Nagashima et al., 2018).
+           (Nagashima et al., 2019).
 \item \code{DL}: A Wald-type t-distribution confidence interval
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
            an approximate variance estimator for the average effect,
-           \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
+           \eqn{(\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
 \item \code{HK}: A Wald-type t-distribution confidence interval
            (the REML estimator for \eqn{\tau^2} with
-           the Hartung (1999)'s varance estimator [the Hartung and
+           the Hartung (1999)'s variance estimator [the Hartung and
            Knapp (2001)'s estimator] for the average effect,
            \eqn{df=K-1}).
 \item \code{SJ}: A Wald-type t-distribution confidence interval
            (the REML estimator for \eqn{\tau^2} with
-           the Sidik and Jonkman (2006)'s bias coreccted SE estimator
+           the Sidik and Jonkman (2006)'s bias corrected SE estimator
            for the average effect, \eqn{df=K-1}).
 \item \code{KR}: Partlett--Riley (2017) confidence interval /
            (the REML estimator for \eqn{\tau^2} with
@@ -62,15 +77,20 @@ cima(y, se, v = NULL, alpha = 0.05, method = c("boot", "DL", "HK",
 
 \item{lower}{the lower limit of random numbers of \eqn{\tau^2}}
 
-\item{upper}{the lower upper of random numbers of \eqn{\tau^2}}
+\item{upper}{the upper limit of random numbers of \eqn{\tau^2} (see \code{\link{pima}})}
 
 \item{maxit2}{the maximum number of iteration for numerical inversions}
 
-\item{tol}{the desired level of accuracy for numerical inversions}
+\item{tol}{the desired level of accuracy for numerical inversions (see \code{\link{pima}})}
 
 \item{rnd}{a vector of random numbers from the exact distribution of \eqn{\tau^2}}
 
 \item{maxiter}{the maximum number of iteration for REML estimation}
+
+\item{sampling}{the sampling method of \eqn{\tau^2} in the parametric
+bootstrap (\code{"table"} [default] or \code{"exact"}; see \code{\link{pima}})}
+
+\item{nodes}{the number of nodes of the quantile table (see \code{\link{pima}})}
 }
 \value{
 \itemize{
@@ -88,7 +108,7 @@ This function calculates confidence intervals.
 }
 \details{
 Excellent reviews of heterogeneity variance estimation
-have been published (e.g., Veroniki, et al., 2018).
+have been published (e.g., Veroniki, et al., 2019).
 }
 \examples{
 data(sbp, package = "pimeta")
@@ -127,18 +147,18 @@ pimeta::cima(sbp$y, sbp$sigmak, method = "BC")
 }
 \references{
 Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
-Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2016).
+Langan, D., Higgins, J. P. T., Knapp, G., and Salanti, G. (2019).
 Methods to calculate uncertainty in the estimated overall effect
-size from a random-effects meta-analysis
-\emph{Res Syn Meth.}
-\emph{In press}.
+size from a random-effects meta-analysis.
+\emph{Res Synth Methods.}
+\strong{10}(1): 23-43.
 \url{https://doi.org/10.1002/jrsm.1319}.
 
-Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
-\emph{In press}.
+\strong{28}(6): 1689-1702.
 \url{https://doi.org/10.1177/0962280218773520}.
 
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).

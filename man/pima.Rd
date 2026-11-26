@@ -10,11 +10,26 @@
 \alias{htsreml}
 \title{Calculating Prediction Intervals}
 \usage{
-pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
-  "SJ", "KR", "CL", "APX"), B = 25000, parallel = FALSE, seed = NULL,
-  maxit1 = 1e+05, eps = 10^(-10), lower = 0, upper = 1000,
-  maxit2 = 1000, tol = .Machine$double.eps^0.25, rnd = NULL,
-  maxiter = 100)
+pima(
+  y,
+  se,
+  v = NULL,
+  alpha = 0.05,
+  method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
+  B = 25000,
+  parallel = FALSE,
+  seed = NULL,
+  maxit1 = 1e+05,
+  eps = 10^(-10),
+  lower = 0,
+  upper = 1000,
+  maxit2 = 1000,
+  tol = .Machine$double.eps^0.25,
+  rnd = NULL,
+  maxiter = 100,
+  sampling = c("table", "exact"),
+  nodes = 400
+)
 }
 \arguments{
 \item{y}{the effect size estimates vector}
@@ -25,14 +40,14 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 
 \item{alpha}{the alpha level of the prediction interval}
 
-\item{method}{the calculation method for the pretiction interval (default = "boot").
+\item{method}{the calculation method for the prediction interval (default = "boot").
 \itemize{
 \item \code{boot}: A parametric bootstrap prediction interval
-           (Nagashima et al., 2018).
+           (Nagashima et al., 2019).
 \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
            an approximate variance estimator for the average effect,
-           \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
+           \eqn{(\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
 \item \code{HK}: Partlett--Riley (2017) prediction interval
            (the REML estimator for \eqn{\tau^2} with
            the Hartung (1999)'s variance estimator [the Hartung and
@@ -64,15 +79,39 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 
 \item{lower}{the lower limit of random numbers of \eqn{\tau^2}}
 
-\item{upper}{the upper limit of random numbers of \eqn{\tau^2}}
+\item{upper}{the upper limit of random numbers of \eqn{\tau^2}; the search
+is automatically extended to at least \code{1e8} times the mean of
+\code{sigma^2} (and \code{1e6} \eqn{Q} times). Random numbers beyond it
+are treated as \eqn{\tau^2 = \infty} (with a warning).}
 
 \item{maxit2}{the maximum number of iteration for numerical inversions}
 
-\item{tol}{the desired level of accuracy for numerical inversions}
+\item{tol}{the desired level of accuracy for numerical inversions,
+relative to the mean of \code{sigma^2} (the confidence distribution of
+\eqn{\tau^2} is computed on this standardised scale, so that the results
+are equivariant to the scale of \code{y} and \code{sigma})}
 
 \item{rnd}{a vector of random numbers from the exact distribution of \eqn{\tau^2}}
 
 \item{maxiter}{the maximum number of iteration for REML estimation}
+
+\item{sampling}{the sampling method of \eqn{\tau^2} from its confidence
+  distribution in the parametric bootstrap (\code{method = "boot"}).
+\itemize{
+\item \code{table} (default): the inverse of the confidence distribution
+  is computed exactly at \code{nodes - 1} probabilities and the bootstrap
+  samples are obtained by monotone cubic (Fritsch--Carlson) interpolation
+  of this quantile table. Probabilities outside the table are inverted
+  exactly. The interpolation error is of the same order as the default
+  accuracy of the numerical inversion (\code{tol}), while the number of
+  numerical inversions is reduced from \code{B} to about \code{nodes}.
+\item \code{exact}: the confidence distribution is inverted numerically
+  for each bootstrap sample (the method of pimeta 1.1.3 and earlier).
+}
+  When \code{lower > 0}, \code{"exact"} is always used.}
+
+\item{nodes}{the number of nodes of the quantile table
+(\code{sampling = "table"} only).}
 }
 \value{
 \itemize{
@@ -85,12 +124,14 @@ pima(y, se, v = NULL, alpha = 0.05, method = c("boot", "HTS", "HK",
 \item \code{nup}: degrees of freedom for the prediction interval.
 \item \code{nuc}: degrees of freedom for the confidence interval.
 \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+\item \code{rnd}: the bootstrap samples of \eqn{\tau^2}
+  (\code{method = "boot"} only).
 }
 }
 \description{
 This function can estimate prediction intervals (PIs) as follows: 
 A parametric bootstrap PI based on confidence distribution
-(Nagashima et al., 2018). A parametric bootstrap confidence
+(Nagashima et al., 2019). A parametric bootstrap confidence
 interval is also calculated based on the same sampling method
 for bootstrap PI.
 The Higgins--Thompson--Spiegelhalter (2009) prediction interval.
@@ -131,11 +172,11 @@ confidence and prediction intervals following REML estimation.
 \strong{36}(2): 301-317.
 \url{https://doi.org/10.1002/sim.7140}
 
-Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
-\emph{In press}.
+\strong{28}(6): 1689-1702.
 \url{https://doi.org/10.1177/0962280218773520}.
 
 Hartung, J. (1999).

@@ -4,9 +4,18 @@
 \alias{plot.pima}
 \title{Plot Results}
 \usage{
-\method{plot}{pima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
-  ntick = NULL, trans = c("identity", "exp"), ...)
+\method{plot}{pima}(
+  x,
+  y = NULL,
+  title = "Forest plot",
+  base_size = 16,
+  base_family = "",
+  digits = 3,
+  studylabel = NULL,
+  ntick = NULL,
+  trans = c("identity", "exp"),
+  ...
+)
 }
 \arguments{
 \item{x}{`pima` object to plot}
@@ -38,8 +47,6 @@ A function for plotting of `pima` objects.
 \donttest{
 data(sbp, package = "pimeta")
 piex <- pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
-cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 plot(piex, digits = 2, base_size = 10, studylabel = sbp$label)
-dev.off()
 }
 }

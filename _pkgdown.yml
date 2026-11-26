@@ -1,0 +1,5 @@
+url: https://nshi-stat.github.io/pimeta/
+template:
+  bootstrap: 5
+  math-rendering: katex
+  

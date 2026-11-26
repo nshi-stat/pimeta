@@ -4,7 +4,9 @@
 \name{sbp}
 \alias{sbp}
 \title{Systolic blood pressure (SBP) data}
-\format{A data frame with 10 rows and 2 variables}
+\format{
+A data frame with 10 rows and 2 variables
+}
 \usage{
 data(sbp)
 }

@@ -4,7 +4,9 @@
 \name{pain}
 \alias{pain}
 \title{Pain data}
-\format{A data frame with 22 rows and 2 variables}
+\format{
+A data frame with 22 rows and 2 variables
+}
 \usage{
 data(pain)
 }

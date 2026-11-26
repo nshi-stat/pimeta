@@ -4,9 +4,18 @@
 \alias{plot.cima}
 \title{Plot Results}
 \usage{
-\method{plot}{cima}(x, y = NULL, title = "Forest plot",
-  base_size = 16, base_family = "", digits = 3, studylabel = NULL,
-  ntick = NULL, trans = c("identity", "exp"), ...)
+\method{plot}{cima}(
+  x,
+  y = NULL,
+  title = "Forest plot",
+  base_size = 16,
+  base_family = "",
+  digits = 3,
+  studylabel = NULL,
+  ntick = NULL,
+  trans = c("identity", "exp"),
+  ...
+)
 }
 \arguments{
 \item{x}{`cima` object to plot}
@@ -38,8 +47,6 @@ A function for plotting of `cima` objects.
 \donttest{
 data(sbp, package = "pimeta")
 ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
-cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 plot(ciex, digits = 2, base_size = 10, studylabel = sbp$label)
-dev.off()
 }
 }

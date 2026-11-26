@@ -3,7 +3,7 @@
 #' This function calculates confidence intervals.
 #' 
 #' @details Excellent reviews of heterogeneity variance estimation
-#' have been published (e.g., Veroniki, et al., 2018).
+#' have been published (e.g., Veroniki, et al., 2019).
 #'
 #' @name cima
 #' @rdname cima
@@ -11,22 +11,22 @@
 #' @param se the within studies standard errors vector
 #' @param v the within studies variance estimates vector
 #' @param alpha the alpha level of the prediction interval
-#' @param method the calculation method for the pretiction interval (default = "boot").
+#' @param method the calculation method for the confidence interval (default = "boot").
 #' \itemize{
 #' \item \code{boot}: A parametric bootstrap confidence interval
-#'            (Nagashima et al., 2018).
+#'            (Nagashima et al., 2019).
 #' \item \code{DL}: A Wald-type t-distribution confidence interval
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            an approximate variance estimator for the average effect,
-#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
+#'            \eqn{(\sum{\hat{w}_i})^{-1}}, \eqn{df=K-1}).
 #' \item \code{HK}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            the Hartung (1999)'s varance estimator [the Hartung and
+#'            the Hartung (1999)'s variance estimator [the Hartung and
 #'            Knapp (2001)'s estimator] for the average effect,
 #'            \eqn{df=K-1}).
 #' \item \code{SJ}: A Wald-type t-distribution confidence interval
 #'            (the REML estimator for \eqn{\tau^2} with
-#'            the Sidik and Jonkman (2006)'s bias coreccted SE estimator
+#'            the Sidik and Jonkman (2006)'s bias corrected SE estimator
 #'            for the average effect, \eqn{df=K-1}).
 #' \item \code{KR}: Partlett--Riley (2017) confidence interval /
 #'            (the REML estimator for \eqn{\tau^2} with
@@ -47,11 +47,14 @@
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
 #' @param eps the desired level of accuracy for the exact distribution function of \eqn{Q}
 #' @param lower the lower limit of random numbers of \eqn{\tau^2}
-#' @param upper the lower upper of random numbers of \eqn{\tau^2}
+#' @param upper the upper limit of random numbers of \eqn{\tau^2} (see \code{\link{pima}})
 #' @param maxit2 the maximum number of iteration for numerical inversions
-#' @param tol the desired level of accuracy for numerical inversions
+#' @param tol the desired level of accuracy for numerical inversions (see \code{\link{pima}})
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
 #' @param maxiter the maximum number of iteration for REML estimation
+#' @param sampling the sampling method of \eqn{\tau^2} in the parametric
+#'   bootstrap (\code{"table"} [default] or \code{"exact"}; see \code{\link{pima}})
+#' @param nodes the number of nodes of the quantile table (see \code{\link{pima}})
 #' @return
 #' \itemize{
 #' \item \code{K}: the number of studies.
@@ -64,18 +67,18 @@
 #' }
 #' @references
 #' Veroniki, A. A., Jackson, D., Bender, R., Kuss, O.,
-#' Langan, D., Higgins, J. P. T., Knapp, G.,  and Salanti, J. (2016).
+#' Langan, D., Higgins, J. P. T., Knapp, G., and Salanti, G. (2019).
 #' Methods to calculate uncertainty in the estimated overall effect
-#' size from a random-effects meta-analysis
-#' \emph{Res Syn Meth.}
-#' \emph{In press}.
+#' size from a random-effects meta-analysis.
+#' \emph{Res Synth Methods.}
+#' \strong{10}(1): 23-43.
 #' \url{https://doi.org/10.1002/jrsm.1319}.
 #' 
-#' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+#' Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 #' Prediction intervals for random-effects meta-analysis:
 #' a confidence distribution approach.
 #' \emph{Stat Methods Med Res}.
-#' \emph{In press}.
+#' \strong{28}(6): 1689-1702.
 #' \url{https://doi.org/10.1177/0962280218773520}.
 #' 
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
@@ -151,11 +154,13 @@ cima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "DL", "HK", "SJ", "KR", "APX", "PL", "BC"),
                  B = 25000, parallel = FALSE, seed = NULL, maxit1 = 100000,
                  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100) {
+                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100,
+                 sampling = c("table", "exact"), nodes = 400) {
   
   # initial check
   lstm <- c("boot", "DL", "HK", "SJ", "KR", "APX", "PL", "BC")
   method <- match.arg(method)
+  sampling <- match.arg(sampling)
   
   if (missing(se) & missing(v)) {
     stop("Either 'se' or 'v' must be specified.")
@@ -194,9 +199,12 @@ cima <- function(y, se, v = NULL, alpha = 0.05,
                      lower  = lower,
                      upper  = upper, 
                      maxit2 = maxit2,
+                     tol    = tol,
                      rnd    = rnd,
                      parallel = parallel,
-                     seed     = seed)
+                     seed     = seed,
+                     sampling = sampling,
+                     nodes    = nodes)
   } else if (method == "DL") {
     res <- pima_hts(y      = y, 
                     sigma  = se, 
@@ -349,9 +357,7 @@ print.cima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
 #' \donttest{
 #' data(sbp, package = "pimeta")
 #' ciex <- pimeta::cima(sbp$y, sbp$sigmak, method = "DL")
-#' cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 #' plot(ciex, digits = 2, base_size = 10, studylabel = sbp$label)
-#' dev.off()
 #' }
 #' @export
 #' @method plot cima
@@ -421,7 +427,7 @@ plot.cima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   
   ggplot <- ggplot2::ggplot
   aes <- ggplot2::aes
-  geom_errorbarh <- ggplot2::geom_errorbarh
+  geom_linerange <- ggplot2::geom_linerange
   geom_point <- ggplot2::geom_point
   geom_ribbon <- ggplot2::geom_ribbon
   geom_vline <- ggplot2::geom_vline
@@ -464,7 +470,7 @@ plot.cima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   suppressWarnings(
     print(
       p <- ggplot(df1, aes(x = y, y = idodr)) +
-        geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
+        geom_linerange(aes(xmin = lcl, xmax = ucl), linewidth = 1) +
         geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
         geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
                     colour = "black", fill = "black") +

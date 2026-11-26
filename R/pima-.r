@@ -2,7 +2,7 @@
 #'
 #' This function can estimate prediction intervals (PIs) as follows: 
 #' A parametric bootstrap PI based on confidence distribution
-#' (Nagashima et al., 2018). A parametric bootstrap confidence
+#' (Nagashima et al., 2019). A parametric bootstrap confidence
 #' interval is also calculated based on the same sampling method
 #' for bootstrap PI.
 #' The Higgins--Thompson--Spiegelhalter (2009) prediction interval.
@@ -19,14 +19,14 @@
 #' @param se the within studies standard error estimates vector
 #' @param v the within studies variance estimates vector
 #' @param alpha the alpha level of the prediction interval
-#' @param method the calculation method for the pretiction interval (default = "boot").
+#' @param method the calculation method for the prediction interval (default = "boot").
 #' \itemize{
 #' \item \code{boot}: A parametric bootstrap prediction interval
-#'            (Nagashima et al., 2018).
+#'            (Nagashima et al., 2019).
 #' \item \code{HTS}: the Higgins--Thompson--Spiegelhalter (2009) prediction interval / 
 #'            (the DerSimonian & Laird estimator for \eqn{\tau^2} with
 #'            an approximate variance estimator for the average effect,
-#'            \eqn{(1/\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
+#'            \eqn{(\sum{\hat{w}_i})^{-1}}, \eqn{df=K-2}).
 #' \item \code{HK}: Partlett--Riley (2017) prediction interval
 #'            (the REML estimator for \eqn{\tau^2} with
 #'            the Hartung (1999)'s variance estimator [the Hartung and
@@ -51,11 +51,33 @@
 #' @param maxit1 the maximum number of iteration for the exact distribution function of \eqn{Q}
 #' @param eps the desired level of accuracy for the exact distribution function of \eqn{Q}
 #' @param lower the lower limit of random numbers of \eqn{\tau^2}
-#' @param upper the upper limit of random numbers of \eqn{\tau^2}
+#' @param upper the upper limit of random numbers of \eqn{\tau^2}; the search
+#'   is automatically extended to at least \code{1e8} times the mean of
+#'   \code{sigma^2} (and \code{1e6} \eqn{Q} times). Random numbers beyond it
+#'   are treated as \eqn{\tau^2 = \infty} (with a warning).
 #' @param maxit2 the maximum number of iteration for numerical inversions
-#' @param tol the desired level of accuracy for numerical inversions
+#' @param tol the desired level of accuracy for numerical inversions,
+#'   relative to the mean of \code{sigma^2} (the confidence distribution of
+#'   \eqn{\tau^2} is computed on this standardised scale, so that the results
+#'   are equivariant to the scale of \code{y} and \code{sigma})
 #' @param rnd a vector of random numbers from the exact distribution of \eqn{\tau^2}
 #' @param maxiter the maximum number of iteration for REML estimation
+#' @param sampling the sampling method of \eqn{\tau^2} from its confidence
+#'   distribution in the parametric bootstrap (\code{method = "boot"}).
+#' \itemize{
+#' \item \code{table} (default): the inverse of the confidence distribution
+#'   is computed exactly at \code{nodes - 1} probabilities and the bootstrap
+#'   samples are obtained by monotone cubic (Fritsch--Carlson) interpolation
+#'   of this quantile table. Probabilities outside the table are inverted
+#'   exactly. The interpolation error is of the same order as the default
+#'   accuracy of the numerical inversion (\code{tol}), while the number of
+#'   numerical inversions is reduced from \code{B} to about \code{nodes}.
+#' \item \code{exact}: the confidence distribution is inverted numerically
+#'   for each bootstrap sample (the method of pimeta 1.1.3 and earlier).
+#' }
+#'   When \code{lower > 0}, \code{"exact"} is always used.
+#' @param nodes the number of nodes of the quantile table
+#'   (\code{sampling = "table"} only).
 #' @return
 #' \itemize{
 #' \item \code{K}: the number of studies.
@@ -67,6 +89,8 @@
 #' \item \code{nup}: degrees of freedom for the prediction interval.
 #' \item \code{nuc}: degrees of freedom for the confidence interval.
 #' \item \code{vmuhat}: the variance estimate for \eqn{\hat{\mu}}.
+#' \item \code{rnd}: the bootstrap samples of \eqn{\tau^2}
+#'   (\code{method = "boot"} only).
 #' }
 #' @references
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
@@ -82,11 +106,11 @@
 #' \strong{36}(2): 301-317.
 #' \url{https://doi.org/10.1002/sim.7140}
 #' 
-#' Nagashima, K., Noma, H., and Furukawa, T. A. (2018).
+#' Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 #' Prediction intervals for random-effects meta-analysis:
 #' a confidence distribution approach.
 #' \emph{Stat Methods Med Res}.
-#' \emph{In press}.
+#' \strong{28}(6): 1689-1702.
 #' \url{https://doi.org/10.1177/0962280218773520}.
 #' 
 #' Hartung, J. (1999).
@@ -143,11 +167,13 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
                  method = c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX"),
                  B = 25000, parallel = FALSE, seed = NULL, maxit1 = 100000, 
                  eps = 10^(-10), lower = 0, upper = 1000, maxit2 = 1000,
-                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100) {
+                 tol = .Machine$double.eps^0.25, rnd = NULL, maxiter = 100,
+                 sampling = c("table", "exact"), nodes = 400) {
   
   # initial check
   lstm <- c("boot", "HTS", "HK", "SJ", "KR", "CL", "APX")
   method <- match.arg(method)
+  sampling <- match.arg(sampling)
   
   if (missing(se) & missing(v)) {
     stop("Either 'se' or 'v' must be specified.")
@@ -186,9 +212,12 @@ pima <- function(y, se, v = NULL, alpha = 0.05,
                      lower    = lower,
                      upper    = upper, 
                      maxit2   = maxit2,
+                     tol      = tol,
                      rnd      = rnd,
                      parallel = parallel,
-                     seed     = seed)
+                     seed     = seed,
+                     sampling = sampling,
+                     nodes    = nodes)
   } else if (method == "HTS") {
     res <- pima_hts(y      = y, 
                     sigma  = se, 
@@ -343,9 +372,7 @@ print.pima <- function(x, digits = 4, trans = c("identity", "exp"), ...) {
 #' \donttest{
 #' data(sbp, package = "pimeta")
 #' piex <- pimeta::pima(sbp$y, sbp$sigmak, method = "HTS")
-#' cairo_pdf("forestplot.pdf", width = 6, height = 3, family = "Arial")
 #' plot(piex, digits = 2, base_size = 10, studylabel = sbp$label)
-#' dev.off()
 #' }
 #' @export
 #' @method plot pima
@@ -421,7 +448,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   
   ggplot <- ggplot2::ggplot
   aes <- ggplot2::aes
-  geom_errorbarh <- ggplot2::geom_errorbarh
+  geom_linerange <- ggplot2::geom_linerange
   geom_point <- ggplot2::geom_point
   geom_ribbon <- ggplot2::geom_ribbon
   geom_vline <- ggplot2::geom_vline
@@ -464,7 +491,7 @@ plot.pima <- function(x, y = NULL, title = "Forest plot", base_size = 16,
   suppressWarnings(
     print(
       p <- ggplot(df1, aes(x = y, y = idodr)) +
-        geom_errorbarh(aes(xmin = lcl, xmax = ucl), height = 0, size = 1) +
+        geom_linerange(aes(xmin = lcl, xmax = ucl), linewidth = 1) +
         geom_point(aes(size = size, shape = shape), fill = "black", show.legend = FALSE) +
         geom_ribbon(data = df4, aes(x = x, y = y, ymin = ymin, ymax = ymax), alpha = 1,
                     colour = "black", fill = "black") +

@@ -18,6 +18,11 @@ extern NumericVector rtau2CppWrap(const int, const Eigen::VectorXd&, const Eigen
                                   const double, const double, const int, const double,
                                   const int);
 
+extern NumericVector rtau2CDCppWrap(const int, const Eigen::VectorXd&, const Eigen::VectorXd&,
+                                    const double, const int, const double,
+                                    const double, const double, const int, const double,
+                                    const int, const int, const int);
+
 extern double getqa(const Eigen::VectorXd&, const Eigen::MatrixXd&);
 
 extern Eigen::MatrixXd getA(const Eigen::VectorXd&);
