@@ -57,7 +57,8 @@ relative risk, and risk difference described in Hartung & Knapp (2001).
 
 Hartung, J., and Knapp, G. (2001). A refined method for the
 meta-analysis of controlled clinical trials with binary outcome. *Stat
-Med.* **20**(24): 3875-3889. <https://doi.org/10.1002/sim.1009>
+Med.* **20**(24): 3875-3889.
+[doi:10.1002/sim.1009](https://doi.org/10.1002/sim.1009)
 
 ## See also
 

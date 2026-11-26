@@ -152,47 +152,47 @@ Methods to calculate uncertainty in the estimated overall effect
 size from a random-effects meta-analysis.
 \emph{Res Synth Methods.}
 \strong{10}(1): 23-43.
-\url{https://doi.org/10.1002/jrsm.1319}.
+\doi{10.1002/jrsm.1319}.
 
 Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
 \strong{28}(6): 1689-1702.
-\url{https://doi.org/10.1177/0962280218773520}.
+\doi{10.1177/0962280218773520}.
 
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 A re-evaluation of random-effects meta-analysis.
 \emph{J R Stat Soc Ser A Stat Soc.}
 \strong{172}(1): 137-159.
-\url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
+\doi{10.1111/j.1467-985X.2008.00552.x}
  
 Partlett, C, and Riley, R. D. (2017).
 Random effects meta-analysis: Coverage performance of 95%
 confidence and prediction intervals following REML estimation.
 \emph{Stat Med.}
 \strong{36}(2): 301-317.
-\url{https://doi.org/10.1002/sim.7140}
+\doi{10.1002/sim.7140}
 
 Hartung, J., and Knapp, G. (2001).
 On tests of the overall treatment effect in meta-analysis with
 normally distributed responses.
 \emph{Stat Med.}
 \strong{20}(12): 1771-1782.
-\url{https://doi.org/10.1002/sim.791}
+\doi{10.1002/sim.791}
 
 Sidik, K., and Jonkman, J. N. (2006).
 Robust variance estimation for random effects meta-analysis.
 \emph{Comput Stat Data Anal.}
 \strong{50}(12): 3681-3701.
-\url{https://doi.org/10.1016/j.csda.2005.07.019}
+\doi{10.1016/j.csda.2005.07.019}
 
 Noma H. (2011)
 Confidence intervals for a random-effects meta-analysis
 based on Bartlett-type corrections.
 \emph{Stat Med.}
 \strong{30}(28): 3304-3312.
-\url{https://doi.org/10.1002/sim.4350}
+\doi{10.1002/sim.4350}
 }
 \seealso{
 \code{\link[=pima]{pima}}

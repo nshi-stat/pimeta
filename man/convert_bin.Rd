@@ -56,7 +56,7 @@ A refined method for the meta-analysis of controlled clinical trials
 with binary outcome.
 \emph{Stat Med.}
 \strong{20}(24): 3875-3889.
-\url{https://doi.org/10.1002/sim.1009}
+\doi{10.1002/sim.1009}
 }
 \seealso{
 \code{\link{convert_mean}}

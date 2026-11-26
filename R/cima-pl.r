@@ -20,7 +20,7 @@
 # A likelihood approach to meta-analysis with random effects.
 # \emph{Stat Med.}
 # \strong{15}(6): 619-629.
-# \url{https://doi.org/10.1002/(SICI)1097-0258(19960330)15:6<619::AID-SIM188>3.0.CO;2-A}.
+# \doi{10.1002/(SICI)1097-0258(19960330)15:6<619::AID-SIM188>3.0.CO;2-A}.
 # @seealso
 # \code{\link[=cima]{cima}}.
 # @examples

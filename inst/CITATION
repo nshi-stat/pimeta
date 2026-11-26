@@ -1,22 +1,15 @@
 citHeader("To cite pimeta in publications use:")
 
-citEntry(
-entry = "Article",
-title = "Prediction interval for random-effects meta-analysis: a confidence distribution approach",
-author = personList(
-  as.person("Kengo Nagashima"),
-  as.person("Hisashi Noma"),
-  as.person("Toshi A. Furukawa")),
-journal = "Statistical Methods in Medical Research",
-year = "2019",
-volume = "28",
-number = "6",
-page = "1689-1702",
-doi = "10.1177/0962280218773520",
-note = "Post-print available at (https://arxiv.org/abs/1804.01054)",
-textVersion = paste(
-  "Nagashima K, Noma H, Furukawa TA.",
-  "Prediction interval for random-effects meta-analysis: a confidence distribution approach.",
-  "Statistical Methods in Medical Research 2019; 28(6): 1689-1702.",
-  "DOI:10.1177/0962280218773520."
-))
+bibentry(
+  bibtype = "Article",
+  title   = "Prediction intervals for random-effects meta-analysis: a confidence distribution approach",
+  author  = c(person("Kengo", "Nagashima"),
+              person("Hisashi", "Noma"),
+              person(c("Toshi", "A."), "Furukawa")),
+  journal = "Statistical Methods in Medical Research",
+  year    = "2019",
+  volume  = "28",
+  number  = "6",
+  pages   = "1689--1702",
+  doi     = "10.1177/0962280218773520"
+)

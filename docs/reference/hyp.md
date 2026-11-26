@@ -29,4 +29,5 @@ A data frame with 10 rows and 2 variables
 Wang, J. G., Staessen, J. A., Franklin, S. S., Fagard, R., and
 Gueyffier, F. (2005). Systolic and diastolic blood pressure lowering as
 determinants of cardiovascular outcome. *Hypertension.* **45**(5):
-907-913. <https://doi.org/10.1161/01.HYP.0000165020.14745.79>
+907-913.
+[doi:10.1161/01.HYP.0000165020.14745.79](https://doi.org/10.1161/01.HYP.0000165020.14745.79)

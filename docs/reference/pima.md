@@ -190,33 +190,38 @@ function.
 Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009). A
 re-evaluation of random-effects meta-analysis. *J R Stat Soc Ser A Stat
 Soc.* **172**(1): 137-159.
-<https://doi.org/10.1111/j.1467-985X.2008.00552.x>
+[doi:10.1111/j.1467-985X.2008.00552.x](https://doi.org/10.1111/j.1467-985X.2008.00552.x)
 
 Partlett, C, and Riley, R. D. (2017). Random effects meta-analysis:
 Coverage performance of 95 confidence and prediction intervals following
 REML estimation. *Stat Med.* **36**(2): 301-317.
-<https://doi.org/10.1002/sim.7140>
+[doi:10.1002/sim.7140](https://doi.org/10.1002/sim.7140)
 
 Nagashima, K., Noma, H., and Furukawa, T. A. (2019). Prediction
 intervals for random-effects meta-analysis: a confidence distribution
 approach. *Stat Methods Med Res*. **28**(6): 1689-1702.
-<https://doi.org/10.1177/0962280218773520>.
+[doi:10.1177/0962280218773520](https://doi.org/10.1177/0962280218773520)
+.
 
 Hartung, J. (1999). An alternative method for meta-analysis. *Biom J.*
 **41**(8): 901-916.
-<https://doi.org/10.1002/(SICI)1521-4036(199912)41:8%3C901::AID-BIMJ901%3E3.0.CO;2-W>.
+[doi:10.1002/(SICI)1521-4036(199912)41:8\<901::AID-BIMJ901\>3.0.CO;2-W](https://doi.org/10.1002/%28SICI%291521-4036%28199912%2941%3A8%3C901%3A%3AAID-BIMJ901%3E3.0.CO%3B2-W)
+.
 
 Hartung, J., and Knapp, G. (2001). On tests of the overall treatment
 effect in meta-analysis with normally distributed responses. *Stat Med.*
-**20**(12): 1771-1782. <https://doi.org/10.1002/sim.791>.
+**20**(12): 1771-1782.
+[doi:10.1002/sim.791](https://doi.org/10.1002/sim.791) .
 
 Sidik, K., and Jonkman, J. N. (2006). Robust variance estimation for
 random effects meta-analysis. *Comput Stat Data Anal.* **50**(12):
-3681-3701. <https://doi.org/10.1016/j.csda.2005.07.019>.
+3681-3701.
+[doi:10.1016/j.csda.2005.07.019](https://doi.org/10.1016/j.csda.2005.07.019)
+.
 
 Kenward, M. G., and Roger, J. H. (1997). Small sample inference for
 fixed effects from restricted maximum likelihood. *Biometrics.*
-**53**(3): 983-997. <https://www.ncbi.nlm.nih.gov/pubmed/9333350>.
+**53**(3): 983-997. <https://pubmed.ncbi.nlm.nih.gov/9333350/>.
 
 DerSimonian, R., and Laird, N. (1986). Meta-analysis in clinical trials.
 *Control Clin Trials.* **7**(3): 177-188.

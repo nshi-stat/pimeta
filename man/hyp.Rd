@@ -32,6 +32,6 @@ Systolic and diastolic blood pressure lowering as determinants
 of cardiovascular outcome.
 \emph{Hypertension.}
 \strong{45}(5): 907-913.
-\url{https://doi.org/10.1161/01.HYP.0000165020.14745.79}
+\doi{10.1161/01.HYP.0000165020.14745.79}
 }
 \keyword{datasets}

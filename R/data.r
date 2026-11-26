@@ -26,13 +26,13 @@
 #' ability in eating disorders.
 #' \emph{Psychol Med.}
 #' \strong{37}(8): 1075-1084.
-#' \url{https://doi.org/10.1017/S0033291707009877}
+#' \doi{10.1017/S0033291707009877}
 #' 
 #' Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 #' A re-evaluation of random-effects meta-analysis.
 #' \emph{J R Stat Soc Ser A Stat Soc.}
 #' \strong{172}(1): 137-159.
-#' \url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
+#' \doi{10.1111/j.1467-985X.2008.00552.x}
 NULL
 
 
@@ -62,13 +62,13 @@ NULL
 #' Treatment of fibromyalgia syndrome with antidepressants: a meta-analysis.
 #' \emph{JAMA.}
 #' \strong{301}(2): 198-209.
-#' \url{https://doi.org/10.1001/jama.2008.944}
+#' \doi{10.1001/jama.2008.944}
 #' 
 #' Riley, R. D., Higgins, J. P. T, and Deeks, J. J. (2011).
 #' Interpretation of random effects meta-analyses.
 #' \emph{BMJ.}
 #' \strong{342}: d549.
-#' \url{https://doi.org/10.1136/bmj.d549}
+#' \doi{10.1136/bmj.d549}
 NULL
 
 
@@ -96,7 +96,7 @@ NULL
 #' Interpretation of random effects meta-analyses.
 #' \emph{BMJ.}
 #' \strong{342}: d549.
-#' \url{https://doi.org/10.1136/bmj.d549}
+#' \doi{10.1136/bmj.d549}
 NULL
 
 
@@ -127,7 +127,7 @@ NULL
 #' of cardiovascular outcome.
 #' \emph{Hypertension.}
 #' \strong{45}(5): 907-913.
-#' \url{https://doi.org/10.1161/01.HYP.0000165020.14745.79}
+#' \doi{10.1161/01.HYP.0000165020.14745.79}
 NULL
 
 
@@ -166,7 +166,7 @@ NULL
 #' and meta-analysis of randomised controlled trials.
 #' \emph{BMJ.}
 #' \strong{364}: l689.
-#' \url{https://doi.org/10.1136/bmj.l689}
+#' \doi{10.1136/bmj.l689}
 NULL
 
 
@@ -208,5 +208,5 @@ NULL
 #' a systematic review and meta-analysis.
 #' \emph{JAMA Intern Med.}
 #' \strong{179}(9): 1262-1271.
-#' \url{https://doi.org/10.1001/jamainternmed.2019.2248}
+#' \doi{10.1001/jamainternmed.2019.2248}
 NULL

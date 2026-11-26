@@ -45,4 +45,4 @@ A., Noreik, M., Jebb, S. A., and Aveyard, P. (2019). Association of
 weight loss interventions with changes in biomarkers of nonalcoholic
 fatty liver disease: a systematic review and meta-analysis. *JAMA Intern
 Med.* **179**(9): 1262-1271.
-<https://doi.org/10.1001/jamainternmed.2019.2248>
+[doi:10.1001/jamainternmed.2019.2248](https://doi.org/10.1001/jamainternmed.2019.2248)

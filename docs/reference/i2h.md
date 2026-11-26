@@ -26,7 +26,7 @@ i2h(se, tau2h)
 
 Higgins, J. P. T., and Thompson, S. G. (2002). Quantifying heterogeneity
 in a meta-analysis. *Stat Med.* **21**(11): 1539-1558.
-<https://doi.org/10.1002/sim.1186>
+[doi:10.1002/sim.1186](https://doi.org/10.1002/sim.1186)
 
 ## Examples
 

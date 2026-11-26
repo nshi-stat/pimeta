@@ -163,47 +163,47 @@ Higgins, J. P. T, Thompson, S. G., Spiegelhalter, D. J. (2009).
 A re-evaluation of random-effects meta-analysis.
 \emph{J R Stat Soc Ser A Stat Soc.}
 \strong{172}(1): 137-159.
-\url{https://doi.org/10.1111/j.1467-985X.2008.00552.x}
+\doi{10.1111/j.1467-985X.2008.00552.x}
  
 Partlett, C, and Riley, R. D. (2017).
 Random effects meta-analysis: Coverage performance of 95%
 confidence and prediction intervals following REML estimation.
 \emph{Stat Med.}
 \strong{36}(2): 301-317.
-\url{https://doi.org/10.1002/sim.7140}
+\doi{10.1002/sim.7140}
 
 Nagashima, K., Noma, H., and Furukawa, T. A. (2019).
 Prediction intervals for random-effects meta-analysis:
 a confidence distribution approach.
 \emph{Stat Methods Med Res}.
 \strong{28}(6): 1689-1702.
-\url{https://doi.org/10.1177/0962280218773520}.
+\doi{10.1177/0962280218773520}.
 
 Hartung, J. (1999).
 An alternative method for meta-analysis.
 \emph{Biom J.}
 \strong{41}(8): 901-916.
-\url{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}.
+\doi{10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}.
 
 Hartung, J., and Knapp, G. (2001).
 On tests of the overall treatment effect in meta-analysis with
 normally distributed responses.
 \emph{Stat Med.}
 \strong{20}(12): 1771-1782.
-\url{https://doi.org/10.1002/sim.791}.
+\doi{10.1002/sim.791}.
 
 Sidik, K., and Jonkman, J. N. (2006).
 Robust variance estimation for random effects meta-analysis.
 \emph{Comput Stat Data Anal.}
 \strong{50}(12): 3681-3701.
-\url{https://doi.org/10.1016/j.csda.2005.07.019}.
+\doi{10.1016/j.csda.2005.07.019}.
 
 Kenward, M. G., and Roger, J. H. (1997).
 Small sample inference for fixed effects from restricted
 maximum likelihood.
 \emph{Biometrics.}
 \strong{53}(3): 983-997.
-\url{https://www.ncbi.nlm.nih.gov/pubmed/9333350}.
+\url{https://pubmed.ncbi.nlm.nih.gov/9333350/}.
 
 DerSimonian, R., and Laird, N. (1986).
 Meta-analysis in clinical trials.

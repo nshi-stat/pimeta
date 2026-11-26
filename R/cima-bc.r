@@ -21,7 +21,7 @@
 # based on Bartlett-type corrections.
 # \emph{Stat Med.}
 # \strong{30}(28): 3304-3312.
-# \url{https://doi.org/10.1002/sim.4350}
+# \doi{10.1002/sim.4350}
 # @seealso
 # \code{\link[=cima]{cima}}.
 # @examples

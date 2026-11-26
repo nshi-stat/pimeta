@@ -29,6 +29,6 @@ Riley, R. D., Higgins, J. P. T, and Deeks, J. J. (2011).
 Interpretation of random effects meta-analyses.
 \emph{BMJ.}
 \strong{342}: d549.
-\url{https://doi.org/10.1136/bmj.d549}
+\doi{10.1136/bmj.d549}
 }
 \keyword{datasets}

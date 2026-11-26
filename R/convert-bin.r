@@ -33,7 +33,7 @@
 #' with binary outcome.
 #' \emph{Stat Med.}
 #' \strong{20}(24): 3875-3889.
-#' \url{https://doi.org/10.1002/sim.1009}
+#' \doi{10.1002/sim.1009}
 #' @seealso \code{\link{convert_mean}}
 #' @examples
 #' m1 <- c(15,12,29,42,14,44,14,29,10,17,38,19,21)

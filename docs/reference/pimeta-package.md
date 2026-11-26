@@ -7,7 +7,9 @@ meta-analysis: Higgins et al. (2009)
 [doi:10.1002/sim.7140](https://doi.org/10.1002/sim.7140) , and Nagashima
 et al. (2019)
 [doi:10.1177/0962280218773520](https://doi.org/10.1177/0962280218773520)
-, [arXiv:1804.01054](https://arxiv.org/abs/1804.01054).
+,
+[doi:10.48550/arXiv.1804.01054](https://doi.org/10.48550/arXiv.1804.01054)
+.
 
 ## Author
 

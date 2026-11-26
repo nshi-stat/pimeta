@@ -43,6 +43,6 @@ in biomarkers of nonalcoholic fatty liver disease:
 a systematic review and meta-analysis.
 \emph{JAMA Intern Med.}
 \strong{179}(9): 1262-1271.
-\url{https://doi.org/10.1001/jamainternmed.2019.2248}
+\doi{10.1001/jamainternmed.2019.2248}
 }
 \keyword{datasets}

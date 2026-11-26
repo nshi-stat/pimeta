@@ -44,4 +44,5 @@ Rubinstein, S. M., de Zoete, A., van Middelkoop, M., Assendelft, W. J.
 J., de Boer, M. R., and van Tulder, M. W. (2019). Benefits and harms of
 spinal manipulative therapy for the treatment of chronic low back pain:
 systematic review and meta-analysis of randomised controlled trials.
-*BMJ.* **364**: l689. <https://doi.org/10.1136/bmj.l689>
+*BMJ.* **364**: l689.
+[doi:10.1136/bmj.l689](https://doi.org/10.1136/bmj.l689)
